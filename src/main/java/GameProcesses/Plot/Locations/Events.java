@@ -1,33 +1,37 @@
 package main.java.GameProcesses.Plot.Locations;
 
-import java.util.Objects;
+import main.java.Characters.Organism;
+import main.java.GameProcesses.Services.GameScanner;
+import main.java.GameProcesses.Services.Printable;
+import main.java.GameProcesses.Services.StoryReader;
 
-public class Events {
-    private final String eventName; /// call event with his name
-    private String plotText;
-    private String choose;
-    private Location location;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
-    public Events(String eventName, String plotText, String choose, Location location) {
+public abstract class Events implements Printable, GameScanner {
+    private final String eventName;
+    /// call event with his name
+    private final Location LOCATION;
+    StoryReader story;
+    Organism player;
+
+    private List<String> eventsTexts = new ArrayList<>();;
+
+    public Events(String eventName, Location LOCATION, StoryReader story ) {
         this.eventName = eventName;
-        this.plotText = plotText;
-        this.choose = choose;
-        this.location = location;
+        this.LOCATION = LOCATION;
+        this.story = story;
     }
 
-    public void setTextAndCommandsDependingOnThePlot() {
-
+    protected void setEventsTexts(String s) {
+        eventsTexts.add(s);
+    }
+    public String getEventsText(int index) {
+        return eventsTexts.get(index);
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
-        Events events = (Events) object;
-        return Objects.equals(eventName, events.eventName) && Objects.equals(plotText, events.plotText) && Objects.equals(choose, events.choose);
-    }
+    public abstract void printEvent(int index);
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(eventName, plotText, choose);
-    }
+    public Organism startEvent (Scanner sc) {return player;}
 }

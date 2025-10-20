@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class StoryReader implements Phrases{
+public class StoryReader implements Printable {
 
     File file;
     StringBuilder stringBuilder;
@@ -32,7 +32,7 @@ public class StoryReader implements Phrases{
        return stringBuilder.toString();
     }
     @Override public void print(String text) {
-        Phrases.super.print(text);
+        Printable.super.print(text);
     }
 
 }
