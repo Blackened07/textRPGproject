@@ -1,0 +1,93 @@
+package main.java.Characters;
+
+import main.java.Items.Armor.Armors;
+import main.java.Items.Weapon.Weapon;
+
+public class Organism {
+    private final String NAME;
+
+    private float strength;
+    private float stamina;
+    private float agility;
+    private float intellect;
+    private int experience;
+
+    private int level = 1;
+
+    private final float BASE_HEALTH = 20;
+    private final float BASE_MANA = 20;
+
+    private float currentHealth;
+    private float currentMana;
+    private float healthMaxValue;
+    private float manaMaxValue;
+
+    private float attackPower;
+    private float spellPower;
+    private float evasion;
+    private float spellResistance;
+    private float attackSpeed;
+
+    final float attackPowerANDSpellPowerANDAttackSpeedCoefficient = 1.6f;
+    final float evasionCoefficient = 2f;
+    final float spellResistanceCoefficient = 16f;
+    final float attackSpeedCoefficient = 10f;
+
+    private int gold;
+
+    Inventory inventory;
+    BackPack backPack;
+    SpellBook spellBook;
+
+    /// ADD QUESTS, DIALOGUES
+
+    public Organism(String name, float strength, float stamina, float agility, float intellect, int experience, int gold) {
+        this.NAME = name;
+        this.strength = strength;
+        this.stamina = stamina;
+        this.agility = agility;
+        this.intellect = intellect;
+        this.experience = experience;
+        this.gold = gold;
+        this.inventory = new Inventory();
+        this.backPack = new BackPack();
+        this.spellBook = new SpellBook();
+    }
+    /** BASE STATS */
+    public String getNAME() {return NAME;}
+
+    public float getStrength() {return strength;}
+    public float getStamina() {return stamina;}
+    public float getAgility() {return agility;}
+    public float getIntellect() {return intellect;}
+
+    /** HEALTH AND MANA */
+    public float getCurrentHealth() {return currentHealth;} //currentHealth
+    public float getCurrentMana() {return currentMana;}
+    public float getHealthMaxValue() {return BASE_HEALTH + getStamina();} //MaxHealth
+    public float getManaMaxValue() {return BASE_MANA + getIntellect();}
+    public float getBASE_HEALTH() {return BASE_HEALTH;}
+    public float getBASE_MANA() {return BASE_MANA;}
+    public void setCurrentHealth(float health) {this.currentHealth = health;}
+    public void setCurrentMana(float currentMana) {this.currentMana = currentMana;}
+
+    /** SECONDARY STATS/FEATURES */
+    public float getAttackPower() {return getStrength() / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
+    public float getSpellPower() {return getIntellect() / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
+    public float getEvasion() {return getAgility() / evasionCoefficient;}
+    public float getSpellResistance() {return (getIntellect() + getStamina()) / spellResistanceCoefficient;}
+    public float getAttackSpeed() {return (getAgility() + getStamina()/attackSpeedCoefficient) / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
+
+    /** ECONOMY */
+    public int getGold() {return gold;}
+
+    /** BANK */
+    public void addToInventoryA(Armors a) {}
+    public void addToInventoryW (Weapon w) {}
+
+    /** EXP AND LEVEL*/
+    public int getLevel() {return level;}
+    public void setLevel() {this.level ++;}
+    public int getExperience() {return experience;}
+    public void setExperience(int experience) {this.experience = experience;}
+}
