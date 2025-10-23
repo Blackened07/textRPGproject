@@ -9,6 +9,8 @@ import java.util.Objects;
 
 public enum Location {
     START_GAME,
-    SILVERSHIRE_VILLAGE
+    SILVERSHIRE_VILLAGE,
+    CROSSROADS,
+    MILL
 
 }

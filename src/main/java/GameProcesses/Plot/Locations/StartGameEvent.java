@@ -1,6 +1,8 @@
 package main.java.GameProcesses.Plot.Locations;
 
 import main.java.Characters.*;
+import main.java.GameProcesses.Plot.Dialogue;
+import main.java.GameProcesses.Services.PrintableInterfaces;
 import main.java.GameProcesses.Services.StoryReader;
 import main.java.Items.Armor.ArmorType;
 import main.java.Items.Armor.Armors;
@@ -9,29 +11,37 @@ import main.java.Items.Types;
 import main.java.Items.Weapon.Weapon;
 import main.java.Items.Weapon.WeaponTypes;
 
-import java.util.Scanner;
+import java.util.*;
 
-public class StartGameEvent extends Events{
+public class StartGameEvent extends Events implements PrintableInterfaces {
     Weapon weapon;
     Organism player;
+    Dialogue dialogue;
 
-    public StartGameEvent(String eventName, Location LOCATION, StoryReader story) {
+    public StartGameEvent(String eventName, Location LOCATION, StoryReader story, Dialogue dialogue) {
         super(eventName, LOCATION, story);
-        super.setEventsTexts(story.phrasesBuilder(0, 6));
-        super.setEventsTexts(story.phrasesBuilder(6, 3));
-        super.setEventsTexts(story.phrasesBuilder(9, 3));
-        super.setEventsTexts(story.phrasesBuilder(12, 3));
-        super.setEventsTexts(story.phrasesBuilder(15, 2));
-        super.setEventsTexts(story.phrasesBuilder(17, 3));
+        this.dialogue = dialogue;
+        textAndCommands = new String[][]{
+                {phraseSetter(0, 3), phraseSetter(3, 1), phraseSetter(4, 1), phraseSetter(5, 1)},
+                {phraseSetter(6, 1), phraseSetter(7, 1), phraseSetter(8, 1)},
+                {phraseSetter(9, 1), phraseSetter(10, 1), phraseSetter(11, 1)},
+                {phraseSetter(12, 1), phraseSetter(13, 1), phraseSetter(14, 1)},
+                {phraseSetter(15,2)}
+        };
+        dialogue.setKeysToTextsMapAndSetKeysToKeyList(getEventName(), 5);
+        dialogue.addTextsToListInMap(textAndCommands.length, textAndCommands);
     }
 
-    @Override public void printEvent(int index) {System.out.println(getEventsText(index));}
-    @Override public void features(Organism player) {super.features(player);}
-    @Override public String gameScanner(Scanner sc) {return super.gameScanner(sc);}
-    @Override public Organism startEvent(Scanner sc) {
-        printEvent(0);
+    @Override public Organism startGameEvent(Scanner sc) {
+        dialogue.printEventTextAndCommands(0);
         chooseWeapon(sc);
         features(player);
+        try {
+            Thread.sleep(3000);
+            dialogue.printEventWithoutCommands(4);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return this.player;
     }
 
@@ -39,19 +49,19 @@ public class StartGameEvent extends Events{
         String weaponTyped = gameScanner(sc);
         switch (weaponTyped) {
             case "Axe" -> {
-                printEvent(1);
+                this.dialogue.printEventTextAndCommands(1 );
                 weapon = new Weapon("Axe of Strength", 10, 5, Types.WEAPON, 15, 4, 2, 0, 7, WeaponTypes.AXE );}
             case "Staff" -> {
-                printEvent(2);
+                this.dialogue.printEventTextAndCommands(2);;
                 weapon = new Weapon("Wizard Stave", 12, 3, Types.WEAPON, 0, 5, 0, 25, 3, WeaponTypes.STAFF);
             }
             case "Dagger" -> {
-                printEvent(3);
+                this.dialogue.printEventTextAndCommands(3);
                 weapon = new Weapon("Stinger", 9, 2, Types.WEAPON, 2, 3, 10, 10, 5, WeaponTypes.DAGGER );
             }
         }
         chooseSpec(player, weapon, weaponTyped, sc);
-        sc.close();
+        /*sc.close();*/
     }
 
     public String enterName(Scanner sc) {
@@ -86,7 +96,7 @@ public class StartGameEvent extends Events{
                 armorForRogue(player);
             }
         }
-        sc.close();
+        /*sc.close();*/
     }
 
     public void armorForWarrior (Organism player) {
