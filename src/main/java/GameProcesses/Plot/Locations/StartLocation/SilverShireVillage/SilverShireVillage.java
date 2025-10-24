@@ -4,6 +4,7 @@ import main.java.Characters.Organism;
 import main.java.GameProcesses.Plot.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
+import main.java.GameProcesses.Services.GameExceptions;
 import main.java.GameProcesses.Services.StoryReader;
 
 import java.util.Scanner;
@@ -22,7 +23,7 @@ public class SilverShireVillage extends Events {
         this.dialogue = dialogue;
         textAndCommands = new String[][]{
                 {phraseSetter(17, 3), phraseSetter(20, 1), phraseSetter(21, 1), phraseSetter(22, 1), phraseSetter(23, 1)},
-                {phraseSetter(24, 1), phraseSetter(25, 1)},
+                {phraseSetter(24, 1), getSTART_DIALOGUE()},
                 {"StartTavernDialogue", "Tavern"},
                 {"StartSarayEv", "Saray"},
                 {"StartToCrossroads", "Cross"},
@@ -41,7 +42,7 @@ public class SilverShireVillage extends Events {
     }
 
     @Override
-    public void startEvent(Organism player, Scanner sc) {
+    public void startEvent(Organism player, Scanner sc) throws GameExceptions {
         setCurrentEvent(dialogue.getKey(getSTART_EVENT_NUMBER()));
         dialogue.printEventTextAndCommands(getSTART_EVENT_NUMBER());
         setBoyDialogue(player, sc);
@@ -50,7 +51,7 @@ public class SilverShireVillage extends Events {
         eventSwitcher(sc, getCurrentEvent(), player);
     }
 
-    private void eventSwitcher(Scanner sc, String currentEvent, Organism player) {
+    private void eventSwitcher(Scanner sc, String currentEvent, Organism player) throws GameExceptions {
         int i;
         while (isEventActive()) {
             i = Integer.parseInt(gameScanner(sc));

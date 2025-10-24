@@ -2,6 +2,7 @@ package main.java;
 
 import main.java.GameProcesses.Game;
 
+import main.java.GameProcesses.Services.GameExceptions;
 import main.java.GameProcesses.Services.StoryReader;
 
 import java.io.File;
@@ -9,7 +10,7 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, GameExceptions {
         File dir = new File("story");
         File file = new File("story/startPhrases.txt");
         try {

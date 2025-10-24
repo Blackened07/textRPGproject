@@ -6,9 +6,11 @@ import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
 import main.java.GameProcesses.Plot.Locations.StartGameEvent;
 import main.java.GameProcesses.Plot.Locations.StartLocation.SilverShireVillage.SilverShireVillage;
+import main.java.GameProcesses.Services.GameExceptions;
 import main.java.GameProcesses.Services.GameScanner;
 import main.java.GameProcesses.Services.StoryReader;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Game implements GameScanner {
@@ -25,10 +27,10 @@ public class Game implements GameScanner {
         silvershire = new SilverShireVillage("StartVillage", Location.SILVERSHIRE_VILLAGE, story, Dialogue.createDialogue());
     }// new locations, events, npc for location with items
 
-    public void startGame () {
+    public void startGame () throws GameExceptions {
         this.sc = new Scanner(System.in);
-        this.player = startGameEvent.startGameEvent(sc);
-        //choose the way
-        silvershire.startEvent(this.player, sc);
+            this.player = startGameEvent.startGameEvent(sc);
+            silvershire.startEvent(this.player, sc);
+
     }
 }

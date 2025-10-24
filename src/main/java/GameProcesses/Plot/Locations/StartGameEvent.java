@@ -2,6 +2,7 @@ package main.java.GameProcesses.Plot.Locations;
 
 import main.java.Characters.*;
 import main.java.GameProcesses.Plot.Dialogue;
+import main.java.GameProcesses.Services.GameExceptions;
 import main.java.GameProcesses.Services.PrintableInterfaces;
 import main.java.GameProcesses.Services.StoryReader;
 import main.java.Items.Armor.ArmorType;
@@ -32,7 +33,7 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
         dialogue.addTextsToListsInMap(textAndCommands);
     }
 
-    @Override public Organism startGameEvent(Scanner sc) {
+    @Override public Organism startGameEvent(Scanner sc) throws GameExceptions {
         dialogue.printEventTextAndCommands(0);
         chooseWeapon(sc);
         features(player);
@@ -45,17 +46,17 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
         return this.player;
     }
 
-    public void chooseWeapon (Scanner sc) {
-        String weaponTyped = gameScanner(sc);
+    public void chooseWeapon (Scanner sc) throws GameExceptions {
+        int weaponTyped = Integer.parseInt(gameScanner(sc));
         switch (weaponTyped) {
-            case "Axe" -> {
+            case 1 -> {
                 this.dialogue.printEventTextAndCommands(1 );
                 weapon = new Weapon("Axe of Strength", 10, 5, Types.WEAPON, 15, 4, 2, 0, 7, WeaponTypes.AXE );}
-            case "Staff" -> {
+            case 2 -> {
                 this.dialogue.printEventTextAndCommands(2);;
                 weapon = new Weapon("Wizard Stave", 12, 3, Types.WEAPON, 0, 5, 0, 25, 3, WeaponTypes.STAFF);
             }
-            case "Dagger" -> {
+            case 3 -> {
                 this.dialogue.printEventTextAndCommands(3);
                 weapon = new Weapon("Stinger", 9, 2, Types.WEAPON, 2, 3, 10, 10, 5, WeaponTypes.DAGGER );
             }
@@ -68,29 +69,29 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
         System.out.println("Введите имя персонажа: ");
         return sc.nextLine();
     }
-    public void chooseSpec (Organism player, Weapon weapon, String weaponTyped, Scanner sc) {
-        String spec = gameScanner(sc);
+    public void chooseSpec (Organism player, Weapon weapon, int weaponTyped, Scanner sc) throws GameExceptions {
+        int spec = Integer.parseInt(gameScanner(sc));
         switch (weaponTyped) {
-            case "Axe" -> {
+            case 1 -> {
                 switch (spec) {
-                    case "1" -> player = new Player(enterName(sc), 13, 10,5,7,0,10 , GameClass.PALADIN, Inventory.createInventory(), BackPack.createBackPack(), SpellBook.createSpellBook(), weapon);
-                    case "2" -> player = new Player(enterName(sc), 14, 11,5,5,0,10, GameClass.WARRIOR, Inventory.createInventory(), BackPack.createBackPack(), SpellBook.createSpellBook(), weapon );
+                    case 1 -> player = new Player(enterName(sc), 13, 10,5,7,0,10 , GameClass.PALADIN, Inventory.createInventory(), BackPack.createBackPack(), SpellBook.createSpellBook(), weapon);
+                    case 2 -> player = new Player(enterName(sc), 14, 11,5,5,0,10, GameClass.WARRIOR, Inventory.createInventory(), BackPack.createBackPack(), SpellBook.createSpellBook(), weapon );
                 }
                 player.addToInventoryW(weapon);
                 armorForWarrior(player);
             }
-            case "Staff" -> {
+            case 2 -> {
                 switch (spec) {
-                    case "1" -> player = new Player(enterName(sc), 5, 8,5,17,0,10, GameClass.FIRE_MAGE, Inventory.createInventory(), BackPack.createBackPack(), SpellBook.createSpellBook(), weapon);
-                    case "2" -> player = new Player(enterName(sc), 5, 7,5,18,0,10, GameClass.FROST_MAGE, Inventory.createInventory(), BackPack.createBackPack(), SpellBook.createSpellBook(), weapon);
+                    case 1 -> player = new Player(enterName(sc), 5, 8,5,17,0,10, GameClass.FIRE_MAGE, Inventory.createInventory(), BackPack.createBackPack(), SpellBook.createSpellBook(), weapon);
+                    case 2 -> player = new Player(enterName(sc), 5, 7,5,18,0,10, GameClass.FROST_MAGE, Inventory.createInventory(), BackPack.createBackPack(), SpellBook.createSpellBook(), weapon);
                 }
                 player.addToInventoryW(weapon);
                 armorForMage(player);
             }
-            case "Dagger" -> {
+            case 3 -> {
                 switch (spec) {
-                    case "1" -> player = new Player(enterName(sc), 5, 10,15,5,0,10, GameClass.ROGUE, Inventory.createInventory(), BackPack.createBackPack(), SpellBook.createSpellBook(), weapon);
-                    case "2" -> player = new Player(enterName(sc), 5, 8,8,14,0,10, GameClass.NECROMANT, Inventory.createInventory(), BackPack.createBackPack(), SpellBook.createSpellBook(), weapon);
+                    case 1 -> player = new Player(enterName(sc), 5, 10,15,5,0,10, GameClass.ROGUE, Inventory.createInventory(), BackPack.createBackPack(), SpellBook.createSpellBook(), weapon);
+                    case 2 -> player = new Player(enterName(sc), 5, 8,8,14,0,10, GameClass.NECROMANT, Inventory.createInventory(), BackPack.createBackPack(), SpellBook.createSpellBook(), weapon);
                 }
                 player.addToInventoryW(weapon);
                 armorForRogue(player);

@@ -4,6 +4,7 @@ import main.java.Characters.Organism;
 import main.java.GameProcesses.Plot.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
+import main.java.GameProcesses.Services.GameExceptions;
 import main.java.GameProcesses.Services.StoryReader;
 
 import java.util.Scanner;
@@ -35,14 +36,14 @@ public class BoyDialogue extends Events {
     @Override public void setCurrentEvent(String currentEvent) {this.currentEvent = currentEvent;}
 
     @Override
-    public void startEvent(Organism player, Scanner sc) {
+    public void startEvent(Organism player, Scanner sc) throws GameExceptions {
         setCurrentEvent(dialogue.getKey(getSTART_EVENT_NUMBER()));
         dialogue.printEventTextAndCommands(getSTART_EVENT_NUMBER());
         setEventActive(true);
         eventSwitcher(sc, player);
     }
 
-    private void eventSwitcher(Scanner sc, Organism player) {
+    private void eventSwitcher(Scanner sc, Organism player) throws GameExceptions {
         int i;
         while (isEventActive()) {
             i = Integer.parseInt(gameScanner(sc));
@@ -60,7 +61,7 @@ public class BoyDialogue extends Events {
     }
 
     @Override
-    protected int commandParser(int i, int currentEvent, Organism player, Scanner sc) {
+    protected int commandParser(int i, int currentEvent, Organism player, Scanner sc) throws GameExceptions {
         if (currentEvent == getSTART_EVENT_NUMBER()) {
             return i;
         } else if (currentEvent == 1 && i == 1 || currentEvent == 3 && i == 1) {
