@@ -5,7 +5,7 @@ import main.java.GameProcesses.Plot.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
 import main.java.GameProcesses.Plot.Locations.StartGameEvent;
-import main.java.GameProcesses.Plot.Locations.StartLocation.StartVillage;
+import main.java.GameProcesses.Plot.Locations.StartLocation.SilverShireVillage.SilverShireVillage;
 import main.java.GameProcesses.Services.GameScanner;
 import main.java.GameProcesses.Services.StoryReader;
 
@@ -22,7 +22,7 @@ public class Game implements GameScanner {
         this.story = story;
         //сделать метод имитации загрузки
         startGameEvent = new StartGameEvent("StartGame", Location.START_GAME, story, Dialogue.createDialogue());
-        silvershire = new StartVillage("StartVillage", Location.SILVERSHIRE_VILLAGE, story, Dialogue.createDialogue());
+        silvershire = new SilverShireVillage("StartVillage", Location.SILVERSHIRE_VILLAGE, story, Dialogue.createDialogue());
     }// new locations, events, npc for location with items
 
     public void startGame () {

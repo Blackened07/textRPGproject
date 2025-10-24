@@ -29,7 +29,7 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
                 {phraseSetter(15,2)}
         };
         dialogue.setKeysToTextsMapAndSetKeysToKeyList(getEventName(), 5);
-        dialogue.addTextsToListInMap(textAndCommands.length, textAndCommands);
+        dialogue.addTextsToListsInMap(textAndCommands);
     }
 
     @Override public Organism startGameEvent(Scanner sc) {
