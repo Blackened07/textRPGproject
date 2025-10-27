@@ -23,8 +23,8 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
     private final String START_CHOOSE_Spec_3 = "ChooseSpec3";
     private final String GAME_MESSAGE = "GameMessage";
 
-    public StartGameEvent(String eventName, Location LOCATION, StoryReader story, Dialogue dialogue) {
-        super(eventName, LOCATION, story);
+    public StartGameEvent(String eventName, Location LOCATION, Dialogue dialogue) {
+        super(eventName, LOCATION);
         this.dialogue = dialogue;
     }
 

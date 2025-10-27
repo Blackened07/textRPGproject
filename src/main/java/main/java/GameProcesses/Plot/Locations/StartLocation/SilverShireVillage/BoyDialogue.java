@@ -4,6 +4,7 @@ import main.java.Characters.Organism;
 import main.java.GameProcesses.Plot.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
+import main.java.GameProcesses.Services.ConsoleCommands;
 import main.java.GameProcesses.Services.InvalidCommandException;
 import main.java.GameProcesses.Services.StoryReader;
 
@@ -13,17 +14,17 @@ public class BoyDialogue extends Events {
     Dialogue dialogue;
     private Events silverShire;
 
-    public BoyDialogue(String eventName, Location LOCATION, StoryReader story, Dialogue dialogue, Events silverShire) {
-        super(eventName, LOCATION, story);
+    public BoyDialogue(String eventName, Location LOCATION, Dialogue dialogue, Events silverShire) {
+        super(eventName, LOCATION);
         this.dialogue = dialogue;
         this.silverShire = silverShire;
     }
 
     @Override
     public void startEvent(Organism player, Scanner sc) throws InvalidCommandException {
+        setEventActive(true);
         setCurrentEvent(getSTART_EVENT());
         printEventTextAndCommands(getSTART_EVENT(), this.dialogue);
-        setEventActive(true);
         eventSwitcher(sc, player);
     }
     @Override
@@ -33,22 +34,25 @@ public class BoyDialogue extends Events {
 
             userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()));
 
-            if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_1(), userInput)) {
+            if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_1(), this, this.dialogue) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
                 startEvent(player, sc);
             }
-            if (checkCurrentEventAndCommandEqualsForDialogue(getSTART_QUEST(), userInput)) {
+            if (checkCurrentEventAndCommandEqualsForDialogue(getSTART_QUEST(), this, this.dialogue) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
                 System.out.println("Quest Accepted");
                 startEvent(player, sc);
             }
-            if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_2(), userInput)) {
+            if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_2(), this, this.dialogue) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
                 startEvent(player, sc);
             }
-            if (checkCurrentEventAndCommandEqualsForDialogue(getSWITCH_EVENT(), userInput)) {
-                silverShire.startEvent(player, sc);
-                break;
+            if (checkCurrentEventAndCommandEqualsForDialogue(getSTART_EVENT(), this, this.dialogue)) {
+                switch (userInput) {
+                    case 1 -> setCurrentEvent(getPHRASE_1());
+                    case 2 -> setCurrentEvent(getSTART_QUEST());
+                    case 3 -> setCurrentEvent(getPHRASE_2());
+                    case 4 -> silverShire.startEvent(player, sc);
+                }
             }
-            setCurrentEvent(dialogue.getCurrentEventKey(userInput));
-            printEventTextAndCommands(dialogue.getCurrentEventKey(userInput), this.dialogue);
+            printEventTextAndCommands(getCurrentEvent(), this.dialogue);
         }
     }
 

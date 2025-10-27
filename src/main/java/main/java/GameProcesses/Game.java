@@ -22,8 +22,8 @@ public class Game  {
     public Game(StoryReader story) {
         this.story = story;
         //сделать метод имитации загрузки
-        startGameEvent = new StartGameEvent("StartGame", Location.START_GAME, story, new Dialogue(PATH_NAME_START_GAME_EVENT));
-        silverShire = new SilverShireVillage("SilverShireVillage", Location.SILVERSHIRE_VILLAGE, story, new Dialogue(PATH_NAME_SILVERSHIRE_EVENT));
+        startGameEvent = new StartGameEvent("StartGame", Location.START_GAME, new Dialogue(PATH_NAME_START_GAME_EVENT));
+        silverShire = new SilverShireVillage("SilverShireVillage", Location.SILVERSHIRE_VILLAGE, new Dialogue(PATH_NAME_SILVERSHIRE_EVENT));
     }
 
     public void startGame() throws InvalidCommandException {

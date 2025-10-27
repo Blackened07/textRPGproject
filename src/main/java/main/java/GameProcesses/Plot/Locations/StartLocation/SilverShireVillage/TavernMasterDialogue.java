@@ -9,11 +9,9 @@ public class TavernMasterDialogue extends Events {
 
     Dialogue dialogue;
     private String currentEvent;
-    private int k;
-    private StoryReader story;
 
-    public TavernMasterDialogue(String eventName, Location LOCATION, StoryReader story, Dialogue dialogue) {
-        super(eventName, LOCATION, story);
+    public TavernMasterDialogue(String eventName, Location LOCATION, Dialogue dialogue) {
+        super(eventName, LOCATION);
         this.dialogue = dialogue;
     }
 }

@@ -26,39 +26,38 @@ public abstract class Events implements GameScanner {
     private final String PHRASE_2 = "Phrase2";
     private final String EXIT_IN_EVENT = "Выйти";
 
-    public Events(String eventName, Location LOCATION, StoryReader story) {
+    public Events(String eventName, Location LOCATION) {
         this.eventName = eventName;
         this.LOCATION = LOCATION;
-        this.story = story;
     }
     /// WORK WITH VARS
-    public String getSTART_EVENT() {return START_EVENT;}
-    public String getSWITCH_EVENT() {return SWITCH_EVENT;}
-    public String getSTART_DIALOGUE() {return START_DIALOGUE;}
-    public String getEND_DIALOGUE() {return END_DIALOGUE;}
-    public String getSTART_QUEST() {return START_QUEST;}
-    public String getQUEST_COMPLETE() {return QUEST_COMPLETE;}
-    public String getEXIT_IN_EVENT() {return EXIT_IN_EVENT;}
-    public String getSTART_TRADE() {return START_TRADE;}
-    public String getEND_DIALOGUE_WITH_THANKS() {return END_DIALOGUE_WITH_THANKS;}
-    public String getPHRASE_1() {return PHRASE_1;}
-    public String getPHRASE_2() {return PHRASE_2;}
+    protected String getSTART_EVENT() {return START_EVENT;}
+    protected String getSWITCH_EVENT() {return SWITCH_EVENT;}
+    protected String getSTART_DIALOGUE() {return START_DIALOGUE;}
+    protected String getEND_DIALOGUE() {return END_DIALOGUE;}
+    protected String getSTART_QUEST() {return START_QUEST;}
+    protected String getQUEST_COMPLETE() {return QUEST_COMPLETE;}
+    protected String getEXIT_IN_EVENT() {return EXIT_IN_EVENT;}
+    protected String getSTART_TRADE() {return START_TRADE;}
+    protected String getEND_DIALOGUE_WITH_THANKS() {return END_DIALOGUE_WITH_THANKS;}
+    protected String getPHRASE_1() {return PHRASE_1;}
+    protected String getPHRASE_2() {return PHRASE_2;}
 
-    public boolean isEventActive() {return isEventActive;}
-    public void setEventActive(boolean eventActive) {this.isEventActive = eventActive;}
+    protected boolean isEventActive() {return isEventActive;}
+    protected void setEventActive(boolean eventActive) {this.isEventActive = eventActive;}
 
-    public void setCurrentEvent(String s){this.currentEvent = s;};
-    public String getCurrentEvent() {return currentEvent;}
+    protected void setCurrentEvent(String s){this.currentEvent = s;};
+    protected String getCurrentEvent() {return currentEvent;}
 
-    public Dialogue getDialogue() {return dialogue;}
 
     /// METHODS
     public void startEvent(Organism player, Scanner sc) throws InvalidCommandException {};
     public Organism startGameEvent(Scanner sc) throws InvalidCommandException {return player;}
-    protected boolean checkCurrentEventAndCommandEqualsForDialogue(String event, int userInput) {
-        return getCurrentEvent().equals(event) && dialogue.getTextFromMAp(getCurrentEvent(), userInput).equals(event);
+    protected boolean checkCurrentEventAndCommandEqualsForDialogue(String event, Events events, Dialogue dialogue) {
+
+        return events.getCurrentEvent().equals(event);
     }
-    public void printEventTextAndCommands(String key, Dialogue dialogue) {
+    protected void printEventTextAndCommands(String key, Dialogue dialogue) {
         for (int i = 0; i < dialogue.getEventsTextsAndCommands().get(key).size(); i++) {
             System.out.println(dialogue.getEventsTextsAndCommands().get(key).get(i));
         }

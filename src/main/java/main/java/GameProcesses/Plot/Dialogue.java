@@ -20,9 +20,7 @@ public class Dialogue implements PrintableInterfaces {
     public String getCurrentEventKey(int index) {
         return keysCurrentEvent.get(index);
     }
-    public String getTextFromMAp(String key, int index) {
-        return getEventsTextsAndCommands().get(key).get(index);
-    }
+
     public int getInnerListSize(String key) {
         return eventsTextsAndCommands.get(key).size();
     }
