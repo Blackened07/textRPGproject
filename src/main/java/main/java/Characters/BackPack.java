@@ -1,5 +1,6 @@
 package main.java.Characters;
 
+import main.java.Items.Food.Food;
 import main.java.Items.Item;
 
 import java.util.ArrayList;
@@ -18,6 +19,21 @@ public class BackPack {
 
     public static BackPack createBackPack () {
         return new BackPack();
+    }
+
+    public String findItem (Item item) {
+        for (Item i : backPack) {
+            switch (item.getType()) {
+                case FOOD -> {
+                    Food food = (Food) item;
+                    return "Restores " + food.getRESTORES_HEALTH() + " health";
+                }
+                case POTION -> {
+                    return "Potion";
+                }
+            }
+        }
+        return "";
     }
 
 }

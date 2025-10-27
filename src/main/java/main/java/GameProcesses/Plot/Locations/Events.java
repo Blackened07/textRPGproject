@@ -24,6 +24,8 @@ public abstract class Events implements GameScanner {
     private final String END_DIALOGUE_WITH_THANKS = "Thanks";
     private final String PHRASE_1 = "Phrase1";
     private final String PHRASE_2 = "Phrase2";
+    private final String PHRASE_3 = "Phrase3";
+    private final String PHRASE_4 = "Phrase4";
     private final String EXIT_IN_EVENT = "Выйти";
 
     public Events(String eventName, Location LOCATION) {
@@ -42,6 +44,8 @@ public abstract class Events implements GameScanner {
     protected String getEND_DIALOGUE_WITH_THANKS() {return END_DIALOGUE_WITH_THANKS;}
     protected String getPHRASE_1() {return PHRASE_1;}
     protected String getPHRASE_2() {return PHRASE_2;}
+    protected String getPHRASE_3() {return PHRASE_3;}
+    public String getPHRASE_4() {return PHRASE_4;}
 
     protected boolean isEventActive() {return isEventActive;}
     protected void setEventActive(boolean eventActive) {this.isEventActive = eventActive;}
@@ -53,8 +57,7 @@ public abstract class Events implements GameScanner {
     /// METHODS
     public void startEvent(Organism player, Scanner sc) throws InvalidCommandException {};
     public Organism startGameEvent(Scanner sc) throws InvalidCommandException {return player;}
-    protected boolean checkCurrentEventAndCommandEqualsForDialogue(String event, Events events, Dialogue dialogue) {
-
+    protected boolean checkCurrentEventAndCommandEqualsForDialogue(String event, Events events) {
         return events.getCurrentEvent().equals(event);
     }
     protected void printEventTextAndCommands(String key, Dialogue dialogue) {

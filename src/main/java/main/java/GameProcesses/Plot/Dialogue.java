@@ -12,15 +12,10 @@ public class Dialogue implements PrintableInterfaces {
         eventsTextsAndCommands = StoryReader.gsonReader(pathName);
         keysCurrentEvent = eventsTextsAndCommands.keySet()
                 .stream()
-                .sorted()
                 .toList();
     }
 
     public Map<String, List<String>> getEventsTextsAndCommands() {return eventsTextsAndCommands;}
-    public String getCurrentEventKey(int index) {
-        return keysCurrentEvent.get(index);
-    }
-
     public int getInnerListSize(String key) {
         return eventsTextsAndCommands.get(key).size();
     }

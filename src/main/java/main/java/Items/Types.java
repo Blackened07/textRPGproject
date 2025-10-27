@@ -4,5 +4,6 @@ public enum Types {
     WEAPON,
     POTION,
     ARMOR,
+    FOOD,
     EMPTY
 }

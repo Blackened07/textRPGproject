@@ -1,6 +1,7 @@
 package main.java.Characters;
 
 import main.java.Items.Armor.Armors;
+import main.java.Items.Item;
 import main.java.Items.Weapon.Weapon;
 
 public class Organism {
@@ -84,6 +85,7 @@ public class Organism {
     /** BANK */
     public void addToInventoryA(Armors a) {}
     public void addToInventoryW (Weapon w) {}
+    public void addToBackPack(Item item){}
 
     /** EXP AND LEVEL*/
     public int getLevel() {return level;}

@@ -34,17 +34,17 @@ public class BoyDialogue extends Events {
 
             userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()));
 
-            if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_1(), this, this.dialogue) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
+            if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_1(), this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
                 startEvent(player, sc);
             }
-            if (checkCurrentEventAndCommandEqualsForDialogue(getSTART_QUEST(), this, this.dialogue) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
+            if (checkCurrentEventAndCommandEqualsForDialogue(getSTART_QUEST(), this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
                 System.out.println("Quest Accepted");
                 startEvent(player, sc);
             }
-            if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_2(), this, this.dialogue) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
+            if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_2(), this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
                 startEvent(player, sc);
             }
-            if (checkCurrentEventAndCommandEqualsForDialogue(getSTART_EVENT(), this, this.dialogue)) {
+            if (checkCurrentEventAndCommandEqualsForDialogue(getSTART_EVENT(), this)) {
                 switch (userInput) {
                     case 1 -> setCurrentEvent(getPHRASE_1());
                     case 2 -> setCurrentEvent(getSTART_QUEST());

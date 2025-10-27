@@ -20,11 +20,9 @@ public class SilverShireVillage extends Events {
     private final String PATH_NAME_TAVERN_EVENT = "story/SilverShireVillageTavernMasterDialogue.json";
     private Events boyDialogue;
     private Events tavernMasterDialogue;
-    private StoryReader story;
 
     public SilverShireVillage(String eventName, Location LOCATION, Dialogue dialogue) {
         super(eventName, LOCATION);
-        this.story = story;
         this.dialogue = dialogue;
     }
 
@@ -48,20 +46,20 @@ public class SilverShireVillage extends Events {
 
             userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()));
 
-            if (checkCurrentEventAndCommandEqualsForDialogue(START_BOY_DIALOGUE,this, this.dialogue) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
+            if (checkCurrentEventAndCommandEqualsForDialogue(START_BOY_DIALOGUE,this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
                 setEventActive(false);
                 boyDialogue.startEvent(player, sc);
                 break;
             }
-            if (checkCurrentEventAndCommandEqualsForDialogue(START_TAVERN_MASTER_DIALOGUE, this, this.dialogue) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
+            if (checkCurrentEventAndCommandEqualsForDialogue(START_TAVERN_MASTER_DIALOGUE, this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
                 setEventActive(false);
                 tavernMasterDialogue.startEvent(player, sc);
                 break;
             }
-            if (checkCurrentEventAndCommandEqualsForDialogue(START_SARAY_EVENT, this, this.dialogue) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
+            if (checkCurrentEventAndCommandEqualsForDialogue(START_SARAY_EVENT, this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
                 startEvent(player, sc);
             }
-            if (checkCurrentEventAndCommandEqualsForDialogue(getSWITCH_EVENT(), this, this.dialogue)) {
+            if (checkCurrentEventAndCommandEqualsForDialogue(getSWITCH_EVENT(), this)) {
                 switch (userInput) {
                     case 1 -> {
                         System.out.println("North");
@@ -76,7 +74,7 @@ public class SilverShireVillage extends Events {
                     case 4 -> {startEvent(player, sc);}
                 }
             }
-            if (checkCurrentEventAndCommandEqualsForDialogue(getSTART_EVENT(), this, this.dialogue)) {
+            if (checkCurrentEventAndCommandEqualsForDialogue(getSTART_EVENT(), this)) {
                 switch (userInput) {
                     case 1 -> setCurrentEvent(START_BOY_DIALOGUE);
                     case 2 -> setCurrentEvent(START_TAVERN_MASTER_DIALOGUE);
@@ -93,7 +91,7 @@ public class SilverShireVillage extends Events {
         boyDialogue = new BoyDialogue("BoyDialogue", Location.SILVERSHIRE_VILLAGE, new Dialogue(PATH_NAME_BOY_EVENT), this);
     }
     private void setTavernMasterDialogue() {
-        tavernMasterDialogue = new TavernMasterDialogue("TavernMasterDialogue", Location.SILVERSHIRE_VILLAGE, new Dialogue(PATH_NAME_TAVERN_EVENT));
+        tavernMasterDialogue = new TavernMasterDialogue("TavernMasterDialogue", Location.SILVERSHIRE_VILLAGE, new Dialogue(PATH_NAME_TAVERN_EVENT), this);
     }
 
 

@@ -59,6 +59,7 @@ public class Player extends Organism implements StatsCalculator {
         inventory.addToInventoryW(w);
         System.out.println("You receive item: " + w + " " + w.getFeatures());
     }
+
     public void changeWeapon(Weapon weapon) {
         addToBackPack(this.weapon);
         setWeapon(weapon);
@@ -67,12 +68,11 @@ public class Player extends Organism implements StatsCalculator {
 
     public void addToBackPack(Item item) {
         backPack.addToBackPack(item);
+        System.out.println("You receive item: " + item);
     }
 
     public void addToSpellBook(Spell spell) {
         spellBook.addToSpellBook(spell);
     }
-
-
 
 }
