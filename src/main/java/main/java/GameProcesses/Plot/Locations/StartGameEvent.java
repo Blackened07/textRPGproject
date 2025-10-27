@@ -2,6 +2,7 @@ package main.java.GameProcesses.Plot.Locations;
 
 import main.java.Characters.*;
 import main.java.GameProcesses.Plot.Dialogue;
+import main.java.GameProcesses.Services.InvalidCommandException;
 import main.java.GameProcesses.Services.PrintableInterfaces;
 import main.java.GameProcesses.Services.StoryReader;
 import main.java.Items.Armor.ArmorType;
@@ -17,34 +18,24 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
     Weapon weapon;
     Organism player;
     Dialogue dialogue;
-    private final String START = "StartEvent";
+    private final String START_CHOOSE_Spec_1 = "ChooseSpec1";
+    private final String START_CHOOSE_Spec_2 = "ChooseSpec2";
+    private final String START_CHOOSE_Spec_3 = "ChooseSpec3";
+    private final String GAME_MESSAGE = "GameMessage";
 
     public StartGameEvent(String eventName, Location LOCATION, StoryReader story, Dialogue dialogue) {
         super(eventName, LOCATION, story);
         this.dialogue = dialogue;
-
-        /*textAndCommands = new String[][]{
-                {phraseSetter(0, 3), phraseSetter(3, 1), phraseSetter(4, 1), phraseSetter(5, 1)},
-                {phraseSetter(6, 1), phraseSetter(7, 1), phraseSetter(8, 1)},
-                {phraseSetter(9, 1), phraseSetter(10, 1), phraseSetter(11, 1)},
-                {phraseSetter(12, 1), phraseSetter(13, 1), phraseSetter(14, 1)},
-                {phraseSetter(15,2)}
-        };
-        dialogue.setKeysToTextsMapAndSetKeysToKeyList(getEventName(), 5);
-        dialogue.addTextsToListsInMap(textAndCommands);*/
-
     }
 
     @Override public Organism startGameEvent(Scanner sc) {
-        /*dialogue.printEventTextAndCommands(getSTART_EVENT_NUMBER());*/
-        dialogue.printJson(START);
+        printEventTextAndCommands(getSTART_EVENT(), this.dialogue);
         chooseWeapon(sc);
-
         try {
             Thread.sleep(2500);
             features(player);
             Thread.sleep(2500);
-            dialogue.printEventWithoutCommands(4);
+            printEventTextAndCommands(GAME_MESSAGE, this.dialogue);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -52,17 +43,17 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
     }
 
     public void chooseWeapon (Scanner sc) {
-        int weaponTyped = gameScanner(sc, dialogue.getInnerListSize(getSTART_EVENT_NUMBER()));
+        int weaponTyped = gameScanner(sc, dialogue.getInnerListSize(getSTART_EVENT()));
         switch (weaponTyped) {
             case 1 -> {
-                this.dialogue.printEventTextAndCommands(1 );
+                printEventTextAndCommands(START_CHOOSE_Spec_1, this.dialogue);
                 weapon = new Weapon("Axe of Strength", 10, 5, Types.WEAPON, 15, 4, 2, 0, 7, WeaponTypes.AXE );}
             case 2 -> {
-                this.dialogue.printEventTextAndCommands(2);;
+                printEventTextAndCommands(START_CHOOSE_Spec_2, this.dialogue);;
                 weapon = new Weapon("Wizard Stave", 12, 3, Types.WEAPON, 0, 5, 0, 25, 3, WeaponTypes.STAFF);
             }
             case 3 -> {
-                this.dialogue.printEventTextAndCommands(3);
+                printEventTextAndCommands(START_CHOOSE_Spec_3, this.dialogue);
                 weapon = new Weapon("Stinger", 9, 2, Types.WEAPON, 2, 3, 10, 10, 5, WeaponTypes.DAGGER );
             }
         }
@@ -74,7 +65,7 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
         return sc.nextLine();
     }
     public void chooseSpec (Organism player, Weapon weapon, int weaponTyped, Scanner sc) {
-        int spec = gameScanner(sc, dialogue.getInnerListSize(3));
+        int spec = gameScanner(sc, dialogue.getInnerListSize(START_CHOOSE_Spec_3));
         switch (weaponTyped) {
             case 1 -> {
                 switch (spec) {
@@ -124,5 +115,4 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
         player.addToInventoryA(new Armors("Spider Boots", 12, 10, Types.ARMOR, 0, 0, 0,0, ArmorType.LEATHER, SlotType.FEET));
         this.player = player;
     }
-
 }

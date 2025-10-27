@@ -11,74 +11,45 @@ import java.util.Scanner;
 
 public class BoyDialogue extends Events {
     Dialogue dialogue;
-    private String currentEvent;
-    private int k;
     private Events silverShire;
 
     public BoyDialogue(String eventName, Location LOCATION, StoryReader story, Dialogue dialogue, Events silverShire) {
         super(eventName, LOCATION, story);
         this.dialogue = dialogue;
         this.silverShire = silverShire;
-
-        textAndCommands = new String[][]{
-                {phraseSetter(26, 1), phraseSetter(27, 1), phraseSetter(28, 1), phraseSetter(29, 1), phraseSetter(30, 1)},
-                {phraseSetter(31, 1), phraseSetter(32, 1)},
-                {phraseSetter(33, 2), phraseSetter(35, 1)},
-                {phraseSetter(36, 1), phraseSetter(37, 1)},
-                {phraseSetter(38, 2), phraseSetter(40, 1)}     // q complete
-        };
-                dialogue.setKeysToTextsMapAndSetKeysToKeyList(getEventName(), textAndCommands.length);
-                dialogue.addTextsToListsInMap(textAndCommands);
-
     }
-/*
-    @Override
-    protected String phraseSetter(int textIndex, int commandIndex) {
-        return story.phrasesBuilder(textIndex, commandIndex);
-    }*/
-
-    public String getCurrentEvent() {return currentEvent;}
-    @Override public void setCurrentEvent(String currentEvent) {this.currentEvent = currentEvent;}
 
     @Override
     public void startEvent(Organism player, Scanner sc) throws InvalidCommandException {
-        setCurrentEvent(dialogue.getKey(getSTART_EVENT_NUMBER()));
-        dialogue.printEventTextAndCommands(getSTART_EVENT_NUMBER());
+        setCurrentEvent(getSTART_EVENT());
+        printEventTextAndCommands(getSTART_EVENT(), this.dialogue);
         setEventActive(true);
         eventSwitcher(sc, player);
     }
-
-    private void eventSwitcher(Scanner sc, Organism player) throws InvalidCommandException {
-        int i;
+    @Override
+    protected void eventSwitcher(Scanner sc, Organism player) throws InvalidCommandException {
+        int userInput = 0;
         while (isEventActive()) {
-            i = gameScanner(sc, dialogue.getInnerListSize(getEventNumber(getCurrentEvent())));
-            k = commandParser(i, getEventNumber(getCurrentEvent()), player, sc);
-            if (getEventNumber(getCurrentEvent()) == 0 && k == 4) {
-                setCurrentEvent(dialogue.getKey(getSTART_EVENT_NUMBER()));
-                setEventActive(false);
+
+            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()));
+
+            if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_1(), userInput)) {
+                startEvent(player, sc);
+            }
+            if (checkCurrentEventAndCommandEqualsForDialogue(getSTART_QUEST(), userInput)) {
+                System.out.println("Quest Accepted");
+                startEvent(player, sc);
+            }
+            if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_2(), userInput)) {
+                startEvent(player, sc);
+            }
+            if (checkCurrentEventAndCommandEqualsForDialogue(getSWITCH_EVENT(), userInput)) {
                 silverShire.startEvent(player, sc);
                 break;
             }
-            setCurrentEvent(dialogue.getKey(k));
-            dialogue.printEventTextAndCommands(k);
-            setK();
+            setCurrentEvent(dialogue.getCurrentEventKey(userInput));
+            printEventTextAndCommands(dialogue.getCurrentEventKey(userInput), this.dialogue);
         }
     }
 
-    @Override
-    protected int commandParser(int i, int currentEvent, Organism player, Scanner sc) throws InvalidCommandException {
-        if (currentEvent == getSTART_EVENT_NUMBER()) {
-            return i;
-        } else if (currentEvent == 1 && i == 1 || currentEvent == 3 && i == 1) {
-            startEvent(player, sc);
-        } else if (currentEvent == 2 && i == 1) {
-            System.out.println("Quest accepted");
-            startEvent(player, sc);
-        } else if (currentEvent == 0 && i == 4) {
-            return 0;
-        }
-        return -1;
-    }
-
-    public void setK() {this.k = 0;}
 }
