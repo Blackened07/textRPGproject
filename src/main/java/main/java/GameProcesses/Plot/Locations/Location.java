@@ -4,6 +4,6 @@ public enum Location {
     START_GAME,
     SILVERSHIRE_VILLAGE,
     CROSSROADS,
-    MILL
-
+    MILL,
+    LAKE_SILVER
 }

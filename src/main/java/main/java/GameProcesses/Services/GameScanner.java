@@ -12,10 +12,14 @@ public interface GameScanner {
         int userCommand;
         while (true) {
             try {
-                String userText = sc.nextLine().replaceAll(NON_DIGITS_PATTERN, "");
+                String userText = sc.nextLine();
+                if (userText.equals("/buy")) return -25;
+                if (userText.equals("/trade")) return -50;
+                if (userText.equals("/exitTrade")) return 75;
+                userText = userText.replaceAll(NON_DIGITS_PATTERN, "");
                 if (userText.isEmpty()) throw new InvalidCommandException("Вы ввели: '" + userText + "'! Введите числовое значение!");
                 userCommand = Integer.parseInt(userText.replaceAll(NON_DIGITS_PATTERN, ""));
-                if (userCommand > innerList)
+                if (userCommand > innerList || userCommand == 0)
                     throw new InvalidCommandException("Вы ввели: '" + userCommand + "'! Некорректный номер команды!");
                 return userCommand;
             } catch (InvalidCommandException exceptions) {
@@ -24,4 +28,5 @@ public interface GameScanner {
         }
 
     }
+
 }

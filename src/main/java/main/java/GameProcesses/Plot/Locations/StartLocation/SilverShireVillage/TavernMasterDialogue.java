@@ -8,21 +8,27 @@ import main.java.GameProcesses.Services.ConsoleCommands;
 import main.java.GameProcesses.Services.InvalidCommandException;
 import main.java.GameProcesses.Services.StoryReader;
 import main.java.Items.Food.Food;
+import main.java.Items.Item;
 import main.java.Items.Types;
 
 import java.util.Scanner;
 
 public class TavernMasterDialogue extends Events {
 
-    Dialogue dialogue;
-    Events silverShire;
-    private String currentEvent;
+    private Dialogue dialogue;
+    private Events silverShire;
+    private Organism tavernMaster;
+    private boolean checkPie;
+    private final String AFTER_PIE_EVENT = "Phrase2 - 2";
 
-    public TavernMasterDialogue(String eventName, Location LOCATION, Dialogue dialogue, Events silverShire) {
+    public TavernMasterDialogue(String eventName, Location LOCATION, Dialogue dialogue, Events silverShire, Organism tavernMaster) {
         super(eventName, LOCATION);
         this.dialogue = dialogue;
         this.silverShire = silverShire;
+        this.tavernMaster = tavernMaster;
     }
+
+    public void setCheckPie(boolean checkPie) {this.checkPie = checkPie;}
 
     @Override
     public void startEvent(Organism player, Scanner sc) throws InvalidCommandException {
@@ -34,7 +40,7 @@ public class TavernMasterDialogue extends Events {
 
     @Override
     protected void eventSwitcher(Scanner sc, Organism player) throws InvalidCommandException {
-        int userInput = 0;
+        int userInput;
 
         while (isEventActive()) {
             userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()));
@@ -42,14 +48,21 @@ public class TavernMasterDialogue extends Events {
             if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_2(), this)) {
                 switch (userInput) {
                     case 1 ->{
-                        player.addToBackPack(new Food("ApplePie", 2, 1, Types.FOOD, 16.7f));
+                        player.addToBackPack(tavernMaster.getFromBackPack( "ApplePie"));
+                        setCheckPie(true);
                         startEvent(player, sc);
                     }
                     case 2 -> startEvent(player, sc);
                 }
             }
-            if (checkCurrentEventAndCommandEqualsForDialogue(getSTART_TRADE(), this)) {
-                System.out.println("Trade Interface");
+            if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_5(), this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
+                startEvent(player, sc);
+            }
+            if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_6(), this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0] ) {
+                startEvent(player, sc);
+            }
+            if (checkCurrentEventAndCommandEqualsForDialogue(AFTER_PIE_EVENT, this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
+                startEvent(player, sc);
             }
             if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_4(), this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
                 startEvent(player, sc);
@@ -66,14 +79,21 @@ public class TavernMasterDialogue extends Events {
             if (checkCurrentEventAndCommandEqualsForDialogue(getSTART_EVENT(), this)) {
                 switch (userInput) {
                     case 1 -> setCurrentEvent(getPHRASE_1());
-                    case 2 -> setCurrentEvent(getPHRASE_2());
-                    case 3 -> System.out.println("Trade Interface");
-                    case 4 -> silverShire.startEvent(player, sc);
+                    case 2 -> {
+                        if (checkPie) {
+                            setCurrentEvent(AFTER_PIE_EVENT);
+                        }
+                        else setCurrentEvent(getPHRASE_2());
+                    }
+                    case 3 -> {setCurrentEvent(getPHRASE_5());}
+                    case 4 -> {setCurrentEvent(getPHRASE_6());}
+                    case 5 -> {
+                        trade(player, tavernMaster, sc, this);
+                    }
+                    case 6 -> silverShire.startEvent(player, sc);
                 }
             }
-            System.out.println(getCurrentEvent() + " " + userInput);
             printEventTextAndCommands(getCurrentEvent(), this.dialogue);
-
         }
     }
 }

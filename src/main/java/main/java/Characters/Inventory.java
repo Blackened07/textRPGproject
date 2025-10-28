@@ -14,9 +14,6 @@ public class Inventory {
         this.inventoryA = new HashSet<>();
         this.inventoryW = new HashSet<>();
     }
-    public static Inventory createInventory () {
-        return new Inventory();
-    }
 
     public void addToInventoryA(Armors armor) {
         inventoryA.add(armor);

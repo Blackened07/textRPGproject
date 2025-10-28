@@ -12,12 +12,12 @@ public class Player extends Organism implements StatsCalculator {
     BackPack backPack;
     SpellBook spellBook;
 
-    public Player(String name, float strength, float stamina, float agility, float intellect, int experience, int gold, GameClass gameClass, Inventory inventory, BackPack backPack, SpellBook spellBook, Weapon weapon) {
+    public Player(String name, float strength, float stamina, float agility, float intellect, int experience, int gold, GameClass gameClass, Weapon weapon) {
         super(name, strength, stamina, agility, intellect, experience, gold);
         this.gameClass = gameClass;
-        this.inventory = inventory;
-        this.backPack = backPack;
-        this.spellBook = spellBook;
+        this.inventory = new Inventory();
+        this.backPack = new BackPack();
+        this.spellBook = new SpellBook();
         this.weapon = weapon;
     }
     /** BASE STATS */
@@ -50,15 +50,6 @@ public class Player extends Organism implements StatsCalculator {
     private void setWeapon(Weapon weapon) {
         this.weapon = weapon;
     }
-    /** BUSINESS*/
-    public void addToInventoryA(Armors a) {
-        inventory.addToInventoryA(a);
-        System.out.println("You receive item: " + a + " " + a.getFeatures());
-    }
-    public void addToInventoryW(Weapon w) {
-        inventory.addToInventoryW(w);
-        System.out.println("You receive item: " + w + " " + w.getFeatures());
-    }
 
     public void changeWeapon(Weapon weapon) {
         addToBackPack(this.weapon);
@@ -66,9 +57,53 @@ public class Player extends Organism implements StatsCalculator {
         addToInventoryW(weapon);
     }
 
+    /** BUSINESS*/
+    public void addToInventoryA(Armors a) {
+        inventory.addToInventoryA(a);
+        System.out.println("\nYou receive item: " + a + " " + a.getFeatures());
+    }
+    public void addToInventoryW(Weapon w) {
+        inventory.addToInventoryW(w);
+        System.out.println("\nYou receive item: " + w + " " + w.getFeatures());
+    }
+
     public void addToBackPack(Item item) {
         backPack.addToBackPack(item);
-        System.out.println("You receive item: " + item);
+        System.out.println("\nYou receive item: " + item + "\n");
+    }
+    @Override
+    public String findItemCanRestore(Item item) {
+        return backPack.findItemCanRestore(item);
+    }
+    public boolean findItemWithName (String name) {
+        return backPack.findItemWithName(name);
+    }
+    @Override
+    public String showItemsFromBackPack() {
+        StringBuilder sb;
+        sb = backPack.showAllItems().append("\nВаше золото: ").append(getGold());
+        return sb.toString();
+    }
+    @Override
+    public Item getFromBackPack(String name) {
+        return backPack.getFromBackPack(name);
+    }
+    @Override
+    public Item getFromBackPackWithIndex(int index) {
+        return backPack.getFromBackPack(index);
+    }
+    @Override
+    public int getSize() {
+        return backPack.getSize();
+    }
+    @Override
+    public void setGold(int gold) {
+        super.setGold(gold);
+    }
+
+    @Override
+    public void removeFromBAckPack(int index) {
+        backPack.remove(index);
     }
 
     public void addToSpellBook(Spell spell) {

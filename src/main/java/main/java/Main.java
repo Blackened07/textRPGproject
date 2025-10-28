@@ -4,7 +4,6 @@ import main.java.GameProcesses.Game;
 import main.java.GameProcesses.Services.InvalidCommandException;
 import main.java.GameProcesses.Services.StoryReader;
 
-
 public class Main {
 
     public static void main(String[] args) throws InvalidCommandException {

@@ -81,11 +81,24 @@ public class Organism {
 
     /** ECONOMY */
     public int getGold() {return gold;}
+    public void setGold(int gold) {this.gold += gold;}
+
+    public void setGoldAfterTrade(int gold) {
+        if (getGold() < gold) setGold(0);
+        else setGold(gold);
+    }
 
     /** BANK */
     public void addToInventoryA(Armors a) {}
     public void addToInventoryW (Weapon w) {}
     public void addToBackPack(Item item){}
+    public Item getFromBackPack (String name) {return null;}
+    public Item getFromBackPackWithIndex (int index) {return null;}
+    public boolean findItemWithName(String name) {return false;}
+    public String findItemCanRestore(Item item){return "";}
+    public String showItemsFromBackPack() {return "";}
+    public int getSize(){return 0;}
+    public void removeFromBAckPack(int index){}
 
     /** EXP AND LEVEL*/
     public int getLevel() {return level;}

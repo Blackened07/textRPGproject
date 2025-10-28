@@ -11,4 +11,8 @@ public interface PrintableInterfaces {
                 + "\nИнтеллект: " + player.getIntellect() + "\nСила Атаки: " + player.getAttackPower() + "\nСкорость Атаки: " + player.getAttackSpeed()
                 + "\nУклонение: " + player.getEvasion() + "\nСила Заклинаний: " + player.getSpellPower() + "\nСопротивление магии: " + player.getSpellResistance());
     }
+
+    default void print (String text) {
+        System.out.println("Game message: " + text.toUpperCase());
+    }
 }

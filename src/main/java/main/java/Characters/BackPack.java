@@ -17,11 +17,7 @@ public class BackPack {
         backPack.add(item);
     }
 
-    public static BackPack createBackPack () {
-        return new BackPack();
-    }
-
-    public String findItem (Item item) {
+    public String findItemCanRestore(Item item) {
         for (Item i : backPack) {
             switch (item.getType()) {
                 case FOOD -> {
@@ -31,9 +27,40 @@ public class BackPack {
                 case POTION -> {
                     return "Potion";
                 }
+
             }
         }
         return "";
     }
+    public boolean findItemWithName (String name) {
+        for (Item i : backPack) {
+            if (i.getName().equals(name)) return true;
+        }
+        return false;
+    }
+    public Item getFromBackPack(String name) {
+        for (Item i : backPack) {
+            if (i.getName().equals(name)) return i;
+        }
+        return null;
+    }
+    public Item getFromBackPack(int index) {
+        return backPack.get(index);
+    }
+    public void remove(int index) {
+        backPack.remove(index);
+    }
 
+    public StringBuilder showAllItems() {
+        StringBuilder sb = new StringBuilder();
+        int count;
+        for (int i = 0; i < backPack.size(); i++) {
+            count = i + 1;
+            sb.append(count).append(" - ").append(backPack.get(i).getName()).append(" цена: ").append(backPack.get(i).getCost()).append("\n");
+        }
+        return sb;
+    }
+    public int getSize() {
+        return backPack.size();
+    }
 }

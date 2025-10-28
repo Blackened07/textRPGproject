@@ -15,7 +15,4 @@ public class SpellBook {
     public void addToSpellBook(Spell spell) {
         spellBook.add(spell);
     }
-    public static SpellBook createSpellBook () {
-        return new SpellBook();
-    }
 }
