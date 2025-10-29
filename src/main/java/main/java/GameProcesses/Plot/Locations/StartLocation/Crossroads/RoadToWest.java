@@ -39,7 +39,7 @@ public class RoadToWest extends Events {
         int userInput;
 
         while (isEventActive()) {
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()));
+            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player);
             switch (userInput) {
                 case 1 -> System.out.println("Город - городские ворота");
                 case 2 -> System.out.println("Река Ивент перейти реку");

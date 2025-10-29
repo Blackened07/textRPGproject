@@ -43,7 +43,7 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
     }
 
     public void chooseWeapon (Scanner sc) {
-        int weaponTyped = gameScanner(sc, dialogue.getInnerListSize(getSTART_EVENT()));
+        int weaponTyped = gameScanner(sc, dialogue.getInnerListSize(getSTART_EVENT()), player);
         switch (weaponTyped) {
             case 1 -> {
                 printEventTextAndCommands(START_CHOOSE_Spec_1, this.dialogue);
@@ -65,7 +65,7 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
         return sc.nextLine();
     }
     public void chooseSpec (Organism player, Weapon weapon, int weaponTyped, Scanner sc) {
-        int spec = gameScanner(sc, dialogue.getInnerListSize(START_CHOOSE_Spec_3));
+        int spec = gameScanner(sc, dialogue.getInnerListSize(START_CHOOSE_Spec_3), player);
         switch (weaponTyped) {
             case 1 -> {
                 switch (spec) {

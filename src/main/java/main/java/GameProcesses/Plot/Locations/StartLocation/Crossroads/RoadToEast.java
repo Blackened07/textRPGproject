@@ -31,7 +31,7 @@ public class RoadToEast extends Events {
         int userInput;
 
         while (isEventActive()) {
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()));
+            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player);
             switch (userInput) {
                 case 1 -> System.out.println("Иди дальше - развилка север - хайлвл лесболото, восток - болото + кладбище, юг - путь к побережью мидл лвл");
                 case 2 -> System.out.println("Загадка-квест");

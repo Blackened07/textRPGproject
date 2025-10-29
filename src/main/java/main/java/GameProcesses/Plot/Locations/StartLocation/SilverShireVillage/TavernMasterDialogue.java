@@ -43,7 +43,7 @@ public class TavernMasterDialogue extends Events {
         int userInput;
 
         while (isEventActive()) {
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()));
+            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player);
 
             if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_2(), this)) {
                 switch (userInput) {

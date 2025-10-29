@@ -32,7 +32,7 @@ public class BoyDialogue extends Events {
         int userInput = 0;
         while (isEventActive()) {
 
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()));
+            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player);
 
             if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_1(), this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
                 startEvent(player, sc);

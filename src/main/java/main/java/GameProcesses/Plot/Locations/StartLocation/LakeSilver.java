@@ -34,7 +34,7 @@ public class LakeSilver extends Events {
         int userInput;
 
         while (isEventActive()) {
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()));
+            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player);
 
             switch (userInput) {
                 case 1 -> mill.startEvent(player, sc);

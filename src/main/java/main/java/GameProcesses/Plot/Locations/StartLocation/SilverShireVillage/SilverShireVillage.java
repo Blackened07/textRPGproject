@@ -54,7 +54,7 @@ public class SilverShireVillage extends Events {
         int userInput;
         while (isEventActive()) {
 
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()));
+            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player);
 
             if (checkCurrentEventAndCommandEqualsForDialogue(START_BOY_DIALOGUE,this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
                 setEventActive(false);
