@@ -18,6 +18,7 @@ public interface GameScanner {
                 if (userText.equals("/buy")) return -25;
                 if (userText.equals("/trade")) return -50;
                 if (userText.equals("/exitTrade")) return -75;
+                if (userText.equals("/use")) return -2;
                 userText = userText.replaceAll(NON_DIGITS_PATTERN, "");
                 if (userText.isEmpty()) throw new InvalidCommandException("Вы ввели: '" + userText + "'! Введите числовое значение!");
                 userCommand = Integer.parseInt(userText.replaceAll(NON_DIGITS_PATTERN, ""));

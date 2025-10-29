@@ -60,7 +60,7 @@ public class Armors extends Item implements Features{
     public ArmorType getArmorType() {
         return armorType;
     }
-
+    @Override
     public SlotType getSlotType() {
         return slotType;
     }

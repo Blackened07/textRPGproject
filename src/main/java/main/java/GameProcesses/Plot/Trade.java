@@ -18,7 +18,7 @@ public interface Trade extends PrintableInterfaces, GameScanner {
 
         while (!tradeActive) {
 
-            System.out.println(npc.showItemsFromBackPack() + "\n" + line + "\n" + player.showItemsFromBackPack());
+            System.out.println(npc.showItemsFromBackPackForTrade() + "\n" + line + "\n" + player.showItemsFromBackPackForTrade());
 
             userInputForOperation = gameScanner(sc, npc.getSize(), player) - 1;
 

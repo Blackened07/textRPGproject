@@ -1,6 +1,7 @@
 package main.java.Items;
 
 import main.java.Items.Armor.Features;
+import main.java.Items.Armor.SlotType;
 
 public class Item implements Features {
     private final String name;
@@ -19,18 +20,17 @@ public class Item implements Features {
     public String getFeatures() {
         return "";
     }
-
     public String getName() {
         return name;
     }
-
     public Types getType() {
         return type;
     }
-
     public int getCost() {return cost;}
-
     public int getWeight() {return weight;}
+    public float[] getAllStats() {return null;}
+    public float getAttackPower(){return 0;};
+    public SlotType getSlotType(){return null;}
 
     @Override
     public String toString() {

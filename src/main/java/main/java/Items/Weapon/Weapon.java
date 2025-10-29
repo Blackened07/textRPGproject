@@ -21,28 +21,22 @@ public class Weapon extends Item implements Attack {
         this.weaponTypes = weaponTypes;
     }
 
-    public float getAttackPower() {
+    @Override public float getAttackPower() {
         return attackPower;
     }
-
     public float getStrength() {
         return strength;
     }
-
     public float getStamina() {
         return stamina;
     }
-
     public float getAgility() {
         return agility;
     }
-
     public float getIntellect() {
         return intellect;
     }
-    public float[] getAllStats() {
-        return new float[]{getStrength(), getStamina(), getAgility(), getIntellect()};
-    }
+    @Override public float[] getAllStats() {return new float[]{getStrength(), getStamina(), getAgility(), getIntellect()};}
 
     @Override
     public float attack() {

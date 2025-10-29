@@ -5,11 +5,21 @@ public interface StatsCalculator {
     int STAMINA_INDEX = 1;
     int AGILITY_INDEX = 2;
     int INTELLECT_INDEX = 3;
+    int SUM_OF_ALL_ITEMS = 7;
+    int SUM_OF_ALL_STATS = 4;
+    int HEAD_INDEX = 0;
+    int BACK_INDEX = 1;
+    int CHEST_INDEX = 2;
+    int SHOULDERS_INDEX = 3;
+    int HANDS_INDEX = 4;
+    int LEGS_INDEX = 5;
+    int FEET_INDEX = 6;
     float WEIGHT_COEFFICIENT = 2.9f;
-    default float getStat(Inventory inventory, int statIndex) {
-        return inventory.getWeaponFeatures(statIndex) + inventory.getArmorFeatures(0, statIndex) + inventory.getArmorFeatures(1, statIndex) + inventory.getArmorFeatures(2, statIndex)
-                +  inventory.getArmorFeatures(3, statIndex) + inventory.getArmorFeatures(4, statIndex) + inventory.getArmorFeatures(5, statIndex)
-                + inventory.getArmorFeatures(6, statIndex);
+
+    default float getStat(Equipment inventory, int statIndex) {
+        return inventory.getWeaponFeatures(statIndex) + inventory.getArmorFeatures(HEAD_INDEX, statIndex) + inventory.getArmorFeatures(BACK_INDEX, statIndex) + inventory.getArmorFeatures(CHEST_INDEX, statIndex)
+                +  inventory.getArmorFeatures(SHOULDERS_INDEX, statIndex) + inventory.getArmorFeatures(HANDS_INDEX, statIndex) + inventory.getArmorFeatures(LEGS_INDEX, statIndex)
+                + inventory.getArmorFeatures(FEET_INDEX, statIndex);
     }
     default boolean getWeightByStrength (float strength, int weight) {
         return !(strength  < weight);

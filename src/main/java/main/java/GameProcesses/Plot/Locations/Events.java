@@ -4,10 +4,11 @@ import main.java.Characters.Organism;
 import main.java.GameProcesses.Plot.Dialogue;
 import main.java.GameProcesses.Plot.Trade;
 import main.java.GameProcesses.Services.*;
+import main.java.GameProcesses.Services.UseItemsFromBackPack;
 
 import java.util.*;
 
-public abstract class Events implements GameScanner, PrintableInterfaces, Trade {
+public abstract class Events implements GameScanner, PrintableInterfaces, Trade, UseItemsFromBackPack {
     private final String eventName;
     private final Location LOCATION;
     private String currentEvent;

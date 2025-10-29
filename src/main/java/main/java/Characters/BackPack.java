@@ -2,7 +2,9 @@ package main.java.Characters;
 
 import main.java.Items.Food.Food;
 import main.java.Items.Item;
+import main.java.Items.Types;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +58,7 @@ public class BackPack {
                 sum();
     }
 
-    public StringBuilder showAllItems(Organism o) {
+    public StringBuilder showAllItemsForTrade(Organism o) {
         StringBuilder sb = new StringBuilder("Товар " + o.getNAME() + "'a\n");
         int count;
         for (int i = 0; i < backPack.size(); i++) {
@@ -68,7 +70,23 @@ public class BackPack {
         }
         return sb;
     }
+    public StringBuilder showAllItems() {
+        StringBuilder sb = new StringBuilder();
+        int count;
+        for (int i = 0; i < backPack.size(); i++) {
+            count = i + 1;
+            sb.append(count).
+                    append(" - ").append(backPack.get(i).getName()).
+                    append(": цена - ").append(backPack.get(i).getCost()).
+                    append("; вес - ").append(backPack.get(i).getWeight()).append("\n");
+        }
+        return sb;
+    }
+
     public int getSize() {
         return backPack.size();
+    }
+    public Types getItemType (int index) {
+        return backPack.get(index).getType();
     }
 }

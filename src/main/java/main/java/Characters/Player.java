@@ -1,14 +1,14 @@
 package main.java.Characters;
 
-import main.java.Items.Armor.Armors;
 import main.java.Items.Item;
+import main.java.Items.Types;
 import main.java.Items.Weapon.Weapon;
 import main.java.Spells.Spell;
 
 public class Player extends Organism implements StatsCalculator {
     GameClass gameClass;
-    Weapon weapon;
-    Inventory inventory;
+    Item weapon;
+    Equipment inventory;
     BackPack backPack;
     SpellBook spellBook;
     private final float WEIGHT_COEFFICIENT = 2.9f;
@@ -16,7 +16,7 @@ public class Player extends Organism implements StatsCalculator {
     public Player(String name, float strength, float stamina, float agility, float intellect, int experience, int gold, GameClass gameClass, Weapon weapon) {
         super(name, strength, stamina, agility, intellect, experience, gold);
         this.gameClass = gameClass;
-        this.inventory = new Inventory();
+        this.inventory = new Equipment();
         this.backPack = new BackPack();
         this.spellBook = new SpellBook();
         this.weapon = weapon;
@@ -33,7 +33,7 @@ public class Player extends Organism implements StatsCalculator {
     @Override public float getManaMaxValue() {return getBASE_MANA() + getIntellect();}
 
     /** SECONDARY STATS/FEATURES */
-    @Override public float getAttackPower() {return getStrength() / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
+    @Override public float getAttackPower() {return (getStrength() / attackPowerANDSpellPowerANDAttackSpeedCoefficient) + weapon.getAttackPower();}
     @Override public float getSpellPower() {return getIntellect() / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
     @Override public float getEvasion() {return getAgility() / evasionCoefficient;}
     @Override public float getSpellResistance() {return (getIntellect() + getStamina()) / spellResistanceCoefficient;}
@@ -50,24 +50,27 @@ public class Player extends Organism implements StatsCalculator {
 
     /***/
 
-    private void setWeapon(Weapon weapon) {
+    private void setWeapon(Item weapon) {
         this.weapon = weapon;
+    }
+
+    @Override
+    public void setWeaponFromBackPackToInventory(int index) {
+        setWeapon(backPack.getFromBackPack(index));
+        addToInventory(backPack.getFromBackPack(index));
+        removeFromBAckPack(index);
     }
 
     public void changeWeapon(Weapon weapon) {
         addToBackPack(this.weapon);
         setWeapon(weapon);
-        addToInventoryW(weapon);
+        addToInventory(weapon);
     }
 
     /** BUSINESS*/
-    public void addToInventoryA(Armors a) {
-        inventory.addToInventoryA(a);
+    public void addToInventory(Item a) {
+        inventory.addToInventory(a);
         System.out.println("\nYou receive item: " + a + " " + a.getFeatures());
-    }
-    public void addToInventoryW(Weapon w) {
-        inventory.addToInventoryW(w);
-        System.out.println("\nYou receive item: " + w + " " + w.getFeatures());
     }
     public void addToBackPack(Item item) {
         if (getWeightByStrength(maxWeight(), sumOfWeightInInventory() + item.getWeight())) {
@@ -75,15 +78,25 @@ public class Player extends Organism implements StatsCalculator {
         print("\nYou receive item: " + item + "\n");
         } else print("\nNot enough strength. Required strength: " + requiredStrength(sumOfWeightInInventory() + item.getWeight()));
     }
-    public int sumOfWeightInInventory () {return backPack.sumOfWeightOfItemsInBackPack() + inventory.sumOfWeightOfItemsInInventory();}
+    public int sumOfWeightInInventory () {return backPack.sumOfWeightOfItemsInBackPack() + inventory.sumOfWeightOfItemsEquipped();}
     @Override public float maxWeight() {return getStrength() * getWEIGHT_COEFFICIENT();}
-    @Override
-    public String findItemCanRestore(Item item) {return backPack.findItemCanRestore(item);}
+    @Override public String findItemCanRestore(Item item) {return backPack.findItemCanRestore(item);}
     public boolean findItemWithName (String name) {return backPack.findItemWithName(name);}
+    @Override
+    public String showItemsFromBackPackForTrade() {
+        StringBuilder sb;
+        sb = backPack.showAllItemsForTrade(this).
+                append("\nВаше золото: ").
+                append(getGold()).
+                append("\nВес в инвентаре: ").
+                append(sumOfWeightInInventory()).
+                append("\nМаксимальный вес: ").append(maxWeight());
+        return sb.toString();
+    }
     @Override
     public String showItemsFromBackPack() {
         StringBuilder sb;
-        sb = backPack.showAllItems(this).
+        sb = backPack.showAllItems().
                 append("\nВаше золото: ").
                 append(getGold()).
                 append("\nВес в инвентаре: ").
@@ -96,6 +109,8 @@ public class Player extends Organism implements StatsCalculator {
     @Override public int getSize() {return backPack.getSize();}
     @Override public void setGold(int gold) {super.setGold(gold);}
     @Override public void removeFromBAckPack(int index) {backPack.remove(index);}
+    @Override public Types getItemType(int index) {return backPack.getItemType(index);}
+
     public void addToSpellBook(Spell spell) {
         spellBook.addToSpellBook(spell);
     }

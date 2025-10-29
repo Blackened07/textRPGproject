@@ -1,9 +1,8 @@
 package main.java.Characters;
 
 import main.java.GameProcesses.Services.PrintableInterfaces;
-import main.java.Items.Armor.Armors;
 import main.java.Items.Item;
-import main.java.Items.Weapon.Weapon;
+import main.java.Items.Types;
 import main.java.Spells.Spell;
 
 public class Organism implements PrintableInterfaces, StatsCalculator {
@@ -38,7 +37,7 @@ public class Organism implements PrintableInterfaces, StatsCalculator {
 
     private int gold;
 
-    Inventory inventory;
+    Equipment inventory;
     BackPack backPack;
     SpellBook spellBook;
 
@@ -52,7 +51,7 @@ public class Organism implements PrintableInterfaces, StatsCalculator {
         this.intellect = intellect;
         this.experience = experience;
         this.gold = gold;
-        this.inventory = new Inventory();
+        this.inventory = new Equipment();
         this.backPack = new BackPack();
         this.spellBook = new SpellBook();
     }
@@ -91,18 +90,20 @@ public class Organism implements PrintableInterfaces, StatsCalculator {
     }
 
     /** BANK */
-    public void addToInventoryA(Armors a) {}
-    public void addToInventoryW (Weapon w) {}
+    public void addToInventory(Item item) {}
     public void addToBackPack(Item item){}
     public Item getFromBackPack (String name) {return null;}
     public Item getFromBackPackWithIndex (int index) {return null;}
     public boolean findItemWithName(String name) {return false;}
     public String findItemCanRestore(Item item){return "";}
-    public String showItemsFromBackPack() {return "";}
+    public String showItemsFromBackPackForTrade() {return "";}
+    public String showItemsFromBackPack(){return "";}
     public int getSize(){return 0;}
     public void removeFromBAckPack(int index){}
-    public int sumOfWeightInInventory() {return backPack.sumOfWeightOfItemsInBackPack() + inventory.sumOfWeightOfItemsInInventory();}
+    public int sumOfWeightInInventory() {return backPack.sumOfWeightOfItemsInBackPack() + inventory.sumOfWeightOfItemsEquipped();}
     public float maxWeight() {return 0;}
+    public Types getItemType(int index){return null;}
+    public void setWeaponFromBackPackToInventory(int index){};
 
     /** EXP AND LEVEL*/
     public int getLevel() {return level;}
