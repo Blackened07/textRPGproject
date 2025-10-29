@@ -50,13 +50,21 @@ public class BackPack {
     public void remove(int index) {
         backPack.remove(index);
     }
+    public int sumOfWeightOfItemsInBackPack () {
+        return backPack.stream().
+                mapToInt(Item::getWeight).
+                sum();
+    }
 
-    public StringBuilder showAllItems() {
-        StringBuilder sb = new StringBuilder();
+    public StringBuilder showAllItems(Organism o) {
+        StringBuilder sb = new StringBuilder("Товар " + o.getNAME() + "'a\n");
         int count;
         for (int i = 0; i < backPack.size(); i++) {
             count = i + 1;
-            sb.append(count).append(" - ").append(backPack.get(i).getName()).append(" цена: ").append(backPack.get(i).getCost()).append("\n");
+            sb.append(count).
+                    append(" - ").append(backPack.get(i).getName()).
+                    append(": цена - ").append(backPack.get(i).getCost()).
+                    append("; вес - ").append(backPack.get(i).getWeight()).append("\n");
         }
         return sb;
     }

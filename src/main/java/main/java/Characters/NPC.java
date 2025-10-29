@@ -20,8 +20,9 @@ public class NPC extends Organism implements StatsCalculator{
 
     @Override
     public String showItemsFromBackPack() {
-        StringBuilder sb = new StringBuilder();
-        sb = backPack.showAllItems().append("\nЗолото торговца: ").append(getGold());
+        String s = "Товар торговца";
+        StringBuilder sb;
+        sb = backPack.showAllItems(this).append("\nЗолото торговца: ").append(getGold());
         return sb.toString();
     }
 

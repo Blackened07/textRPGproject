@@ -36,8 +36,8 @@ public interface GameScanner {
                 System.out.println(player.showItemsFromBackPack());
                 return 1024;
             }
-            case "/someCommand" ->{
-                System.out.println("Nothing");
+            case "/stats" ->{
+                player.features(player);
                 return 1024;
             }
         }

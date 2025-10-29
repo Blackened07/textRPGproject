@@ -95,24 +95,24 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
     }
 
     public void armorForWarrior (Organism player) {
-        player.addToInventoryA(new Armors("Giant's Chest", 12, 10, Types.ARMOR, 2, 1, 0,0, ArmorType.PLATE, SlotType.CHEST));
-        player.addToInventoryA(new Armors("Giant's Hands", 12, 10, Types.ARMOR, 0, 0, 0,0, ArmorType.PLATE, SlotType.HANDS));
-        player.addToInventoryA(new Armors("Giant's Legs", 12, 10, Types.ARMOR, 1, 0, 0,0, ArmorType.PLATE, SlotType.LEGS));
-        player.addToInventoryA(new Armors("Giant's Boots", 12, 10, Types.ARMOR, 0, 0, 0,0, ArmorType.PLATE, SlotType.FEET));
+        player.addToInventoryA(new Armors("Giant's Chest", 12, 12, Types.ARMOR, 2, 1, 0,0, ArmorType.PLATE, SlotType.CHEST));
+        player.addToInventoryA(new Armors("Giant's Hands", 12, 8, Types.ARMOR, 0, 0, 0,0, ArmorType.PLATE, SlotType.HANDS));
+        player.addToInventoryA(new Armors("Giant's Legs", 12, 11, Types.ARMOR, 1, 0, 0,0, ArmorType.PLATE, SlotType.LEGS));
+        player.addToInventoryA(new Armors("Giant's Boots", 12, 8, Types.ARMOR, 0, 0, 0,0, ArmorType.PLATE, SlotType.FEET));
         this.player = player;
     }
     public void armorForMage (Organism player) {
-        player.addToInventoryA(new Armors("Robe of Mage", 12, 10, Types.ARMOR, 0, 1, 0,2, ArmorType.CLOTH, SlotType.CHEST));
-        player.addToInventoryA(new Armors("Hands of Mage", 12, 10, Types.ARMOR, 0, 0, 0,0, ArmorType.CLOTH, SlotType.HANDS));
-        player.addToInventoryA(new Armors("Magic Pants", 12, 10, Types.ARMOR, 0, 0, 0,2, ArmorType.CLOTH, SlotType.LEGS));
-        player.addToInventoryA(new Armors("Magic Boots", 12, 10, Types.ARMOR, 0, 0, 0,0, ArmorType.CLOTH, SlotType.FEET));
+        player.addToInventoryA(new Armors("Robe of Mage", 12, 4, Types.ARMOR, 0, 1, 0,2, ArmorType.CLOTH, SlotType.CHEST));
+        player.addToInventoryA(new Armors("Hands of Mage", 12, 1, Types.ARMOR, 0, 0, 0,0, ArmorType.CLOTH, SlotType.HANDS));
+        player.addToInventoryA(new Armors("Magic Pants", 12, 3, Types.ARMOR, 0, 0, 0,2, ArmorType.CLOTH, SlotType.LEGS));
+        player.addToInventoryA(new Armors("Magic Boots", 12, 1, Types.ARMOR, 0, 0, 0,0, ArmorType.CLOTH, SlotType.FEET));
         this.player = player;
     }
     public void armorForRogue (Organism player) {
-        player.addToInventoryA(new Armors("Shadow Chest", 12, 10, Types.ARMOR, 0, 1, 2,0, ArmorType.LEATHER, SlotType.CHEST));
-        player.addToInventoryA(new Armors("Shadow Hands", 12, 10, Types.ARMOR, 0, 0, 0,0, ArmorType.LEATHER, SlotType.HANDS));
-        player.addToInventoryA(new Armors("Pants of Darkness", 12, 10, Types.ARMOR, 0, 0, 1,0, ArmorType.LEATHER, SlotType.LEGS));
-        player.addToInventoryA(new Armors("Spider Boots", 12, 10, Types.ARMOR, 0, 0, 0,0, ArmorType.LEATHER, SlotType.FEET));
+        player.addToInventoryA(new Armors("Shadow Chest", 12, 6, Types.ARMOR, 0, 1, 2,0, ArmorType.LEATHER, SlotType.CHEST));
+        player.addToInventoryA(new Armors("Shadow Hands", 12, 3, Types.ARMOR, 0, 0, 0,0, ArmorType.LEATHER, SlotType.HANDS));
+        player.addToInventoryA(new Armors("Pants of Darkness", 12, 4, Types.ARMOR, 0, 0, 1,0, ArmorType.LEATHER, SlotType.LEGS));
+        player.addToInventoryA(new Armors("Spider Boots", 12, 3, Types.ARMOR, 0, 0, 0,0, ArmorType.LEATHER, SlotType.FEET));
         this.player = player;
     }
 }

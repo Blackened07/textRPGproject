@@ -1,6 +1,7 @@
 package main.java.Characters;
 
 import main.java.Items.Armor.Armors;
+import main.java.Items.Item;
 import main.java.Items.Weapon.Weapon;
 
 import java.util.HashSet;
@@ -50,5 +51,11 @@ public class Inventory {
             }
         }
         return stats[indexSlot][indexStat];
+    }
+
+    public int sumOfWeightOfItemsInInventory () {
+        return inventoryA.stream().
+                mapToInt(Item::getWeight).
+                sum();
     }
 }

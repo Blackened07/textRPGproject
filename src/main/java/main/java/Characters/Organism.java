@@ -1,10 +1,12 @@
 package main.java.Characters;
 
+import main.java.GameProcesses.Services.PrintableInterfaces;
 import main.java.Items.Armor.Armors;
 import main.java.Items.Item;
 import main.java.Items.Weapon.Weapon;
+import main.java.Spells.Spell;
 
-public class Organism {
+public class Organism implements PrintableInterfaces, StatsCalculator {
     private final String NAME;
 
     private float strength;
@@ -99,10 +101,15 @@ public class Organism {
     public String showItemsFromBackPack() {return "";}
     public int getSize(){return 0;}
     public void removeFromBAckPack(int index){}
+    public int sumOfWeightInInventory() {return backPack.sumOfWeightOfItemsInBackPack() + inventory.sumOfWeightOfItemsInInventory();}
+    public float maxWeight() {return 0;}
 
     /** EXP AND LEVEL*/
     public int getLevel() {return level;}
     public void setLevel() {this.level ++;}
     public int getExperience() {return experience;}
     public void setExperience(int experience) {this.experience = experience;}
+
+    /** SPELLS*/
+    public void addToSpellBook(Spell spell){};
 }

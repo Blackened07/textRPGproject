@@ -30,6 +30,8 @@ public class Item implements Features {
 
     public int getCost() {return cost;}
 
+    public int getWeight() {return weight;}
+
     @Override
     public String toString() {
         return name;
