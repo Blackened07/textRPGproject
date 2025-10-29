@@ -8,29 +8,46 @@ import main.java.Spells.Spell;
 public class Player extends Organism implements StatsCalculator {
     GameClass gameClass;
     Item weapon;
-    Equipment inventory;
+    Equipment equipment;
     BackPack backPack;
     SpellBook spellBook;
     private final float WEIGHT_COEFFICIENT = 2.9f;
 
+    private float currentHealth;
+    private float currentMana;
+
     public Player(String name, float strength, float stamina, float agility, float intellect, int experience, int gold, GameClass gameClass, Weapon weapon) {
         super(name, strength, stamina, agility, intellect, experience, gold);
         this.gameClass = gameClass;
-        this.inventory = new Equipment();
+        this.equipment = new Equipment();
         this.backPack = new BackPack();
         this.spellBook = new SpellBook();
         this.weapon = weapon;
     }
     /** BASE STATS */
     @Override
-    public float getStrength() {return super.getStrength() + getStat(inventory, STRENGTH_INDEX);}
-    public float getStamina() {return super.getStamina() + getStat(inventory, STAMINA_INDEX);}
-    public float getAgility() {return super.getAgility() + getStat(inventory, AGILITY_INDEX);}
-    public float getIntellect() {return super.getIntellect() + getStat(inventory, INTELLECT_INDEX);}
+    public float getStrength() {return super.getStrength() + getStat(equipment, STRENGTH_INDEX);}
+    public float getStamina() {return super.getStamina() + getStat(equipment, STAMINA_INDEX);}
+    public float getAgility() {return super.getAgility() + getStat(equipment, AGILITY_INDEX);}
+    public float getIntellect() {return super.getIntellect() + getStat(equipment, INTELLECT_INDEX);}
+
 
     /** HEALTH AND MANA */
+
+    @Override public float getCurrentHealth() {return currentHealth;}
+    @Override public float getCurrentMana() {return currentMana;}
+    @Override public void setCurrentHealth(float currentHealth) {this.currentHealth = currentHealth;}
+    @Override public void setCurrentMana(float currentMana) {this.currentMana = currentMana;}
     @Override public float getHealthMaxValue() {return getBASE_HEALTH() + getStamina();}
     @Override public float getManaMaxValue() {return getBASE_MANA() + getIntellect();}
+
+    @Override public void checkRestoreValueWhileHealing(float health) {
+        if ((getCurrentHealth() + health) > getHealthMaxValue()) {
+            setCurrentHealth(getHealthMaxValue());
+            print("Восстановлено: " + (getHealthMaxValue() - getCurrentHealth()) + " здоровья");
+        } else {setCurrentHealth(getCurrentHealth() + health);
+        print("Восстановлено: " + health + "здоровья");}
+    }
 
     /** SECONDARY STATS/FEATURES */
     @Override public float getAttackPower() {return (getStrength() / attackPowerANDSpellPowerANDAttackSpeedCoefficient) + weapon.getAttackPower();}
@@ -48,7 +65,7 @@ public class Player extends Organism implements StatsCalculator {
 
     public float getWEIGHT_COEFFICIENT() {return WEIGHT_COEFFICIENT;}
 
-    /***/
+    /***USING ITEMS*/
 
     private void setWeapon(Item weapon) {
         this.weapon = weapon;
@@ -60,17 +77,29 @@ public class Player extends Organism implements StatsCalculator {
         addToInventory(backPack.getFromBackPack(index));
         removeFromBAckPack(index);
     }
-
-    public void changeWeapon(Weapon weapon) {
+    @Override
+    public void changeWeapon(int index) {
         addToBackPack(this.weapon);
-        setWeapon(weapon);
-        addToInventory(weapon);
+        equipment.removeFromEquipment(this.weapon);
+        setWeaponFromBackPackToInventory(index);
+    }
+
+    @Override
+    public void useFood(int index) {
+        checkRestoreValueWhileHealing(getFromBackPackWithIndex(index).getRESTORES_HEALTH());
+
+    }
+
+    @Override
+    public void dropItem(int index) {
+        backPack.remove(index);
+        //set to world map
     }
 
     /** BUSINESS*/
     public void addToInventory(Item a) {
-        inventory.addToInventory(a);
-        System.out.println("\nYou receive item: " + a + " " + a.getFeatures());
+        equipment.addToInventory(a);
+        System.out.println("\nYou have equipped item: " + a + " " + a.getFeatures());
     }
     public void addToBackPack(Item item) {
         if (getWeightByStrength(maxWeight(), sumOfWeightInInventory() + item.getWeight())) {
@@ -78,9 +107,8 @@ public class Player extends Organism implements StatsCalculator {
         print("\nYou receive item: " + item + "\n");
         } else print("\nNot enough strength. Required strength: " + requiredStrength(sumOfWeightInInventory() + item.getWeight()));
     }
-    public int sumOfWeightInInventory () {return backPack.sumOfWeightOfItemsInBackPack() + inventory.sumOfWeightOfItemsEquipped();}
+    public int sumOfWeightInInventory () {return backPack.sumOfWeightOfItemsInBackPack() + equipment.sumOfWeightOfItemsEquipped();}
     @Override public float maxWeight() {return getStrength() * getWEIGHT_COEFFICIENT();}
-    @Override public String findItemCanRestore(Item item) {return backPack.findItemCanRestore(item);}
     public boolean findItemWithName (String name) {return backPack.findItemWithName(name);}
     @Override
     public String showItemsFromBackPackForTrade() {

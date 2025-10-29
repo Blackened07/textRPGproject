@@ -1,4 +1,4 @@
-package main.java.Items.Armor;
+package main.java.Items;
 
 public enum SlotType {
     HEAD,
@@ -7,5 +7,6 @@ public enum SlotType {
     BACK,
     HANDS,
     LEGS,
-    FEET
+    FEET,
+    WEAPON
 }

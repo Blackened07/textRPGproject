@@ -19,21 +19,6 @@ public class BackPack {
         backPack.add(item);
     }
 
-    public String findItemCanRestore(Item item) {
-        for (Item i : backPack) {
-            switch (item.getType()) {
-                case FOOD -> {
-                    Food food = (Food) item;
-                    return "Restores " + food.getRESTORES_HEALTH() + " health";
-                }
-                case POTION -> {
-                    return "Potion";
-                }
-
-            }
-        }
-        return "";
-    }
     public boolean findItemWithName (String name) {
         for (Item i : backPack) {
             if (i.getName().equals(name)) return true;

@@ -51,7 +51,7 @@ public class Crossroads extends Events {
         int userInput;
 
         while (isEventActive()) {
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player);
+            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player, this);
 
             if(checkCurrentEventAndCommandEqualsForDialogue(getSTART_EVENT(), this)){
                 switch (userInput) {

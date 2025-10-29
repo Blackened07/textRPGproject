@@ -39,7 +39,7 @@ public class RoadToNorth extends Events {
         int userInput;
 
         while (isEventActive()) {
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player);
+            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player, this);
 
             if (checkCurrentEventAndCommandEqualsForDialogue(getWAY(), this)) {
                 switch (userInput) {

@@ -43,12 +43,13 @@ public class TavernMasterDialogue extends Events {
         int userInput;
 
         while (isEventActive()) {
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player);
+            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player, this);
 
             if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_2(), this)) {
                 switch (userInput) {
                     case 1 ->{
                         player.addToBackPack(tavernMaster.getFromBackPack( "ApplePie"));
+                        tavernMaster.removeFromBAckPack(1);
                         setCheckPie(true);
                         startEvent(player, sc);
                     }
@@ -82,8 +83,7 @@ public class TavernMasterDialogue extends Events {
                     case 2 -> {
                         if (checkPie) {
                             setCurrentEvent(AFTER_PIE_EVENT);
-                        }
-                        else setCurrentEvent(getPHRASE_2());
+                        } else setCurrentEvent(getPHRASE_2());
                     }
                     case 3 -> {setCurrentEvent(getPHRASE_5());}
                     case 4 -> {setCurrentEvent(getPHRASE_6());}

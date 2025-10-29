@@ -2,11 +2,8 @@ package main.java.Characters;
 
 import main.java.Items.Item;
 import main.java.Items.Types;
-import main.java.Items.Weapon.Weapon;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Equipment implements StatsCalculator{
     private Set<Item> equipment;
@@ -24,6 +21,10 @@ public class Equipment implements StatsCalculator{
                 mapToInt(Item::getWeight).
                 sum();
     }
+    public void removeFromEquipment (Item item) {
+        equipment.remove(item);
+    }
+
 
 
     /// ЭТО ИДИОТИЗМ? ОСТАВЛЮ ДЛЯ ИСТОРИИ
@@ -59,6 +60,7 @@ public class Equipment implements StatsCalculator{
                     case HANDS -> stats[HANDS_INDEX] = a.getAllStats();
                     case LEGS -> stats[LEGS_INDEX] = a.getAllStats();
                     case FEET -> stats[FEET_INDEX] = a.getAllStats();
+                    case WEAPON -> stats[WEAPON_INDEX] = a.getAllStats();
                 }
             }
         }

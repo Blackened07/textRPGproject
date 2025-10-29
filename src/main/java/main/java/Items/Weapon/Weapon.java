@@ -1,6 +1,7 @@
 package main.java.Items.Weapon;
 
 import main.java.Items.Item;
+import main.java.Items.SlotType;
 import main.java.Items.Types;
 
 public class Weapon extends Item implements Attack {
@@ -10,8 +11,9 @@ public class Weapon extends Item implements Attack {
     private float stamina;
     private float agility;
     private float intellect;
+    SlotType slotType;
 
-    public Weapon(String name, int cost, int weight, Types type, float strength, float stamina, float agility, float intellect, float attackPower, WeaponTypes weaponTypes) {
+    public Weapon(String name, int cost, int weight, Types type, float strength, float stamina, float agility, float intellect, float attackPower, WeaponTypes weaponTypes, SlotType slotType) {
         super(name, cost, weight, type);
         this.strength = strength;
         this.stamina = stamina;
@@ -19,6 +21,16 @@ public class Weapon extends Item implements Attack {
         this.intellect = intellect;
         this.attackPower = attackPower;
         this.weaponTypes = weaponTypes;
+        this.slotType = slotType;
+    }
+
+    @Override
+    public SlotType getSlotType() {
+        return slotType;
+    }
+
+    public WeaponTypes getWeaponTypes() {
+        return weaponTypes;
     }
 
     @Override public float getAttackPower() {

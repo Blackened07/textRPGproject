@@ -1,6 +1,7 @@
 package main.java.Items.Armor;
 
 import main.java.Items.Item;
+import main.java.Items.SlotType;
 import main.java.Items.Types;
 
 public class Armors extends Item implements Features{

@@ -43,7 +43,7 @@ public class Mill extends Events {
         int userInput;
 
         while (isEventActive()) {
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player);
+            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player, this);
 
             if(checkCurrentEventAndCommandEqualsForDialogue(FAT_DIALOGUE, this)) {
                 fatDialogue.startEvent(player, sc);

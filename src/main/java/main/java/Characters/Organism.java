@@ -1,11 +1,12 @@
 package main.java.Characters;
 
 import main.java.GameProcesses.Services.PrintableInterfaces;
+import main.java.GameProcesses.Services.UseItemsFromBackPack;
 import main.java.Items.Item;
 import main.java.Items.Types;
 import main.java.Spells.Spell;
 
-public class Organism implements PrintableInterfaces, StatsCalculator {
+public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsFromBackPack {
     private final String NAME;
 
     private float strength;
@@ -71,6 +72,7 @@ public class Organism implements PrintableInterfaces, StatsCalculator {
     public float getBASE_HEALTH() {return BASE_HEALTH;}
     public float getBASE_MANA() {return BASE_MANA;}
     public void setCurrentHealth(float health) {this.currentHealth = health;}
+    public void checkRestoreValueWhileHealing(float health) {}
     public void setCurrentMana(float currentMana) {this.currentMana = currentMana;}
 
     /** SECONDARY STATS/FEATURES */
@@ -95,7 +97,6 @@ public class Organism implements PrintableInterfaces, StatsCalculator {
     public Item getFromBackPack (String name) {return null;}
     public Item getFromBackPackWithIndex (int index) {return null;}
     public boolean findItemWithName(String name) {return false;}
-    public String findItemCanRestore(Item item){return "";}
     public String showItemsFromBackPackForTrade() {return "";}
     public String showItemsFromBackPack(){return "";}
     public int getSize(){return 0;}
@@ -104,6 +105,9 @@ public class Organism implements PrintableInterfaces, StatsCalculator {
     public float maxWeight() {return 0;}
     public Types getItemType(int index){return null;}
     public void setWeaponFromBackPackToInventory(int index){};
+    public void changeWeapon(int index){};
+    public void useFood(int index) {}
+    public void dropItem(int index) {}
 
     /** EXP AND LEVEL*/
     public int getLevel() {return level;}

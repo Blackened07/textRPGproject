@@ -20,10 +20,10 @@ public interface Trade extends PrintableInterfaces, GameScanner {
 
             System.out.println(npc.showItemsFromBackPackForTrade() + "\n" + line + "\n" + player.showItemsFromBackPackForTrade());
 
-            userInputForOperation = gameScanner(sc, npc.getSize(), player) - 1;
+            userInputForOperation = gameScanner(sc, npc.getSize(), player, events) - 1;
 
             if (userInputForOperation == -26) {
-                userInput = gameScanner(sc, npc.getSize(), player) - 1;
+                userInput = gameScanner(sc, npc.getSize(), player, events) - 1;
                 for (int i = 0; i < npc.getSize(); i++) {
                     if (userInput == i) {
                         if (player.getWeightByStrength(player.maxWeight(), player.sumOfWeightInInventory() + npc.getFromBackPackWithIndex(i).getWeight())) {
@@ -39,7 +39,7 @@ public interface Trade extends PrintableInterfaces, GameScanner {
                 }
             }
             if (userInputForOperation == -51) {
-                userInput = gameScanner(sc, npc.getSize(), player) - 1;
+                userInput = gameScanner(sc, npc.getSize(), player, events) - 1;
                 for (int i = 0; i < npc.getSize(); i++) {
                     if (userInput == i) {
                         if (npc.getGold() > player.getFromBackPackWithIndex(i).getCost()) {

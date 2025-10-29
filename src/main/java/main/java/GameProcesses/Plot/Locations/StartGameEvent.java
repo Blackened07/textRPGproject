@@ -2,12 +2,10 @@ package main.java.GameProcesses.Plot.Locations;
 
 import main.java.Characters.*;
 import main.java.GameProcesses.Plot.Dialogue;
-import main.java.GameProcesses.Services.InvalidCommandException;
 import main.java.GameProcesses.Services.PrintableInterfaces;
-import main.java.GameProcesses.Services.StoryReader;
 import main.java.Items.Armor.ArmorType;
 import main.java.Items.Armor.Armors;
-import main.java.Items.Armor.SlotType;
+import main.java.Items.SlotType;
 import main.java.Items.Types;
 import main.java.Items.Weapon.Weapon;
 import main.java.Items.Weapon.WeaponTypes;
@@ -43,18 +41,18 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
     }
 
     public void chooseWeapon (Scanner sc) {
-        int weaponTyped = gameScanner(sc, dialogue.getInnerListSize(getSTART_EVENT()), player);
+        int weaponTyped = gameScanner(sc, dialogue.getInnerListSize(getSTART_EVENT()), player, this);
         switch (weaponTyped) {
             case 1 -> {
                 printEventTextAndCommands(START_CHOOSE_Spec_1, this.dialogue);
-                weapon = new Weapon("Axe of Strength", 10, 5, Types.WEAPON, 15, 4, 2, 0, 7, WeaponTypes.AXE );}
+                weapon = new Weapon("Axe of Strength", 10, 5, Types.WEAPON, 15, 4, 2, 0, 7, WeaponTypes.AXE, SlotType.WEAPON );}
             case 2 -> {
                 printEventTextAndCommands(START_CHOOSE_Spec_2, this.dialogue);;
-                weapon = new Weapon("Wizard Stave", 12, 3, Types.WEAPON, 0, 5, 0, 25, 3, WeaponTypes.STAFF);
+                weapon = new Weapon("Wizard Stave", 12, 3, Types.WEAPON, 0, 5, 0, 25, 3, WeaponTypes.STAFF, SlotType.WEAPON);
             }
             case 3 -> {
                 printEventTextAndCommands(START_CHOOSE_Spec_3, this.dialogue);
-                weapon = new Weapon("Stinger", 9, 2, Types.WEAPON, 2, 3, 10, 10, 5, WeaponTypes.DAGGER );
+                weapon = new Weapon("Stinger", 9, 2, Types.WEAPON, 2, 3, 10, 10, 5, WeaponTypes.DAGGER, SlotType.WEAPON);
             }
         }
         chooseSpec(player, weapon, weaponTyped, sc);
@@ -65,7 +63,7 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
         return sc.nextLine();
     }
     public void chooseSpec (Organism player, Weapon weapon, int weaponTyped, Scanner sc) {
-        int spec = gameScanner(sc, dialogue.getInnerListSize(START_CHOOSE_Spec_3), player);
+        int spec = gameScanner(sc, dialogue.getInnerListSize(START_CHOOSE_Spec_3), player, this);
         switch (weaponTyped) {
             case 1 -> {
                 switch (spec) {
