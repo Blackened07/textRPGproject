@@ -18,6 +18,9 @@ public class BackPack {
     public void addToBackPack(Item item) {
         backPack.add(item);
     }
+    public void addListOfLootToBackPack(List<Item> items) {
+        backPack.addAll(items);
+    }
 
     public boolean findItemWithName (String name) {
         for (Item i : backPack) {

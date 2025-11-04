@@ -6,6 +6,10 @@ import main.java.GameProcesses.Plot.Locations.Events;
 import java.util.Scanner;
 
 public interface GameScanner {
+    int BUY = -25;
+    int TRADE = -50;
+    int EXIT_TRADE = -75;
+
 
     String NON_DIGITS_PATTERN = "\\D";
 
@@ -15,12 +19,15 @@ public interface GameScanner {
         while (true) {
             try {
                 String userText = sc.nextLine();
-                if(gameCommands(player, userText, sc, events ) == 1024) throw new InvalidCommandException("Вы ввели игровую команду");
-                if(gameCommands(player, userText, sc, events) == 333) throw new InvalidCommandException("Вы ввели игровую команду");
-                if (userText.equals("/buy")) return -25;
-                if (userText.equals("/trade")) return -50;
-                if (userText.equals("/exitTrade")) return -75;
-                if (userText.equals("/exitBP")) return -10;
+
+                if (userText.equals("/backpack")) player.useItemsFromBackPack(player, sc, events);
+                if (userText.equals("/stats")) player.features(player);
+                if (userText.equals("/equip")) player.showItemsFromEquipment();
+                if (userText.equals("/quest")) player.showQuestJournal();
+                if (userText.equals("/buy")) return BUY;
+                if (userText.equals("/trade")) return TRADE;
+                if (userText.equals("/exitTrade")) return EXIT_TRADE;
+                if (userText.equals("/closeBP")) return -10;
                 if (userText.equals("/use")) return -2;
                 if (userText.equals("/set")) return -4;
                 if (userText.equals("/change")) return -8;
@@ -37,18 +44,10 @@ public interface GameScanner {
             }
         }
     }
+    default String fightScanner(Scanner sc) {
 
-    default int gameCommands(Organism player, String userText, Scanner sc, Events events) throws InvalidCommandException {
-        switch (userText) {
-            case "/backpack" -> {
-                player.useItemsFromBackPack(player, sc, events);
-                return 1024;
-            }
-            case "/stats" ->{
-                player.features(player);
-                return 333;
-            }
-        }
-        return 8192;
+
+        return sc.nextLine();
     }
+
 }

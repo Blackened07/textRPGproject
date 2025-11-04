@@ -1,16 +1,20 @@
 package main.java.Characters;
 
+import main.java.GameProcesses.Plot.Quests.ActiveQuests;
+import main.java.Items.EquipableItem.EquipableItem;
 import main.java.Items.Item;
+import main.java.Items.QuestItem;
 import main.java.Items.Types;
-import main.java.Items.Weapon.Weapon;
+import main.java.Items.EquipableItem.Weapon.Weapon;
 import main.java.Spells.Spell;
 
 public class Player extends Organism implements StatsCalculator {
     GameClass gameClass;
-    Item weapon;
+    EquipableItem weapon;
     Equipment equipment;
     BackPack backPack;
     SpellBook spellBook;
+    QuestJournal questJournal;
     private final float WEIGHT_COEFFICIENT = 2.9f;
 
     private float currentHealth;
@@ -23,6 +27,7 @@ public class Player extends Organism implements StatsCalculator {
         this.backPack = new BackPack();
         this.spellBook = new SpellBook();
         this.weapon = weapon;
+        this.questJournal = new QuestJournal();
     }
     /** BASE STATS */
     @Override
@@ -65,29 +70,46 @@ public class Player extends Organism implements StatsCalculator {
 
     public float getWEIGHT_COEFFICIENT() {return WEIGHT_COEFFICIENT;}
 
+    /** QUESTS */
+
+    @Override
+    public void addQuestToJouranl(ActiveQuests quest) {
+        questJournal.addQuestToJournal(quest);
+        print("Quest " + quest.getQuestName() + " Accepted");
+    }
+
+    @Override public void showQuestJournal() {System.out.println(questJournal.ShowAllQuests());}
+
+    @Override
+    public boolean getQuestObjective(String name) {
+        return questJournal.getQuestObjective(name);
+    }
+
     /***USING ITEMS*/
 
-    private void setWeapon(Item weapon) {
+    private void setWeapon(EquipableItem weapon) {
         this.weapon = weapon;
     }
-
-    @Override
-    public void setWeaponFromBackPackToInventory(int index) {
-        setWeapon(backPack.getFromBackPack(index));
-        addToInventory(backPack.getFromBackPack(index));
+    @Override public void setWeaponFromBackPackToInventory(int index) {
+        setWeapon((EquipableItem) backPack.getFromBackPack(index));
+        addToEquipment((EquipableItem) backPack.getFromBackPack(index));
         removeFromBAckPack(index);
     }
-    @Override
-    public void changeWeapon(int index) {
+    @Override public void changeWeapon(int index) {
         addToBackPack(this.weapon);
         equipment.removeFromEquipment(this.weapon);
-        setWeaponFromBackPackToInventory(index);
+        this.setWeaponFromBackPackToInventory(index);
     }
+    public void addToEquipment(EquipableItem a) {
+        equipment.addToEquipment(a);
+        print("\nYou have equipped item: " + a + " " + a.getFeatures());
+    }
+
+
 
     @Override
     public void useFood(int index) {
         checkRestoreValueWhileHealing(getFromBackPackWithIndex(index).getRESTORES_HEALTH());
-
     }
 
     @Override
@@ -97,17 +119,19 @@ public class Player extends Organism implements StatsCalculator {
     }
 
     /** BUSINESS*/
-    public void addToInventory(Item a) {
-        equipment.addToInventory(a);
-        System.out.println("\nYou have equipped item: " + a + " " + a.getFeatures());
-    }
     public void addToBackPack(Item item) {
-        if (getWeightByStrength(maxWeight(), sumOfWeightInInventory() + item.getWeight())) {
+        if (getWeightByStrength(maxWeight(), this.sumOfEquippedWeightAndBackPackWeight() + item.getWeight())) {
+            if (item.getType().equals(Types.QUEST_ITEM) && !questJournal.getQuest(((QuestItem) item).getFOR_QUEST()).isComplete()) {
+                questJournal.getQuest(((QuestItem) item).getFOR_QUEST()).setQuestObjectiveCounter(1);
+                backPack.addToBackPack(item);
+            }
         backPack.addToBackPack(item);
-        print("\nYou receive item: " + item + "\n");
-        } else print("\nNot enough strength. Required strength: " + requiredStrength(sumOfWeightInInventory() + item.getWeight()));
+        if (item instanceof EquipableItem e) {
+            print("\nYou receive item: " + e + "\n" + e.getFeatures() );
+        } else print("\nYou receive item: " + item );
+        } else print("\nNot enough strength. Required strength: " + requiredStrength(this.sumOfEquippedWeightAndBackPackWeight() + item.getWeight()));
     }
-    public int sumOfWeightInInventory () {return backPack.sumOfWeightOfItemsInBackPack() + equipment.sumOfWeightOfItemsEquipped();}
+    public int sumOfEquippedWeightAndBackPackWeight () {return backPack.sumOfWeightOfItemsInBackPack() + equipment.sumOfWeightOfEquippedItems();}
     @Override public float maxWeight() {return getStrength() * getWEIGHT_COEFFICIENT();}
     public boolean findItemWithName (String name) {return backPack.findItemWithName(name);}
     @Override
@@ -117,7 +141,7 @@ public class Player extends Organism implements StatsCalculator {
                 append("\nВаше золото: ").
                 append(getGold()).
                 append("\nВес в инвентаре: ").
-                append(sumOfWeightInInventory()).
+                append(this.sumOfEquippedWeightAndBackPackWeight()).
                 append("\nМаксимальный вес: ").append(maxWeight());
         return sb.toString();
     }
@@ -128,16 +152,38 @@ public class Player extends Organism implements StatsCalculator {
                 append("\nВаше золото: ").
                 append(getGold()).
                 append("\nВес в инвентаре: ").
-                append(sumOfWeightInInventory()).
+                append(this.sumOfEquippedWeightAndBackPackWeight()).
                 append("\nМаксимальный вес: ").append(maxWeight());
         return sb.toString();
     }
+
+    @Override
+    public void showItemsFromEquipment() {
+        System.out.println(equipment.showAllEquippedItems());
+    }
+
     @Override public Item getFromBackPack(String name) {return backPack.getFromBackPack(name);}
     @Override public Item getFromBackPackWithIndex(int index) {return backPack.getFromBackPack(index);}
     @Override public int getSize() {return backPack.getSize();}
     @Override public void setGold(int gold) {super.setGold(gold);}
     @Override public void removeFromBAckPack(int index) {backPack.remove(index);}
     @Override public Types getItemType(int index) {return backPack.getItemType(index);}
+
+
+    @Override
+    public void autoAttack(Organism attacker, Organism target) {
+        attacker.setFullAttackPower(attacker.getAttackPower() + attacker.getAttackSpeed() / attackPowerANDSpellPowerANDAttackSpeedCoefficient + (float)(Math.random() * 5));
+        takingPhysicalDamage(attacker, target);
+    }
+
+    @Override
+    public void takingPhysicalDamage(Organism attacker, Organism target) {
+        target.setCurrentHealth(target.getCurrentHealth() - attacker.getAttackPower() + target.getEvasion());
+    }
+
+    /** FIGHT */
+
+
 
     public void addToSpellBook(Spell spell) {
         spellBook.addToSpellBook(spell);

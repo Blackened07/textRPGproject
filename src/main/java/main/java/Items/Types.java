@@ -5,5 +5,11 @@ public enum Types {
     POTION,
     ARMOR,
     FOOD,
+    QUEST_ITEM,
+    QUEST_ITEM_FROM_NPC,
+    FOOD_FOR_COOK,
+    JUNK,
+    SKIN,
+    FUR,
     EMPTY
 }

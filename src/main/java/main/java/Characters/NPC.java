@@ -44,4 +44,15 @@ public class NPC extends Organism implements StatsCalculator{
     @Override public int getGold() {return super.getGold();}
     @Override public void setGold(int gold) {super.setGold(gold);}
     @Override public void removeFromBAckPack(int index) {backPack.remove(index);}
+
+
+    @Override
+    public void autoAttack(Organism attacker, Organism target) {
+        super.autoAttack(attacker, target);
+    }
+
+    @Override
+    public void takingPhysicalDamage(Organism attacker, Organism target) {
+        super.takingPhysicalDamage(attacker, target);
+    }
 }

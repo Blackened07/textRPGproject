@@ -6,6 +6,8 @@ import main.java.GameProcesses.Plot.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
 import main.java.GameProcesses.Plot.Locations.StartLocation.Crossroads.Crossroads;
+import main.java.GameProcesses.Plot.Quests.ActiveQuests;
+import main.java.GameProcesses.Plot.Quests.Quest;
 import main.java.GameProcesses.Services.ConsoleCommands;
 import main.java.GameProcesses.Services.InvalidCommandException;
 import main.java.Items.Food.Food;
@@ -23,9 +25,9 @@ public class SilverShireVillage extends Events {
     private final String START_BOY_DIALOGUE = "StartBoyDialogue";
     private final String START_TAVERN_MASTER_DIALOGUE = "StartTavernMasterDialogue";
     private final String START_SARAY_EVENT = "SarayEvent";
-    private final String PATH_NAME_BOY_EVENT = "story/SilverShireVillageBoyDialogue.json";
-    private final String PATH_NAME_TAVERN_EVENT = "story/SilverShireVillageTavernMasterDialogue.json";
-    private final String PATH_NAME_CROSSROADS_EVENT = "story/Crossroads.json";
+    private final String PATH_NAME_BOY_EVENT = "resources/SilverShireVillageBoyDialogue.json";
+    private final String PATH_NAME_TAVERN_EVENT = "resources/SilverShireVillageTavernMasterDialogue.json";
+    private final String PATH_NAME_CROSSROADS_EVENT = "resources/Crossroads.json";
     private Events boyDialogue;
     private Events tavernMasterDialogue;
     private Events crossroads;
@@ -83,7 +85,7 @@ public class SilverShireVillage extends Events {
     }
 
     private void setBoyDialogue() {
-        boyDialogue = new BoyDialogue("BoyDialogue", Location.SILVERSHIRE_VILLAGE, new Dialogue(PATH_NAME_BOY_EVENT), this);
+        boyDialogue = new BoyDialogue("BoyDialogue", Location.SILVERSHIRE_VILLAGE, new Dialogue(PATH_NAME_BOY_EVENT), this, new ActiveQuests("ElfFigure", Quest.getQuest("ElfFigure"), 1));
     }
     private void setTavernMasterDialogue() {
         tavernMaster = new NPC("Sednon", 5,5,5,5,150, 500);

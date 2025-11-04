@@ -19,7 +19,7 @@ public interface UseItemsFromBackPack extends PrintableInterfaces, GameScanner {
             if (userInputForOperation == -3) {
                 print("Введите номер предмета");
                 userInput = gameScanner(sc, player.getSize(), player, events) - 1;
-                print("введите команду: /set, /change, /heal, /drop");
+                print("введите команду: /set - если оружие не экипировано, /change - если нужно заменить экипированное оружие, /heal, /drop");
                 switch (player.getItemType(userInput)) {
                     case WEAPON -> {
                         userInputForOperation = gameScanner(sc, 3, player, events) - 1;

@@ -2,10 +2,13 @@ package main.java.GameProcesses.Plot.Locations.StartLocation.Crossroads;
 
 import main.java.Characters.Organism;
 import main.java.GameProcesses.Plot.Dialogue;
+import main.java.GameProcesses.Plot.Fight;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
 import main.java.GameProcesses.Plot.Locations.StartLocation.Mill;
+import main.java.GameProcesses.Services.CreatureGenerator;
 import main.java.GameProcesses.Services.InvalidCommandException;
+import main.java.GameProcesses.Services.RandomNumberGenerator;
 
 import java.util.Scanner;
 
@@ -15,7 +18,7 @@ public class RoadToWest extends Events {
     Dialogue dialogue;
     Events mill;
 
-    private final String PATH_NAME_MILL_EVENT = "story/Mill.json";
+    private final String PATH_NAME_MILL_EVENT = "resources/Mill.json";
 
     public RoadToWest(String eventName, Location LOCATION, Dialogue dialogue, Events crossroads, Events mill) {
         super(eventName, LOCATION);

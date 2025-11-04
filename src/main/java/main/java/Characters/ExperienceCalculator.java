@@ -1,5 +1,7 @@
 package main.java.Characters;
 
+import main.java.GameProcesses.Services.PrintableInterfaces;
+
 public class ExperienceCalculator {
 
     private static int riseCoefficient = 100;

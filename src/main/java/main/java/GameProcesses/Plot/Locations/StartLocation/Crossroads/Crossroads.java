@@ -18,11 +18,11 @@ public class Crossroads extends Events {
     private Events roadToNorth;
     private Events lake;
     private Events mill;
-    private final String PATH_NAME_ROAD_TO_WEST_EVENT = "story/RoadToWest.json";
-    private final String PATH_NAME_ROAD_TO_EAST_EVENT = "story/RoadToEast.json";
-    private final String PATH_NAME_ROAD_TO_NORTH_EVENT = "story/RoadToNorth.json";
-    private final String PATH_NAME_LAKE = "story/Lake.json";
-    private final String PATH_NAME_MILL_EVENT = "story/Mill.json";
+    private final String PATH_NAME_ROAD_TO_WEST_EVENT = "resources/RoadToWest.json";
+    private final String PATH_NAME_ROAD_TO_EAST_EVENT = "resources/RoadToEast.json";
+    private final String PATH_NAME_ROAD_TO_NORTH_EVENT = "resources/RoadToNorth.json";
+    private final String PATH_NAME_LAKE = "resources/Lake.json";
+    private final String PATH_NAME_MILL_EVENT = "resources/Mill.json";
 
     public Crossroads(String eventName, Location LOCATION, Dialogue dialogue, Events silverShire) {
         super(eventName, LOCATION);
@@ -74,10 +74,10 @@ public class Crossroads extends Events {
         roadToEast = new RoadToEast("RoadToEast", Location.CROSSROADS, new Dialogue(PATH_NAME_ROAD_TO_EAST_EVENT), this);
     }
     private void setNorthEventAtStartLocation () {
-        roadToNorth = new RoadToNorth("RoadToNorth", Location.CROSSROADS, new Dialogue(PATH_NAME_ROAD_TO_NORTH_EVENT), this, lake, mill);
+        roadToNorth = new RoadToNorth("RoadToNorth", Location.NORTH_FROM_CROSSROADS, new Dialogue(PATH_NAME_ROAD_TO_NORTH_EVENT), this, lake, mill);
     }
     private void setWestEventAtStartLocation () {
-        roadToWest = new RoadToWest("RoadToWest", Location.CROSSROADS, new Dialogue(PATH_NAME_ROAD_TO_WEST_EVENT), this, mill);
+        roadToWest = new RoadToWest("RoadToWest", Location.WEST_FROM_CROSSROADS, new Dialogue(PATH_NAME_ROAD_TO_WEST_EVENT), this, mill);
     }
     private void setLinks () {
         for (int i = 0; i < 15; i ++) {

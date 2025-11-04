@@ -4,6 +4,8 @@ import main.java.Characters.Organism;
 import main.java.GameProcesses.Plot.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
+import main.java.GameProcesses.Plot.Quests.ActiveQuests;
+import main.java.GameProcesses.Plot.Quests.Quest;
 import main.java.GameProcesses.Services.ConsoleCommands;
 import main.java.GameProcesses.Services.InvalidCommandException;
 import main.java.GameProcesses.Services.StoryReader;
@@ -13,17 +15,20 @@ import java.util.Scanner;
 public class BoyDialogue extends Events {
     Dialogue dialogue;
     private Events silverShire;
+    ActiveQuests elfFigure;
 
-    public BoyDialogue(String eventName, Location LOCATION, Dialogue dialogue, Events silverShire) {
+    public BoyDialogue(String eventName, Location LOCATION, Dialogue dialogue, Events silverShire, ActiveQuests elfFigure) {
         super(eventName, LOCATION);
         this.dialogue = dialogue;
         this.silverShire = silverShire;
+        this.elfFigure = elfFigure;
     }
 
     @Override
     public void startEvent(Organism player, Scanner sc) throws InvalidCommandException {
         setEventActive(true);
-        setCurrentEvent(getSTART_EVENT());
+        if (player.getQuestObjective(elfFigure.getQuestName())) setCurrentEvent(getQUEST_COMPLETE());
+        else setCurrentEvent(getSTART_EVENT());
         printEventTextAndCommands(getSTART_EVENT(), this.dialogue);
         eventSwitcher(sc, player);
     }
@@ -38,7 +43,7 @@ public class BoyDialogue extends Events {
                 startEvent(player, sc);
             }
             if (checkCurrentEventAndCommandEqualsForDialogue(getSTART_QUEST(), this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
-                System.out.println("Quest Accepted");
+                player.addQuestToJouranl(elfFigure);
                 startEvent(player, sc);
             }
             if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_2(), this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {

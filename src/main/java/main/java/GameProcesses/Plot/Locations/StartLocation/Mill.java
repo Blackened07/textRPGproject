@@ -2,13 +2,18 @@ package main.java.GameProcesses.Plot.Locations.StartLocation;
 
 import main.java.Characters.Organism;
 import main.java.GameProcesses.Plot.Dialogue;
+import main.java.GameProcesses.Plot.Fight;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
+import main.java.GameProcesses.Services.CreatureGenerator;
 import main.java.GameProcesses.Services.InvalidCommandException;
+import main.java.GameProcesses.Services.RandomNumberGenerator;
 
 import java.util.Scanner;
 
-public class Mill extends Events {
+import static main.java.GameProcesses.Plot.Locations.Location.NORTH_FROM_CROSSROADS;
+
+public class Mill extends Events implements RandomNumberGenerator, Fight, CreatureGenerator {
 
     Dialogue dialogue;
     Events roadToWest;
@@ -31,8 +36,11 @@ public class Mill extends Events {
     @Override
     public void startEvent(Organism player, Scanner sc) throws InvalidCommandException {
         //StartEventWithRandomFight
-        print("На вас напал кабан и в битве с ним вы одержали победу");
         setCurrentEvent(getSTART_EVENT());
+
+        fight(player, getCreature(NORTH_FROM_CROSSROADS), sc, this);
+
+
         printEventTextAndCommands(getSTART_EVENT(), this.dialogue);
         setEventActive(true);
         eventSwitcher(sc, player);

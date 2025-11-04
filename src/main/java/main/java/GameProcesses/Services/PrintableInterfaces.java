@@ -11,10 +11,12 @@ public interface PrintableInterfaces {
                 + "\nМана: " + player.getManaMaxValue() + "\nСила: " + player.getStrength() + "\nВыносливость: " + player.getStamina() + "\nЛовкость: " + player.getAgility()
                 + "\nИнтеллект: " + player.getIntellect() + "\nСила Атаки: " + player.getAttackPower() + "\nСкорость Атаки: " + player.getAttackSpeed()
                 + "\nУклонение: " + player.getEvasion() + "\nСила Заклинаний: " + player.getSpellPower() + "\nСопротивление магии: " + player.getSpellResistance()
-        + "\nМаксимальный вес носимых предметов: " + player.maxWeight() + "; Вес в инвентаре: " + player.sumOfWeightInInventory());
+        + "\nМаксимальный вес носимых предметов: " + player.maxWeight() + "; Вес экипировки и рюкзака: " + player.sumOfEquippedWeightAndBackPackWeight());
     }
 
     default void print (String text) {
         System.out.println("Game message: " + text.toUpperCase());
     }
+
+
 }

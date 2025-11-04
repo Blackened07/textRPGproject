@@ -3,12 +3,12 @@ package main.java.GameProcesses.Plot.Locations;
 import main.java.Characters.*;
 import main.java.GameProcesses.Plot.Dialogue;
 import main.java.GameProcesses.Services.PrintableInterfaces;
-import main.java.Items.Armor.ArmorType;
-import main.java.Items.Armor.Armors;
+import main.java.Items.EquipableItem.Armor.ArmorType;
+import main.java.Items.EquipableItem.Armor.Armors;
 import main.java.Items.SlotType;
 import main.java.Items.Types;
-import main.java.Items.Weapon.Weapon;
-import main.java.Items.Weapon.WeaponTypes;
+import main.java.Items.EquipableItem.Weapon.Weapon;
+import main.java.Items.EquipableItem.Weapon.WeaponTypes;
 
 import java.util.*;
 
@@ -45,14 +45,14 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
         switch (weaponTyped) {
             case 1 -> {
                 printEventTextAndCommands(START_CHOOSE_Spec_1, this.dialogue);
-                weapon = new Weapon("Axe of Strength", 10, 5, Types.WEAPON, 15, 4, 2, 0, 7, WeaponTypes.AXE, SlotType.WEAPON );}
+                weapon = new Weapon("Axe of Strength", 10, 5, Types.WEAPON, 15, 4, 2, 0, SlotType.WEAPON, 7,   WeaponTypes.AXE );}
             case 2 -> {
                 printEventTextAndCommands(START_CHOOSE_Spec_2, this.dialogue);;
-                weapon = new Weapon("Wizard Stave", 12, 3, Types.WEAPON, 0, 5, 0, 25, 3, WeaponTypes.STAFF, SlotType.WEAPON);
+                weapon = new Weapon("Wizard Stave", 12, 3, Types.WEAPON, 0, 5, 0, 25, SlotType.WEAPON, 3,WeaponTypes.STAFF );
             }
             case 3 -> {
                 printEventTextAndCommands(START_CHOOSE_Spec_3, this.dialogue);
-                weapon = new Weapon("Stinger", 9, 2, Types.WEAPON, 2, 3, 10, 10, 5, WeaponTypes.DAGGER, SlotType.WEAPON);
+                weapon = new Weapon("Stinger", 9, 2, Types.WEAPON, 2, 3, 10, 10, SlotType.WEAPON, 5, WeaponTypes.DAGGER );
             }
         }
         chooseSpec(player, weapon, weaponTyped, sc);
@@ -93,24 +93,24 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
     }
 
     public void armorForWarrior (Organism player) {
-        player.addToInventory(new Armors("Giant's Chest", 12, 12, Types.ARMOR, 2, 1, 0,0, ArmorType.PLATE, SlotType.CHEST));
-        player.addToInventory(new Armors("Giant's Hands", 12, 8, Types.ARMOR, 0, 0, 0,0, ArmorType.PLATE, SlotType.HANDS));
-        player.addToInventory(new Armors("Giant's Legs", 12, 11, Types.ARMOR, 1, 0, 0,0, ArmorType.PLATE, SlotType.LEGS));
-        player.addToInventory(new Armors("Giant's Boots", 12, 8, Types.ARMOR, 0, 0, 0,0, ArmorType.PLATE, SlotType.FEET));
+        player.addToEquipment(new Armors("Giant's Chest", 12, 12, Types.ARMOR, 2, 1, 0,0, SlotType.CHEST, ArmorType.PLATE));
+        player.addToEquipment(new Armors("Giant's Hands", 12, 8, Types.ARMOR, 0, 0, 0,0, SlotType.HANDS, ArmorType.PLATE));
+        player.addToEquipment(new Armors("Giant's Legs", 12, 11, Types.ARMOR, 1, 0, 0,0, SlotType.LEGS, ArmorType.PLATE));
+        player.addToEquipment(new Armors("Giant's Boots", 12, 8, Types.ARMOR, 0, 0, 0,0, SlotType.FEET, ArmorType.PLATE ));
         this.player = player;
     }
     public void armorForMage (Organism player) {
-        player.addToInventory(new Armors("Robe of Mage", 12, 4, Types.ARMOR, 0, 1, 0,2, ArmorType.CLOTH, SlotType.CHEST));
-        player.addToInventory(new Armors("Hands of Mage", 12, 1, Types.ARMOR, 0, 0, 0,0, ArmorType.CLOTH, SlotType.HANDS));
-        player.addToInventory(new Armors("Magic Pants", 12, 3, Types.ARMOR, 0, 0, 0,2, ArmorType.CLOTH, SlotType.LEGS));
-        player.addToInventory(new Armors("Magic Boots", 12, 1, Types.ARMOR, 0, 0, 0,0, ArmorType.CLOTH, SlotType.FEET));
+        player.addToEquipment(new Armors("Robe of Mage", 12, 4, Types.ARMOR, 0, 1, 0,2, SlotType.CHEST, ArmorType.CLOTH ));
+        player.addToEquipment(new Armors("Hands of Mage", 12, 1, Types.ARMOR, 0, 0, 0,0, SlotType.HANDS, ArmorType.CLOTH ));
+        player.addToEquipment(new Armors("Magic Pants", 12, 3, Types.ARMOR, 0, 0, 0,2, SlotType.LEGS, ArmorType.CLOTH));
+        player.addToEquipment(new Armors("Magic Boots", 12, 1, Types.ARMOR, 0, 0, 0,0, SlotType.FEET, ArmorType.CLOTH));
         this.player = player;
     }
     public void armorForRogue (Organism player) {
-        player.addToInventory(new Armors("Shadow Chest", 12, 6, Types.ARMOR, 0, 1, 2,0, ArmorType.LEATHER, SlotType.CHEST));
-        player.addToInventory(new Armors("Shadow Hands", 12, 3, Types.ARMOR, 0, 0, 0,0, ArmorType.LEATHER, SlotType.HANDS));
-        player.addToInventory(new Armors("Pants of Darkness", 12, 4, Types.ARMOR, 0, 0, 1,0, ArmorType.LEATHER, SlotType.LEGS));
-        player.addToInventory(new Armors("Spider Boots", 12, 3, Types.ARMOR, 0, 0, 0,0, ArmorType.LEATHER, SlotType.FEET));
+        player.addToEquipment(new Armors("Shadow Chest", 12, 6, Types.ARMOR, 0, 1, 2,0, SlotType.CHEST, ArmorType.LEATHER));
+        player.addToEquipment(new Armors("Shadow Hands", 12, 3, Types.ARMOR, 0, 0, 0,0, SlotType.HANDS, ArmorType.LEATHER));
+        player.addToEquipment(new Armors("Pants of Darkness", 12, 4, Types.ARMOR, 0, 0, 1,0, SlotType.LEGS, ArmorType.LEATHER));
+        player.addToEquipment(new Armors("Spider Boots", 12, 3, Types.ARMOR, 0, 0, 0,0, SlotType.FEET, ArmorType.LEATHER));
         this.player = player;
     }
 }

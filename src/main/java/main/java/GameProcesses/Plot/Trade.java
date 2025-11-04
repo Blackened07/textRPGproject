@@ -19,26 +19,26 @@ public interface Trade extends PrintableInterfaces, GameScanner {
         while (!tradeActive) {
 
             System.out.println(npc.showItemsFromBackPackForTrade() + "\n" + line + "\n" + player.showItemsFromBackPackForTrade());
-
+            print("Используйте команды /buy - для покупки и /trade для продажи\nВведите /exitTrade чтобы выйти из диалога торговли");
             userInputForOperation = gameScanner(sc, npc.getSize(), player, events) - 1;
 
-            if (userInputForOperation == -26) {
+            if (userInputForOperation == BUY - 1) {
                 userInput = gameScanner(sc, npc.getSize(), player, events) - 1;
                 for (int i = 0; i < npc.getSize(); i++) {
                     if (userInput == i) {
-                        if (player.getWeightByStrength(player.maxWeight(), player.sumOfWeightInInventory() + npc.getFromBackPackWithIndex(i).getWeight())) {
+                        if (player.getWeightByStrength(player.maxWeight(), player.sumOfEquippedWeightAndBackPackWeight() + npc.getFromBackPackWithIndex(i).getWeight())) {
                             if (player.getGold() >= npc.getFromBackPackWithIndex(i).getCost()) {
                                 player.addToBackPack(npc.getFromBackPackWithIndex(i));
                                 player.setGoldAfterTrade(-(npc.getFromBackPackWithIndex(i).getCost()));
                                 npc.setGold(npc.getFromBackPackWithIndex(i).getCost());
                                 npc.removeFromBAckPack(i);
                             } else print("Not enough money");
-                        } else print("\nNot enough strength. Required strength: " + player.requiredStrength(player.sumOfWeightInInventory() + npc.getFromBackPackWithIndex(i).getWeight()));
+                        } else print("\nNot enough strength. Required strength: " + player.requiredStrength(player.sumOfEquippedWeightAndBackPackWeight() + npc.getFromBackPackWithIndex(i).getWeight()));
                         break;
                     }
                 }
             }
-            if (userInputForOperation == -51) {
+            if (userInputForOperation == TRADE - 1) {
                 userInput = gameScanner(sc, npc.getSize(), player, events) - 1;
                 for (int i = 0; i < npc.getSize(); i++) {
                     if (userInput == i) {
@@ -52,7 +52,7 @@ public interface Trade extends PrintableInterfaces, GameScanner {
                     }
                 }
             }
-            if (userInputForOperation == -76) events.startEvent(player, sc);
+            if (userInputForOperation == EXIT_TRADE - 1) events.startEvent(player, sc);
         }
     }
 

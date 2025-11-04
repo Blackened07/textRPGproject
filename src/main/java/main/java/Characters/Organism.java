@@ -1,7 +1,9 @@
 package main.java.Characters;
 
+import main.java.GameProcesses.Plot.Quests.ActiveQuests;
 import main.java.GameProcesses.Services.PrintableInterfaces;
 import main.java.GameProcesses.Services.UseItemsFromBackPack;
+import main.java.Items.EquipableItem.EquipableItem;
 import main.java.Items.Item;
 import main.java.Items.Types;
 import main.java.Spells.Spell;
@@ -30,6 +32,8 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     private float evasion;
     private float spellResistance;
     private float attackSpeed;
+
+    private float fullAttackPower;
 
     final float attackPowerANDSpellPowerANDAttackSpeedCoefficient = 1.6f;
     final float evasionCoefficient = 2f;
@@ -82,6 +86,9 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     public float getSpellResistance() {return (getIntellect() + getStamina()) / spellResistanceCoefficient;}
     public float getAttackSpeed() {return (getAgility() + getStamina()/attackSpeedCoefficient) / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
 
+    public float getFullAttackPower() {return fullAttackPower;}
+    public void setFullAttackPower(float fullAttackPower) {this.fullAttackPower = fullAttackPower;}
+
     /** ECONOMY */
     public int getGold() {return gold;}
     public void setGold(int gold) {this.gold += gold;}
@@ -92,16 +99,14 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     }
 
     /** BANK */
-    public void addToInventory(Item item) {}
+    public void addToEquipment(EquipableItem item) {}
     public void addToBackPack(Item item){}
     public Item getFromBackPack (String name) {return null;}
     public Item getFromBackPackWithIndex (int index) {return null;}
     public boolean findItemWithName(String name) {return false;}
-    public String showItemsFromBackPackForTrade() {return "";}
-    public String showItemsFromBackPack(){return "";}
     public int getSize(){return 0;}
     public void removeFromBAckPack(int index){}
-    public int sumOfWeightInInventory() {return backPack.sumOfWeightOfItemsInBackPack() + inventory.sumOfWeightOfItemsEquipped();}
+    public int sumOfEquippedWeightAndBackPackWeight() {return backPack.sumOfWeightOfItemsInBackPack() + inventory.sumOfWeightOfEquippedItems();}
     public float maxWeight() {return 0;}
     public Types getItemType(int index){return null;}
     public void setWeaponFromBackPackToInventory(int index){};
@@ -109,11 +114,33 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     public void useFood(int index) {}
     public void dropItem(int index) {}
 
+    /**ShowItems */
+    public String showItemsFromBackPackForTrade() {return "";}
+    public String showItemsFromBackPack(){return "";}
+    public void showItemsFromEquipment(){}
+
+    /** QUESTS */
+    public void addQuestToJouranl (ActiveQuests quest){};
+    public void showQuestJournal(){}
+    public boolean getQuestObjective(String name){return false;}
+
     /** EXP AND LEVEL*/
     public int getLevel() {return level;}
     public void setLevel() {this.level ++;}
     public int getExperience() {return experience;}
     public void setExperience(int experience) {this.experience = experience;}
+    public void checkExp(){}
+
+    /**Attack */
+
+    public void autoAttack (Organism attacker, Organism target) {
+        attacker.setFullAttackPower(attacker.getAttackPower() + attacker.getAttackSpeed() / attackPowerANDSpellPowerANDAttackSpeedCoefficient + (float)(Math.random() * 5));
+        takingPhysicalDamage(attacker, target);
+
+    }
+    public void takingPhysicalDamage(Organism attacker, Organism target) {
+        target.setCurrentHealth(target.getCurrentHealth() - attacker.getFullAttackPower() + target.getEvasion());
+    }
 
     /** SPELLS*/
     public void addToSpellBook(Spell spell){};

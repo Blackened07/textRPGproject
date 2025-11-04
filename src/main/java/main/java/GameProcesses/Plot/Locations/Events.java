@@ -17,10 +17,8 @@ public abstract class Events implements GameScanner, PrintableInterfaces, Trade,
     Organism player;
     Dialogue dialogue;
     private final String START_EVENT = "StartEvent";
-    private final String SWITCH_EVENT = "SwitchEvent";
     private final String START_QUEST = "StartQuest";
     private final String QUEST_COMPLETE = "QuestComplete";
-    private final String START_TRADE = "StartTrade";
     private final String PHRASE_1 = "Phrase1";
     private final String PHRASE_2 = "Phrase2";
     private final String PHRASE_3 = "Phrase3";
@@ -37,10 +35,8 @@ public abstract class Events implements GameScanner, PrintableInterfaces, Trade,
     }
     /// WORK WITH VARS
     protected String getSTART_EVENT() {return START_EVENT;}
-    protected String getSWITCH_EVENT() {return SWITCH_EVENT;}
     protected String getSTART_QUEST() {return START_QUEST;}
     protected String getQUEST_COMPLETE() {return QUEST_COMPLETE;}
-    protected String getSTART_TRADE() {return START_TRADE;}
     protected String getPHRASE_1() {return PHRASE_1;}
     protected String getPHRASE_2() {return PHRASE_2;}
     protected String getPHRASE_3() {return PHRASE_3;}

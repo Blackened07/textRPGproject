@@ -17,10 +17,10 @@ public interface StatsCalculator {
     int WEAPON_INDEX = 7;
     float WEIGHT_COEFFICIENT = 2.9f;
 
-    default float getStat(Equipment inventory, int statIndex) {
-        return /*inventory.getWeaponFeatures(statIndex) +*/ inventory.getArmorFeatures(HEAD_INDEX, statIndex) + inventory.getArmorFeatures(BACK_INDEX, statIndex) + inventory.getArmorFeatures(CHEST_INDEX, statIndex)
-                +  inventory.getArmorFeatures(SHOULDERS_INDEX, statIndex) + inventory.getArmorFeatures(HANDS_INDEX, statIndex) + inventory.getArmorFeatures(LEGS_INDEX, statIndex)
-                + inventory.getArmorFeatures(FEET_INDEX, statIndex) + inventory.getArmorFeatures(WEAPON_INDEX, statIndex);
+    default float getStat(Equipment equipment, int statIndex) {
+        return equipment.getArmorFeatures(HEAD_INDEX, statIndex) + equipment.getArmorFeatures(BACK_INDEX, statIndex) + equipment.getArmorFeatures(CHEST_INDEX, statIndex)
+                +  equipment.getArmorFeatures(SHOULDERS_INDEX, statIndex) + equipment.getArmorFeatures(HANDS_INDEX, statIndex) + equipment.getArmorFeatures(LEGS_INDEX, statIndex)
+                + equipment.getArmorFeatures(FEET_INDEX, statIndex) + equipment.getArmorFeatures(WEAPON_INDEX, statIndex);
     }
     default boolean getWeightByStrength (float strength, int weight) {
         return !(strength  < weight);

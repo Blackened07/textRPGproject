@@ -1,31 +1,31 @@
 package main.java.Characters;
 
+import main.java.Items.EquipableItem.EquipableItem;
 import main.java.Items.Item;
-import main.java.Items.Types;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Equipment implements StatsCalculator{
-    private Set<Item> equipment;
+    private Set<EquipableItem> equipment;
 
     public Equipment() {
         this.equipment = new HashSet<>();
     }
 
-    public void addToInventory(Item item) {
+    public void addToEquipment(EquipableItem item) {
         equipment.add(item);
     }
 
-    public int sumOfWeightOfItemsEquipped() {
+
+    public int sumOfWeightOfEquippedItems() {
         return equipment.stream().
                 mapToInt(Item::getWeight).
                 sum();
     }
-    public void removeFromEquipment (Item item) {
+    public void removeFromEquipment (EquipableItem item) {
         equipment.remove(item);
     }
-
-
 
     /// ЭТО ИДИОТИЗМ? ОСТАВЛЮ ДЛЯ ИСТОРИИ
 
@@ -39,18 +39,9 @@ public class Equipment implements StatsCalculator{
         return 0;
     }*/
 
-    public float getWeaponFeatures(int index) {
-        float[] features = new float[SUM_OF_ALL_STATS];
-        for (Item w : equipment) {
-            if (Objects.requireNonNull(w.getType()) == Types.WEAPON) {
-                features = w.getAllStats();
-            }
-        }
-        return features[index];
-    }
     public float getArmorFeatures(int indexSlot, int indexStat){
         float[][] stats = new float[SUM_OF_ALL_ITEMS][SUM_OF_ALL_STATS];
-        for (Item a : equipment) {
+        for (EquipableItem a : equipment) {
             for (int i = 0; i < 7; i++) {
                 switch (a.getSlotType()) {
                     case HEAD -> stats[HEAD_INDEX] = a.getAllStats();
@@ -65,6 +56,14 @@ public class Equipment implements StatsCalculator{
             }
         }
         return stats[indexSlot][indexStat];
+    }
+
+    public StringBuilder showAllEquippedItems() {
+        StringBuilder sb = new StringBuilder();
+        equipment.forEach(equipableItem -> sb.
+                append(" - ").append(equipableItem.getName()).
+                append(" - ").append(equipableItem.getFeatures()).append("\n"));
+        return sb;
     }
 
 }

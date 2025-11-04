@@ -16,8 +16,8 @@ public class Game  {
     Events silverShire;
     Scanner sc;
     Organism player;
-    private static final String PATH_NAME_START_GAME_EVENT = "story/StartEvent.json";
-    private static final String PATH_NAME_SILVERSHIRE_EVENT = "story/SilverShireVillageEvent.json";
+    private static final String PATH_NAME_START_GAME_EVENT = "resources/StartEvent.json";
+    private static final String PATH_NAME_SILVERSHIRE_EVENT = "resources/SilverShireVillageEvent.json";
 
     public Game(StoryReader story) {
         this.story = story;

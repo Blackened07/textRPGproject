@@ -1,8 +1,8 @@
 package main.java.Items;
 
-import main.java.Items.Armor.Features;
+import main.java.Items.EquipableItem.Armor.Features;
 
-public class Item implements Features {
+public class Item {
     private final String name;
     private final int cost;
     private final int weight;
@@ -15,10 +15,6 @@ public class Item implements Features {
         this.type = type;
     }
 
-    @Override
-    public String getFeatures() {
-        return "";
-    }
     public String getName() {
         return name;
     }
@@ -27,9 +23,7 @@ public class Item implements Features {
     }
     public int getCost() {return cost;}
     public int getWeight() {return weight;}
-    public float[] getAllStats() {return null;}
-    public float getAttackPower(){return 0;};
-    public SlotType getSlotType(){return null;}
+
     public float getRESTORES_HEALTH(){return 0;};
 
     @Override
