@@ -13,11 +13,23 @@ public class Creature extends Organism {
         super(name, strength, stamina, agility, intellect, experience, gold);
         this.loot = new BackPack();
         loot.addListOfLootToBackPack(Loot.getLoot(name));
+        setCurrentHealth(getHealthMaxValue());
+        setCurrentMana(getManaMaxValue());
     }
 
     @Override
     public Item getFromBackPackWithIndex(int index) {
         return loot.getFromBackPack(index);
+    }
+
+    @Override
+    public String findQuestItemInCreaturesBackPack() {
+        return loot.findQuestItem();
+    }
+
+    @Override
+    public Item addQuestItemToPlayerFromCreature() {
+        return loot.getQuestItem();
     }
 
     @Override

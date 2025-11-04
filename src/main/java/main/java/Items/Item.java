@@ -1,7 +1,5 @@
 package main.java.Items;
 
-import main.java.Items.EquipableItem.Armor.Features;
-
 public class Item {
     private final String name;
     private final int cost;
@@ -30,5 +28,7 @@ public class Item {
     public String toString() {
         return name;
     }
-
+    public String getFOR_QUEST() {
+        return "";
+    }
 }

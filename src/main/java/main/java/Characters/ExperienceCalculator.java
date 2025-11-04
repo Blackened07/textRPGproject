@@ -8,9 +8,14 @@ public class ExperienceCalculator {
     private static int expRise = 200;
     private static int expNeeded = 200;
 
+
     private static void setExpNeed() {expNeeded += expRise;}
     private static void setRiseCoefficient() {riseCoefficient += 100;}
     private static void setExpRise() {expRise += riseCoefficient;}
+
+    public static int getExpNeeded() {
+        return expNeeded;
+    }
 
     private static void levelUp() {
         setExpNeed();
@@ -18,12 +23,21 @@ public class ExperienceCalculator {
         setRiseCoefficient();
         System.out.println("DING!!!");
     }
-    public static boolean checkExp (int currentExp) {
-        if (currentExp == expNeeded) {
+    public static void checkExp (int currentExp, int expGained, Organism player) {
+        int whenExpGainedMoreThenNeeded;
+        if (currentExp + expGained == expNeeded) {
+            player.setExperience(expGained);
             levelUp();
-            return true;
-        }
-        return false;
+            player.setLevel();
+            player.setExpWhenLevelUp();
+        } else if (currentExp + expGained > expNeeded) {
+            whenExpGainedMoreThenNeeded = expGained - (expNeeded - currentExp);
+            levelUp();
+            player.setLevel();
+            player.setExpWhenLevelUp();
+            player.setExperience(whenExpGainedMoreThenNeeded);
+        } else player.setExperience(expGained);
     }
+
 
 }

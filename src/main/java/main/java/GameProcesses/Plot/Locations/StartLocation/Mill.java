@@ -38,7 +38,7 @@ public class Mill extends Events implements RandomNumberGenerator, Fight, Creatu
         //StartEventWithRandomFight
         setCurrentEvent(getSTART_EVENT());
 
-        fight(player, getCreature(NORTH_FROM_CROSSROADS), sc, this);
+        fight(player, getCreature(NORTH_FROM_CROSSROADS), sc, this, "Elf Figure");
 
 
         printEventTextAndCommands(getSTART_EVENT(), this.dialogue);

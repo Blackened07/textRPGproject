@@ -40,6 +40,14 @@ public class BackPack {
     public void remove(int index) {
         backPack.remove(index);
     }
+    public void removeByName(String name) {
+        for (int i = 0; i < backPack.size(); i++) {
+            if (backPack.get(i).getName().equals(name)){
+                backPack.remove(i);
+                break;
+            }
+        }
+    }
     public int sumOfWeightOfItemsInBackPack () {
         return backPack.stream().
                 mapToInt(Item::getWeight).
@@ -76,5 +84,18 @@ public class BackPack {
     }
     public Types getItemType (int index) {
         return backPack.get(index).getType();
+    }
+    public String findQuestItem () {
+        for (Item i : backPack) {
+            if (i.getType().equals(Types.QUEST_ITEM)) return i.getName();
+        }
+        return "";
+    }
+
+    public Item getQuestItem () {
+        for (Item i : backPack) {
+            if (i.getType().equals(Types.QUEST_ITEM)) return i;
+        }
+        return null;
     }
 }

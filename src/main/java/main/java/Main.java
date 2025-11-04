@@ -2,6 +2,7 @@ package main.java;
 
 import main.java.Characters.Creature;
 import main.java.GameProcesses.Game;
+import main.java.GameProcesses.GameOver;
 import main.java.GameProcesses.Plot.Quests.Quest;
 import main.java.GameProcesses.Services.InvalidCommandException;
 import main.java.GameProcesses.Services.PrintableInterfaces;
@@ -36,11 +37,8 @@ public class Main implements PrintableInterfaces {
         Quest quest = new Quest();
         Loot loot = new Loot();
 
-        /*Creature c = new Creature("Boar", 8, 5, 4, 5, 0, 10);
-        System.out.println(c.getFromBackPackWithIndex(1).getName());*/
-
-
         Game game = new Game(story);
+        GameOver go = new GameOver(game);
         game.startGame();
     }
 }

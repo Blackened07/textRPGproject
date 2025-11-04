@@ -6,6 +6,7 @@ public enum Types {
     ARMOR,
     FOOD,
     QUEST_ITEM,
+    KEY,
     QUEST_ITEM_FROM_NPC,
     FOOD_FOR_COOK,
     JUNK,

@@ -13,8 +13,8 @@ public interface CreatureGenerator extends RandomNumberGenerator{
         switch (location) {
             case NORTH_FROM_CROSSROADS -> {
                 if (randomToStartFight() % 2 == 0 ) {
-                    return new Creature("Boar", 8, 5, 4, 5, 0, 10);
-                } else return new Creature("Wolf", 6,7,6,5, 0, 10);
+                    return new Creature("Boar", 12, 9, 7, 1, 0, 10);
+                } else return new Creature("Wolf", 11,10,9,1, 0, 10);
             }
         }
         return null;

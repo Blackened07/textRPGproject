@@ -46,8 +46,6 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     BackPack backPack;
     SpellBook spellBook;
 
-    /// ADD QUESTS, DIALOGUES
-
     public Organism(String name, float strength, float stamina, float agility, float intellect, int experience, int gold) {
         this.NAME = name;
         this.strength = strength;
@@ -113,6 +111,8 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     public void changeWeapon(int index){};
     public void useFood(int index) {}
     public void dropItem(int index) {}
+    public void removeFromBackPackByName(String name) {}
+
 
     /**ShowItems */
     public String showItemsFromBackPackForTrade() {return "";}
@@ -122,14 +122,22 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     /** QUESTS */
     public void addQuestToJouranl (ActiveQuests quest){};
     public void showQuestJournal(){}
-    public boolean getQuestObjective(String name){return false;}
+    public boolean getQuestObjectiveIsComplete(String name){return false;}
+    public boolean getQuestObjectiveName(String name) {return false;}
+    public String findQuestItemInCreaturesBackPack(){return "";}
+    public Item addQuestItemToPlayerFromCreature () {return null;}
+    public boolean findQuestInJournal(ActiveQuests aq) {return true;}
+    public void setQuestObjectiveCounter (String name) {}
+    public void removeQuestFromJournal (String name) {}
 
     /** EXP AND LEVEL*/
     public int getLevel() {return level;}
     public void setLevel() {this.level ++;}
-    public int getExperience() {return experience;}
-    public void setExperience(int experience) {this.experience = experience;}
-    public void checkExp(){}
+    public int getCurrentExperience() {return experience;}
+    public void setExperience(int experience) {this.experience += experience;}
+    public void checkExp(int exp){}
+    public int getExpNeedToLevelUp(){return 0;}
+    public void setExpWhenLevelUp(){this.experience = 0;}
 
     /**Attack */
 

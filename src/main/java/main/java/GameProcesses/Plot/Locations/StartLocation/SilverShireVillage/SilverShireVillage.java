@@ -12,7 +12,6 @@ import main.java.GameProcesses.Services.ConsoleCommands;
 import main.java.GameProcesses.Services.InvalidCommandException;
 import main.java.Items.Food.Food;
 import main.java.Items.Item;
-import main.java.Items.Potion.Potions;
 import main.java.Items.Types;
 
 import java.util.Scanner;
@@ -85,7 +84,7 @@ public class SilverShireVillage extends Events {
     }
 
     private void setBoyDialogue() {
-        boyDialogue = new BoyDialogue("BoyDialogue", Location.SILVERSHIRE_VILLAGE, new Dialogue(PATH_NAME_BOY_EVENT), this, new ActiveQuests("ElfFigure", Quest.getQuest("ElfFigure"), 1));
+        boyDialogue = new BoyDialogue("BoyDialogue", Location.SILVERSHIRE_VILLAGE, new Dialogue(PATH_NAME_BOY_EVENT), this, new ActiveQuests("ElfFigure", Quest.getQuest("ElfFigure"), 1, "Elf Figure"));
     }
     private void setTavernMasterDialogue() {
         tavernMaster = new NPC("Sednon", 5,5,5,5,150, 500);

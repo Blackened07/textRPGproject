@@ -3,7 +3,6 @@ package main.java.Characters;
 import main.java.GameProcesses.Plot.Quests.ActiveQuests;
 import main.java.Items.EquipableItem.EquipableItem;
 import main.java.Items.Item;
-import main.java.Items.QuestItem;
 import main.java.Items.Types;
 import main.java.Items.EquipableItem.Weapon.Weapon;
 import main.java.Spells.Spell;
@@ -28,49 +27,149 @@ public class Player extends Organism implements StatsCalculator {
         this.spellBook = new SpellBook();
         this.weapon = weapon;
         this.questJournal = new QuestJournal();
+        setCurrentHealth(getHealthMaxValue());
+        setCurrentMana(getManaMaxValue());
     }
-    /** BASE STATS */
+
+    /**
+     * BASE STATS
+     */
     @Override
-    public float getStrength() {return super.getStrength() + getStat(equipment, STRENGTH_INDEX);}
-    public float getStamina() {return super.getStamina() + getStat(equipment, STAMINA_INDEX);}
-    public float getAgility() {return super.getAgility() + getStat(equipment, AGILITY_INDEX);}
-    public float getIntellect() {return super.getIntellect() + getStat(equipment, INTELLECT_INDEX);}
+    public float getStrength() {
+        return super.getStrength() + getStat(equipment, STRENGTH_INDEX);
+    }
+
+    public float getStamina() {
+        return super.getStamina() + getStat(equipment, STAMINA_INDEX);
+    }
+
+    public float getAgility() {
+        return super.getAgility() + getStat(equipment, AGILITY_INDEX);
+    }
+
+    public float getIntellect() {
+        return super.getIntellect() + getStat(equipment, INTELLECT_INDEX);
+    }
 
 
-    /** HEALTH AND MANA */
+    /**
+     * HEALTH AND MANA
+     */
 
-    @Override public float getCurrentHealth() {return currentHealth;}
-    @Override public float getCurrentMana() {return currentMana;}
-    @Override public void setCurrentHealth(float currentHealth) {this.currentHealth = currentHealth;}
-    @Override public void setCurrentMana(float currentMana) {this.currentMana = currentMana;}
-    @Override public float getHealthMaxValue() {return getBASE_HEALTH() + getStamina();}
-    @Override public float getManaMaxValue() {return getBASE_MANA() + getIntellect();}
+    @Override
+    public float getCurrentHealth() {
+        return currentHealth;
+    }
 
-    @Override public void checkRestoreValueWhileHealing(float health) {
+    @Override
+    public float getCurrentMana() {
+        return currentMana;
+    }
+
+    @Override
+    public void setCurrentHealth(float currentHealth) {
+        this.currentHealth = currentHealth;
+    }
+
+    @Override
+    public void setCurrentMana(float currentMana) {
+        this.currentMana = currentMana;
+    }
+
+    @Override
+    public float getHealthMaxValue() {
+        return getBASE_HEALTH() + getStamina();
+    }
+
+    @Override
+    public float getManaMaxValue() {
+        return getBASE_MANA() + getIntellect();
+    }
+
+    @Override
+    public void checkRestoreValueWhileHealing(float health) {
         if ((getCurrentHealth() + health) > getHealthMaxValue()) {
             setCurrentHealth(getHealthMaxValue());
             print("Восстановлено: " + (getHealthMaxValue() - getCurrentHealth()) + " здоровья");
-        } else {setCurrentHealth(getCurrentHealth() + health);
-        print("Восстановлено: " + health + "здоровья");}
+        } else {
+            setCurrentHealth(getCurrentHealth() + health);
+            print("Восстановлено: " + health + "здоровья");
+        }
     }
 
-    /** SECONDARY STATS/FEATURES */
-    @Override public float getAttackPower() {return (getStrength() / attackPowerANDSpellPowerANDAttackSpeedCoefficient) + weapon.getAttackPower();}
-    @Override public float getSpellPower() {return getIntellect() / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
-    @Override public float getEvasion() {return getAgility() / evasionCoefficient;}
-    @Override public float getSpellResistance() {return (getIntellect() + getStamina()) / spellResistanceCoefficient;}
-    @Override public float getAttackSpeed() {return ((getAgility() + getStamina()) / attackSpeedCoefficient) / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
+    /**
+     * SECONDARY STATS/FEATURES
+     */
+    @Override
+    public float getAttackPower() {
+        return (getStrength() / attackPowerANDSpellPowerANDAttackSpeedCoefficient) + weapon.getAttackPower();
+    }
 
-    /** EXP AND LEVEL*/
-    @Override public int getExperience() {return super.getExperience();}
-    @Override public int getLevel() {return super.getLevel();}
-    @Override public void setLevel() {super.setLevel();} //afterLvlUpInvokeThis
-    @Override public void setExperience(int experience) {super.setExperience(experience);} //for fights and quests
-    public void checkExp() {if (ExperienceCalculator.checkExp(getExperience())) setLevel();} //final of fight or quest
+    @Override
+    public float getSpellPower() {
+        return getIntellect() / attackPowerANDSpellPowerANDAttackSpeedCoefficient;
+    }
 
-    public float getWEIGHT_COEFFICIENT() {return WEIGHT_COEFFICIENT;}
+    @Override
+    public float getEvasion() {
+        return getAgility() / evasionCoefficient;
+    }
 
-    /** QUESTS */
+    @Override
+    public float getSpellResistance() {
+        return (getIntellect() + getStamina()) / spellResistanceCoefficient;
+    }
+
+    @Override
+    public float getAttackSpeed() {
+        return ((getAgility() + getStamina()) / attackSpeedCoefficient) / attackPowerANDSpellPowerANDAttackSpeedCoefficient;
+    }
+
+    /**
+     * EXP AND LEVEL
+     */
+    @Override
+    public int getCurrentExperience() {
+        return super.getCurrentExperience();
+    }
+
+    @Override
+    public int getLevel() {
+        return super.getLevel();
+    }
+
+    @Override
+    public void setLevel() {
+        super.setLevel();
+    } //afterLvlUpInvokeThis
+
+    @Override
+    public void setExperience(int experience) {
+        super.setExperience(experience);
+    } //for fights and quests
+
+    public void checkExp(int experience) {
+        ExperienceCalculator.checkExp(this.getCurrentExperience(), experience, this);
+    }
+
+    /// final of fight or quest
+    @Override
+    public int getExpNeedToLevelUp() {
+        return ExperienceCalculator.getExpNeeded();
+    }
+
+    @Override
+    public void setExpWhenLevelUp() {
+        super.setExpWhenLevelUp();
+    }
+
+    public float getWEIGHT_COEFFICIENT() {
+        return WEIGHT_COEFFICIENT;
+    }
+
+    /**
+     * QUESTS
+     */
 
     @Override
     public void addQuestToJouranl(ActiveQuests quest) {
@@ -78,11 +177,35 @@ public class Player extends Organism implements StatsCalculator {
         print("Quest " + quest.getQuestName() + " Accepted");
     }
 
-    @Override public void showQuestJournal() {System.out.println(questJournal.ShowAllQuests());}
+    @Override
+    public void showQuestJournal() {
+        System.out.println(questJournal.ShowAllQuests());
+    }
 
     @Override
-    public boolean getQuestObjective(String name) {
-        return questJournal.getQuestObjective(name);
+    public boolean getQuestObjectiveIsComplete(String name) {
+        return questJournal.isItemIsQuestObjective(name);
+    }
+
+    @Override
+    public boolean getQuestObjectiveName(String name) {
+        return questJournal.getQuestObjectiveName(name);
+    }
+
+    @Override
+    public boolean findQuestInJournal(ActiveQuests aq) {
+        return questJournal.findQuestInJournal(aq);
+    }
+
+    @Override
+    public void setQuestObjectiveCounter(String name) {
+        System.out.println("1");
+        questJournal.setQuestObjectiveCounter(name);
+    }
+
+    @Override
+    public void removeQuestFromJournal(String name) {
+        questJournal.removeQuest(name);
     }
 
     /***USING ITEMS*/
@@ -90,26 +213,31 @@ public class Player extends Organism implements StatsCalculator {
     private void setWeapon(EquipableItem weapon) {
         this.weapon = weapon;
     }
-    @Override public void setWeaponFromBackPackToInventory(int index) {
+
+    @Override
+    public void setWeaponFromBackPackToInventory(int index) {
         setWeapon((EquipableItem) backPack.getFromBackPack(index));
         addToEquipment((EquipableItem) backPack.getFromBackPack(index));
         removeFromBAckPack(index);
     }
-    @Override public void changeWeapon(int index) {
+
+    @Override
+    public void changeWeapon(int index) {
         addToBackPack(this.weapon);
         equipment.removeFromEquipment(this.weapon);
         this.setWeaponFromBackPackToInventory(index);
     }
+
     public void addToEquipment(EquipableItem a) {
         equipment.addToEquipment(a);
         print("\nYou have equipped item: " + a + " " + a.getFeatures());
     }
 
 
-
     @Override
     public void useFood(int index) {
         checkRestoreValueWhileHealing(getFromBackPackWithIndex(index).getRESTORES_HEALTH());
+        removeFromBAckPack(index);
     }
 
     @Override
@@ -118,22 +246,35 @@ public class Player extends Organism implements StatsCalculator {
         //set to world map
     }
 
-    /** BUSINESS*/
+    /**
+     * BUSINESS
+     */
     public void addToBackPack(Item item) {
         if (getWeightByStrength(maxWeight(), this.sumOfEquippedWeightAndBackPackWeight() + item.getWeight())) {
-            if (item.getType().equals(Types.QUEST_ITEM) && !questJournal.getQuest(((QuestItem) item).getFOR_QUEST()).isComplete()) {
-                questJournal.getQuest(((QuestItem) item).getFOR_QUEST()).setQuestObjectiveCounter(1);
+            if (item.getType().equals(Types.QUEST_ITEM) && !getQuestObjectiveIsComplete(item.getName())) {
+                setQuestObjectiveCounter(item.getName());
                 backPack.addToBackPack(item);
-            }
-        backPack.addToBackPack(item);
-        if (item instanceof EquipableItem e) {
-            print("\nYou receive item: " + e + "\n" + e.getFeatures() );
-        } else print("\nYou receive item: " + item );
-        } else print("\nNot enough strength. Required strength: " + requiredStrength(this.sumOfEquippedWeightAndBackPackWeight() + item.getWeight()));
+            } else backPack.addToBackPack(item);
+            if (item instanceof EquipableItem e) {
+                print("\nYou receive item: " + e + "\n" + e.getFeatures());
+            } else print("\nYou receive item: " + item);
+        } else
+            print("\nNot enough strength. Required strength: " + requiredStrength(this.sumOfEquippedWeightAndBackPackWeight() + item.getWeight()));
     }
-    public int sumOfEquippedWeightAndBackPackWeight () {return backPack.sumOfWeightOfItemsInBackPack() + equipment.sumOfWeightOfEquippedItems();}
-    @Override public float maxWeight() {return getStrength() * getWEIGHT_COEFFICIENT();}
-    public boolean findItemWithName (String name) {return backPack.findItemWithName(name);}
+
+    public int sumOfEquippedWeightAndBackPackWeight() {
+        return backPack.sumOfWeightOfItemsInBackPack() + equipment.sumOfWeightOfEquippedItems();
+    }
+
+    @Override
+    public float maxWeight() {
+        return getStrength() * getWEIGHT_COEFFICIENT();
+    }
+
+    public boolean findItemWithName(String name) {
+        return backPack.findItemWithName(name);
+    }
+
     @Override
     public String showItemsFromBackPackForTrade() {
         StringBuilder sb;
@@ -145,6 +286,7 @@ public class Player extends Organism implements StatsCalculator {
                 append("\nМаксимальный вес: ").append(maxWeight());
         return sb.toString();
     }
+
     @Override
     public String showItemsFromBackPack() {
         StringBuilder sb;
@@ -162,17 +304,46 @@ public class Player extends Organism implements StatsCalculator {
         System.out.println(equipment.showAllEquippedItems());
     }
 
-    @Override public Item getFromBackPack(String name) {return backPack.getFromBackPack(name);}
-    @Override public Item getFromBackPackWithIndex(int index) {return backPack.getFromBackPack(index);}
-    @Override public int getSize() {return backPack.getSize();}
-    @Override public void setGold(int gold) {super.setGold(gold);}
-    @Override public void removeFromBAckPack(int index) {backPack.remove(index);}
-    @Override public Types getItemType(int index) {return backPack.getItemType(index);}
+    @Override
+    public Item getFromBackPack(String name) {
+        return backPack.getFromBackPack(name);
+    }
+
+    @Override
+    public Item getFromBackPackWithIndex(int index) {
+        return backPack.getFromBackPack(index);
+    }
+
+    @Override
+    public int getSize() {
+        return backPack.getSize();
+    }
+
+    @Override
+    public void setGold(int gold) {
+        super.setGold(gold);
+        print("You receive : " + gold + " gold");
+    }
+
+    @Override
+    public void removeFromBAckPack(int index) {
+        backPack.remove(index);
+    }
+
+    @Override
+    public void removeFromBackPackByName(String name) {
+        backPack.removeByName(name);
+    }
+
+    @Override
+    public Types getItemType(int index) {
+        return backPack.getItemType(index);
+    }
 
 
     @Override
     public void autoAttack(Organism attacker, Organism target) {
-        attacker.setFullAttackPower(attacker.getAttackPower() + attacker.getAttackSpeed() / attackPowerANDSpellPowerANDAttackSpeedCoefficient + (float)(Math.random() * 5));
+        attacker.setFullAttackPower(attacker.getAttackPower() + attacker.getAttackSpeed() / attackPowerANDSpellPowerANDAttackSpeedCoefficient + (float) (Math.random() * 5));
         takingPhysicalDamage(attacker, target);
     }
 
@@ -181,8 +352,9 @@ public class Player extends Organism implements StatsCalculator {
         target.setCurrentHealth(target.getCurrentHealth() - attacker.getAttackPower() + target.getEvasion());
     }
 
-    /** FIGHT */
-
+    /**
+     * FIGHT
+     */
 
 
     public void addToSpellBook(Spell spell) {
