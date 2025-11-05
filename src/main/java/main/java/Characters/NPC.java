@@ -11,6 +11,8 @@ public class NPC extends Organism implements StatsCalculator{
         super(name, strength, stamina, agility, intellect, experience, gold);
         this.inventory = new Equipment();
         this.backPack = new BackPack();
+        setHealthMaxValue();
+        setManaMaxValue();
     }
 
     @Override

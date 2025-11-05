@@ -40,12 +40,6 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
 
     private float fullAttackPower;
 
-    final float attackPowerANDSpellPowerANDAttackSpeedCoefficient = 1.6f;
-    final float evasionCoefficient = 2f;
-    final float spellResistanceCoefficient = 16f;
-    final float attackSpeedCoefficient = 10f;
-    private final float WEIGHT_COEFFICIENT = 2.9f;
-
     private int gold;
 
     Equipment equipment;
@@ -63,6 +57,8 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
         this.equipment = new Equipment();
         this.backPack = new BackPack();
         this.spellBook = new SpellBook();
+        setHealthMaxValue();
+        setManaMaxValue();
     }
     /** BASE STATS */
     public String getNAME() {return NAME;}
@@ -94,17 +90,26 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     public void setCurrentHealth(float health) {this.currentHealth = health;}
     public void setCurrentMana(float currentMana) {this.currentMana = currentMana;}
 
-    public float getHealthMaxValue() {return BASE_HEALTH + getFullStamina();} //MaxHealth
-    public float getManaMaxValue() {return BASE_MANA + getFullIntellect();}
+    public float getHealthMaxValue() {return healthMaxValue ;} //MaxHealth
+    public float getManaMaxValue() {return manaMaxValue;}
 
-    public void checkRestoreValueWhileHealing(float health) {}
+    public void setHealthMaxValue() {this.healthMaxValue = BASE_HEALTH + getFullStamina();}
+    public void setManaMaxValue() {this.manaMaxValue = BASE_MANA + getFullIntellect();}
+
+    public void setAttackPower(float attackPower) {this.attackPower = attackPower;}
+    public void setSpellPower(float spellPower) {this.spellPower = spellPower;}
+    public void setEvasion(float evasion) {this.evasion = evasion;}
+    public void setSpellResistance(float spellResistance) {this.spellResistance = spellResistance;}
+    public void setAttackSpeed(float attackSpeed) {this.attackSpeed = attackSpeed;}
+
+    public float getAttackPower() {return attackPower;}
+    public float getSpellPower() {return spellPower;}
+    public float getEvasion() {return evasion;}
+    public float getSpellResistance() {return spellResistance;}
+    public float getAttackSpeed() {return attackSpeed;}
 
     /** SECONDARY STATS/FEATURES */
-    public float getAttackPower() {return getFullStrength() / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
-    public float getSpellPower() {return getFullIntellect() / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
-    public float getEvasion() {return getFullAgility() / evasionCoefficient;}
-    public float getSpellResistance() {return (getFullIntellect() + getFullStamina()) / spellResistanceCoefficient;}
-    public float getAttackSpeed() {return (getFullAgility() + getFullStamina()/attackSpeedCoefficient) / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
+
 
     public float getFullAttackPower() {return fullAttackPower;}
     public void setFullAttackPower(float fullAttackPower) {this.fullAttackPower = fullAttackPower;}
@@ -130,7 +135,9 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     public int getSize() {return backPack.getSize();}
     public void removeFromBAckPack(int index) {backPack.remove(index);}
     public int sumOfEquippedWeightAndBackPackWeight() {return backPack.sumOfWeightOfItemsInBackPack() + equipment.sumOfWeightOfEquippedItems();}
-    public float maxWeight() {return getFullStrength() * WEIGHT_COEFFICIENT;}
+    public float maxWeight() {
+        float WEIGHT_COEFFICIENT = 2.9f;
+        return getFullStrength() * WEIGHT_COEFFICIENT;}
     public Types getItemType(int index) {return backPack.getItemType(index);}
     public void removeFromBackPackByName(String name) {backPack.removeByName(name);}
 
@@ -140,13 +147,14 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
         checkRestoreValueWhileHealing(getFromBackPackWithIndex(index).getRESTORES_HEALTH());
         removeFromBAckPack(index);
     }
+    public void checkRestoreValueWhileHealing(float health) {}
     /**ShowItems */
     public String showItemsFromBackPackForTrade() {return "";}
     public String showItemsFromBackPack(){return "";}
     public void showItemsFromEquipment(){}
 
     /** QUESTS */
-    public void addQuestToJouranl (ActiveQuests quest){};
+    public void addQuestToJournal (ActiveQuests quest){};
     public void showQuestJournal(){}
     public boolean getQuestObjectiveIsComplete(String name){return false;}
     public boolean getQuestObjectiveName(String name) {return false;}
@@ -158,7 +166,17 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
 
     /** EXP AND LEVEL*/
     public int getLevel() {return level;}
-    public void setLevel() {this.level ++;}
+    public void setLevel() {
+        int riseStat = 2;
+        this.level ++;
+        setBaseStrength(getBaseStrength() + riseStat);
+        setBaseStamina(getBaseStamina() + riseStat);
+        setBaseAgility(getBaseAgility() + riseStat);
+        setBaseIntellect(getBaseIntellect() + riseStat);
+        setHealthMaxValue();
+        setManaMaxValue();
+        equipment.iterateAllEquippedItems(this);
+    }
     public int getCurrentExperience() {return experience;}
     public void setExperience(int experience) {this.experience += experience;}
     public void checkExp(int exp){}
@@ -168,6 +186,7 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     /** FIGHT **/
     /** Physical_Attack */
     public void autoAttack(Organism attacker, Organism target) {
+        float attackPowerANDSpellPowerANDAttackSpeedCoefficient = 1.6f;
         attacker.setFullAttackPower(attacker.getAttackPower() + attacker.getAttackSpeed() / attackPowerANDSpellPowerANDAttackSpeedCoefficient + (float) (Math.random() * 5));
         takingPhysicalDamage(attacker, target);
     }

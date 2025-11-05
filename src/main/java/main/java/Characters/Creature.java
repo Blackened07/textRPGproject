@@ -13,8 +13,8 @@ public class Creature extends Organism {
         super(name, strength, stamina, agility, intellect, experience, gold);
         this.loot = new BackPack();
         loot.addListOfLootToBackPack(Loot.getLoot(name));
-        setCurrentHealth(getHealthMaxValue());
-        setCurrentMana(getManaMaxValue());
+        setHealthMaxValue();
+        setManaMaxValue();
     }
 
     @Override

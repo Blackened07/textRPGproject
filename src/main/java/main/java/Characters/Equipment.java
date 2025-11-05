@@ -4,10 +4,12 @@ import main.java.Items.EquipableItem.EquipableItem;
 import main.java.Items.Item;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Equipment implements StatsCalculator{
-
+    final float attackPowerANDSpellPowerANDAttackSpeedCoefficient = 1.6f;
+    final float evasionCoefficient = 2f;
+    final float spellResistanceCoefficient = 16f;
+    final float attackSpeedCoefficient = 10f;
 
     private Set<EquipableItem> equipment;
 
@@ -17,20 +19,43 @@ public class Equipment implements StatsCalculator{
 
     public void addToEquipment(EquipableItem item, Organism player) {
         equipment.add(item);
-        calculatingWhenAddItem(item, player);
+        calculatingEquipped(item, player);
     }
 
-    public void calculatingWhenAddItem(EquipableItem item, Organism player) {
+    public void calculatingEquipped(EquipableItem item, Organism player) {
         player.setFullStrength(calculateEquipmentStrength(item));
         player.setFullStamina(calculateEquipmentStamina(item));
         player.setFullAgility(calculateEquipmentAgility(item));
         player.setFullIntellect(calculateEquipmentIntellect(item));
+
+        player.setAttackPower(calculateAttackPower(player.getFullStrength()));
+        player.setSpellPower(calculateSpellPower(player.getFullIntellect()));
+        player.setEvasion(calculateEvasion(player.getFullAgility()));
+        player.setSpellResistance(calculateSpellResistance(player.getFullIntellect(), player.getFullStamina()));
+        player.setAttackSpeed(calculateAttackSpeed(player.getFullAgility(), player.getFullStamina()));
     }
+    public float calculateAttackPower(float fullStrength) {return fullStrength / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
+    public float calculateSpellPower(float fullIntellect) {return fullIntellect / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
+    public float calculateEvasion(float fullAgility) {return fullAgility / evasionCoefficient;}
+    public float calculateSpellResistance(float fullIntellect, float fullStamina) {return (fullIntellect + fullStamina) / spellResistanceCoefficient;}
+    public float calculateAttackSpeed(float fullAgility, float fullStamina) {return (fullAgility + fullStamina/attackSpeedCoefficient) / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
 
     public int sumOfWeightOfEquippedItems() {
         return equipment.stream().
                 mapToInt(Item::getWeight).
                 sum();
+    }
+    public StringBuilder showAllEquippedItems() {
+        StringBuilder sb = new StringBuilder();
+        equipment.forEach(equipableItem -> sb.
+                append(" - ").append(equipableItem.getName()).
+                append(" - ").append(equipableItem.getFeatures()).append("\n"));
+        return sb;
+    }
+    public void iterateAllEquippedItems(Organism player) {
+        for (EquipableItem e : equipment) {
+            calculatingEquipped(e, player);
+        }
     }
     public void removeFromEquipment (EquipableItem item) {
         equipment.remove(item);
@@ -46,8 +71,7 @@ public class Equipment implements StatsCalculator{
             }
         }
         return 0;
-    }*/
-
+    }
     public float getArmorFeatures(int indexSlot, int indexStat){
         float[][] stats = new float[SUM_OF_ALL_ITEMS][SUM_OF_ALL_STATS];
         for (EquipableItem a : equipment) {
@@ -65,14 +89,5 @@ public class Equipment implements StatsCalculator{
             }
         }
         return stats[indexSlot][indexStat];
-    }
-
-    public StringBuilder showAllEquippedItems() {
-        StringBuilder sb = new StringBuilder();
-        equipment.forEach(equipableItem -> sb.
-                append(" - ").append(equipableItem.getName()).
-                append(" - ").append(equipableItem.getFeatures()).append("\n"));
-        return sb;
-    }
-
+    }*/
 }

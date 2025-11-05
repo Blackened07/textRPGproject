@@ -8,14 +8,12 @@ import main.java.Items.EquipableItem.Weapon.Weapon;
 import main.java.Spells.Spell;
 
 public class Player extends Organism implements StatsCalculator {
-
     GameClass gameClass;
     EquipableItem weapon;
     Equipment equipment;
     BackPack backPack;
     SpellBook spellBook;
     QuestJournal questJournal;
-
 
     public Player(String name, float strength, float stamina, float agility, float intellect, int experience, int gold, GameClass gameClass, Weapon weapon) {
         super(name, strength, stamina, agility, intellect, experience, gold);
@@ -25,12 +23,11 @@ public class Player extends Organism implements StatsCalculator {
         this.spellBook = new SpellBook();
         this.weapon = weapon;
         this.questJournal = new QuestJournal();
-        setCurrentHealth(getHealthMaxValue());
-        setCurrentMana(getManaMaxValue());
+        setHealthMaxValue();
+        setManaMaxValue();
     }
 
-    @Override
-    public void checkRestoreValueWhileHealing(float health) {
+    @Override public void checkRestoreValueWhileHealing(float health) {
         if ((getCurrentHealth() + health) > getHealthMaxValue()) {
             setCurrentHealth(getHealthMaxValue());
             print("Восстановлено: " + (getHealthMaxValue() - getCurrentHealth()) + " здоровья");
@@ -45,7 +42,7 @@ public class Player extends Organism implements StatsCalculator {
 
     /*** QUESTS / QUEST JOURNAL */
     @Override
-    public void addQuestToJouranl(ActiveQuests quest) {
+    public void addQuestToJournal(ActiveQuests quest) {
         questJournal.addQuestToJournal(quest);
         print("Квест " + quest.getQuestName() + " добавлен в журнал заданий");
     }
@@ -121,13 +118,7 @@ public class Player extends Organism implements StatsCalculator {
         print("You receive : " + gold + " gold");
     }
 
-
-
     /*** FIGHT*/
-
-
-    public void addToSpellBook(Spell spell) {
-        spellBook.addToSpellBook(spell);
-    }
+    public void addToSpellBook(Spell spell) {spellBook.addToSpellBook(spell);}
 
 }
