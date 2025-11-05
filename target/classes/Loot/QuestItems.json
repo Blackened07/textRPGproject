@@ -1,8 +1,0 @@
-{
-  "Boar" : [
-    {"name" : "Elf Figure", "cost": 3, "weight": 1, "type": "QUEST_ITEM", "FOR_QUEST": "ElfFigure"}
-  ],
-  "Wolf" : [
-    {"name" : "Elf Figure", "cost": 3, "weight": 1, "type": "QUEST_ITEM", "FOR_QUEST": "ElfFigure"}
-  ]
-}

@@ -44,10 +44,11 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     final float evasionCoefficient = 2f;
     final float spellResistanceCoefficient = 16f;
     final float attackSpeedCoefficient = 10f;
+    private final float WEIGHT_COEFFICIENT = 2.9f;
 
     private int gold;
 
-    Equipment inventory;
+    Equipment equipment;
     BackPack backPack;
     SpellBook spellBook;
 
@@ -59,7 +60,7 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
         this.baseIntellect = intellect;
         this.experience = experience;
         this.gold = gold;
-        this.inventory = new Equipment();
+        this.equipment = new Equipment();
         this.backPack = new BackPack();
         this.spellBook = new SpellBook();
     }
@@ -70,7 +71,7 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     public float getBaseStamina() {return baseStamina;}
     public float getBaseAgility() {return baseAgility;}
     public float getBaseIntellect() {return baseIntellect;}
-
+    //BaseStats is onlyForLvlUp
     public void setBaseStrength(float baseStrength) {this.baseStrength = baseStrength;}
     public void setBaseStamina(float baseStamina) {this.baseStamina = baseStamina;}
     public void setBaseAgility(float baseAgility) {this.baseAgility = baseAgility;}
@@ -81,28 +82,29 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     public float getFullAgility() {return fullAgility;}
     public float getFullIntellect() {return fullIntellect;}
 
-    public void setFullStrength(float strength) {this.fullStrength = strength;}
-    public void setFullStamina(float stamina) {this.fullStamina = stamina;}
-    public void setFullAgility(float agility) {this.fullAgility = agility;}
-    public void setFullIntellect(float intellect) {this.fullIntellect = intellect;}
+    public void setFullStrength(float strength) {this.fullStrength = strength + getBaseStrength();}
+    public void setFullStamina(float stamina) {this.fullStamina = stamina + getBaseStamina();}
+    public void setFullAgility(float agility) {this.fullAgility = agility + getBaseAgility();}
+    public void setFullIntellect(float intellect) {this.fullIntellect = intellect + getBaseIntellect();}
 
     /** HEALTH AND MANA */
     public float getCurrentHealth() {return currentHealth;} //currentHealth
     public float getCurrentMana() {return currentMana;}
-    public float getHealthMaxValue() {return BASE_HEALTH + getBaseStamina();} //MaxHealth
-    public float getManaMaxValue() {return BASE_MANA + getBaseIntellect();}
-    public float getBASE_HEALTH() {return BASE_HEALTH;}
-    public float getBASE_MANA() {return BASE_MANA;}
+
     public void setCurrentHealth(float health) {this.currentHealth = health;}
-    public void checkRestoreValueWhileHealing(float health) {}
     public void setCurrentMana(float currentMana) {this.currentMana = currentMana;}
 
+    public float getHealthMaxValue() {return BASE_HEALTH + getFullStamina();} //MaxHealth
+    public float getManaMaxValue() {return BASE_MANA + getFullIntellect();}
+
+    public void checkRestoreValueWhileHealing(float health) {}
+
     /** SECONDARY STATS/FEATURES */
-    public float getAttackPower() {return getBaseStrength() / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
-    public float getSpellPower() {return getBaseIntellect() / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
-    public float getEvasion() {return getBaseAgility() / evasionCoefficient;}
-    public float getSpellResistance() {return (getBaseIntellect() + getBaseStamina()) / spellResistanceCoefficient;}
-    public float getAttackSpeed() {return (getBaseAgility() + getBaseStamina()/attackSpeedCoefficient) / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
+    public float getAttackPower() {return getFullStrength() / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
+    public float getSpellPower() {return getFullIntellect() / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
+    public float getEvasion() {return getFullAgility() / evasionCoefficient;}
+    public float getSpellResistance() {return (getFullIntellect() + getFullStamina()) / spellResistanceCoefficient;}
+    public float getAttackSpeed() {return (getFullAgility() + getFullStamina()/attackSpeedCoefficient) / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
 
     public float getFullAttackPower() {return fullAttackPower;}
     public void setFullAttackPower(float fullAttackPower) {this.fullAttackPower = fullAttackPower;}
@@ -110,30 +112,34 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     /** ECONOMY */
     public int getGold() {return gold;}
     public void setGold(int gold) {this.gold += gold;}
-
     public void setGoldAfterTrade(int gold) {
         if (getGold() < gold) setGold(0);
         else setGold(gold);
     }
 
-    /** BANK */
-    public void addToEquipment(EquipableItem item) {}
-    public void addToBackPack(Item item){}
-    public Item getFromBackPack (String name) {return null;}
-    public Item getFromBackPackWithIndex (int index) {return null;}
-    public boolean findItemWithName(String name) {return false;}
-    public int getSize(){return 0;}
-    public void removeFromBAckPack(int index){}
-    public int sumOfEquippedWeightAndBackPackWeight() {return backPack.sumOfWeightOfItemsInBackPack() + inventory.sumOfWeightOfEquippedItems();}
-    public float maxWeight() {return 0;}
-    public Types getItemType(int index){return null;}
+    /** EQUIPMENT */
+    public void addToEquipment(EquipableItem item) {equipment.addToEquipment(item, this);;}
     public void setWeaponFromBackPackToInventory(int index){};
     public void changeWeapon(int index){};
-    public void useFood(int index) {}
-    public void dropItem(int index) {}
-    public void removeFromBackPackByName(String name) {}
 
+    /** BACKPACK **/
+    public void addToBackPack(Item item){}
+    public Item getFromBackPack(String name) {return backPack.getFromBackPack(name);}
+    public Item getFromBackPackWithIndex(int index) {return backPack.getFromBackPack(index);}
+    public boolean findItemWithName(String name) {return backPack.findItemWithName(name);}
+    public int getSize() {return backPack.getSize();}
+    public void removeFromBAckPack(int index) {backPack.remove(index);}
+    public int sumOfEquippedWeightAndBackPackWeight() {return backPack.sumOfWeightOfItemsInBackPack() + equipment.sumOfWeightOfEquippedItems();}
+    public float maxWeight() {return getFullStrength() * WEIGHT_COEFFICIENT;}
+    public Types getItemType(int index) {return backPack.getItemType(index);}
+    public void removeFromBackPackByName(String name) {backPack.removeByName(name);}
 
+    public void dropItem(int index) {backPack.remove(index);}//set to world map}
+    /** FOOD AND DRINKS */
+    public void useFood(int index) {
+        checkRestoreValueWhileHealing(getFromBackPackWithIndex(index).getRESTORES_HEALTH());
+        removeFromBAckPack(index);
+    }
     /**ShowItems */
     public String showItemsFromBackPackForTrade() {return "";}
     public String showItemsFromBackPack(){return "";}
@@ -156,20 +162,19 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     public int getCurrentExperience() {return experience;}
     public void setExperience(int experience) {this.experience += experience;}
     public void checkExp(int exp){}
-    public int getExpNeedToLevelUp(){return 0;}
+    public int getExpNeedToLevelUp() {return ExperienceCalculator.getExpNeeded();}
     public void setExpWhenLevelUp(){this.experience = 0;}
 
-    /**Attack */
-
-    public void autoAttack (Organism attacker, Organism target) {
-        attacker.setFullAttackPower(attacker.getAttackPower() + attacker.getAttackSpeed() / attackPowerANDSpellPowerANDAttackSpeedCoefficient + (float)(Math.random() * 5));
+    /** FIGHT **/
+    /** Physical_Attack */
+    public void autoAttack(Organism attacker, Organism target) {
+        attacker.setFullAttackPower(attacker.getAttackPower() + attacker.getAttackSpeed() / attackPowerANDSpellPowerANDAttackSpeedCoefficient + (float) (Math.random() * 5));
         takingPhysicalDamage(attacker, target);
-
     }
+
     public void takingPhysicalDamage(Organism attacker, Organism target) {
-        target.setCurrentHealth(target.getCurrentHealth() - attacker.getFullAttackPower() + target.getEvasion());
-    }
+        target.setCurrentHealth(target.getCurrentHealth() - attacker.getAttackPower() + target.getEvasion());}
 
-    /** SPELLS*/
+    /** SPELLS */
     public void addToSpellBook(Spell spell){};
 }
