@@ -1,6 +1,6 @@
 package main.java.Characters;
 
-import main.java.GameProcesses.Plot.Quests.ActiveQuests;
+import main.java.GameProcesses.Quests.ActiveQuests;
 
 import java.util.*;
 

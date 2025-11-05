@@ -1,14 +1,10 @@
 package main.java.GameProcesses.Plot.Locations.StartLocation.Crossroads;
 
 import main.java.Characters.Organism;
-import main.java.GameProcesses.Plot.Dialogue;
-import main.java.GameProcesses.Plot.Fight;
+import main.java.GameProcesses.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
-import main.java.GameProcesses.Plot.Locations.StartLocation.Mill;
-import main.java.GameProcesses.Services.CreatureGenerator;
 import main.java.GameProcesses.Services.InvalidCommandException;
-import main.java.GameProcesses.Services.RandomNumberGenerator;
 
 import java.util.Scanner;
 

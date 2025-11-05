@@ -2,12 +2,12 @@ package main.java.GameProcesses.Plot.Locations.StartLocation.SilverShireVillage;
 
 import main.java.Characters.NPC;
 import main.java.Characters.Organism;
-import main.java.GameProcesses.Plot.Dialogue;
+import main.java.GameProcesses.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
 import main.java.GameProcesses.Plot.Locations.StartLocation.Crossroads.Crossroads;
-import main.java.GameProcesses.Plot.Quests.ActiveQuests;
-import main.java.GameProcesses.Plot.Quests.Quest;
+import main.java.GameProcesses.Quests.ActiveQuests;
+import main.java.GameProcesses.Quests.Quest;
 import main.java.GameProcesses.Services.ConsoleCommands;
 import main.java.GameProcesses.Services.InvalidCommandException;
 import main.java.Items.Food.Food;

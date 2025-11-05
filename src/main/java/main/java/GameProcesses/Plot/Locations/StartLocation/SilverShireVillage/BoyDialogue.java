@@ -1,10 +1,10 @@
 package main.java.GameProcesses.Plot.Locations.StartLocation.SilverShireVillage;
 
 import main.java.Characters.Organism;
-import main.java.GameProcesses.Plot.Dialogue;
+import main.java.GameProcesses.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
-import main.java.GameProcesses.Plot.Quests.ActiveQuests;
+import main.java.GameProcesses.Quests.ActiveQuests;
 import main.java.GameProcesses.Services.ConsoleCommands;
 import main.java.GameProcesses.Services.InvalidCommandException;
 import main.java.Items.Item;
@@ -44,7 +44,7 @@ public class BoyDialogue extends Events {
             }
             if (checkCurrentEventAndCommandEqualsForDialogue(getSTART_QUEST(), this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
                 if(player.findQuestInJournal(elfFigure)){
-                    player.addQuestToJouranl(elfFigure);
+                    player.addQuestToJournal(elfFigure);
                 }
                 startEvent(player, sc);
             }

@@ -1,6 +1,6 @@
 package main.java.Characters;
 
-import main.java.GameProcesses.Plot.Quests.ActiveQuests;
+import main.java.GameProcesses.Quests.ActiveQuests;
 import main.java.GameProcesses.Services.PrintableInterfaces;
 import main.java.GameProcesses.Services.UseItemsFromBackPack;
 import main.java.Items.EquipableItem.EquipableItem;
@@ -54,11 +54,17 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
         this.baseIntellect = intellect;
         this.experience = experience;
         this.gold = gold;
+        this.fullStrength = baseStrength;
+        this.fullStamina = baseStamina;
+        this.fullAgility = baseAgility;
+        this.fullIntellect = baseIntellect;
         this.equipment = new Equipment();
         this.backPack = new BackPack();
         this.spellBook = new SpellBook();
         setHealthMaxValue();
         setManaMaxValue();
+        setCurrentHealth(getHealthMaxValue());
+        setCurrentMana(getManaMaxValue());
     }
     /** BASE STATS */
     public String getNAME() {return NAME;}
@@ -78,10 +84,10 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     public float getFullAgility() {return fullAgility;}
     public float getFullIntellect() {return fullIntellect;}
 
-    public void setFullStrength(float strength) {this.fullStrength = strength + getBaseStrength();}
-    public void setFullStamina(float stamina) {this.fullStamina = stamina + getBaseStamina();}
-    public void setFullAgility(float agility) {this.fullAgility = agility + getBaseAgility();}
-    public void setFullIntellect(float intellect) {this.fullIntellect = intellect + getBaseIntellect();}
+    public void setFullStrength(float strength) {this.fullStrength += strength;}
+    public void setFullStamina(float stamina) {this.fullStamina += stamina ;}
+    public void setFullAgility(float agility) {this.fullAgility += agility ;}
+    public void setFullIntellect(float intellect) {this.fullIntellect += intellect;}
 
     /** HEALTH AND MANA */
     public float getCurrentHealth() {return currentHealth;} //currentHealth
@@ -96,6 +102,8 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     public void setHealthMaxValue() {this.healthMaxValue = BASE_HEALTH + getFullStamina();}
     public void setManaMaxValue() {this.manaMaxValue = BASE_MANA + getFullIntellect();}
 
+    /** SECONDARY STATS/FEATURES */
+
     public void setAttackPower(float attackPower) {this.attackPower = attackPower;}
     public void setSpellPower(float spellPower) {this.spellPower = spellPower;}
     public void setEvasion(float evasion) {this.evasion = evasion;}
@@ -107,9 +115,6 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     public float getEvasion() {return evasion;}
     public float getSpellResistance() {return spellResistance;}
     public float getAttackSpeed() {return attackSpeed;}
-
-    /** SECONDARY STATS/FEATURES */
-
 
     public float getFullAttackPower() {return fullAttackPower;}
     public void setFullAttackPower(float fullAttackPower) {this.fullAttackPower = fullAttackPower;}
@@ -123,13 +128,15 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     }
 
     /** EQUIPMENT */
+    public Equipment getEquipment() {return equipment;}
     public void addToEquipment(EquipableItem item) {equipment.addToEquipment(item, this);;}
     public void setWeaponFromBackPackToInventory(int index){};
     public void changeWeapon(int index){};
 
     /** BACKPACK **/
+    public BackPack getBackPack() {return backPack;}
     public void addToBackPack(Item item){}
-    public Item getFromBackPack(String name) {return backPack.getFromBackPack(name);}
+    public Item getFromBackPackWithName(String name) {return backPack.getFromBackPack(name);}
     public Item getFromBackPackWithIndex(int index) {return backPack.getFromBackPack(index);}
     public boolean findItemWithName(String name) {return backPack.findItemWithName(name);}
     public int getSize() {return backPack.getSize();}

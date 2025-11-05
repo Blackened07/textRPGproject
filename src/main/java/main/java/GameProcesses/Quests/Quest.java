@@ -1,9 +1,7 @@
-package main.java.GameProcesses.Plot.Quests;
+package main.java.GameProcesses.Quests;
 
 import main.java.GameProcesses.Services.StoryReader;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class Quest {

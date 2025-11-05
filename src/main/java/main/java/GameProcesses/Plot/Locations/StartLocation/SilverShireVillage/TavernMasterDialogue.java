@@ -1,15 +1,11 @@
 package main.java.GameProcesses.Plot.Locations.StartLocation.SilverShireVillage;
 
 import main.java.Characters.Organism;
-import main.java.GameProcesses.Plot.Dialogue;
+import main.java.GameProcesses.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
 import main.java.GameProcesses.Services.ConsoleCommands;
 import main.java.GameProcesses.Services.InvalidCommandException;
-import main.java.GameProcesses.Services.StoryReader;
-import main.java.Items.Food.Food;
-import main.java.Items.Item;
-import main.java.Items.Types;
 
 import java.util.Scanner;
 
@@ -48,7 +44,7 @@ public class TavernMasterDialogue extends Events {
             if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_2(), this)) {
                 switch (userInput) {
                     case 1 ->{
-                        player.addToBackPack(tavernMaster.getFromBackPack( "ApplePie"));
+                        player.addToBackPack(tavernMaster.getFromBackPackWithName( "ApplePie"));
                         tavernMaster.removeFromBAckPack(1);
                         setCheckPie(true);
                         startEvent(player, sc);

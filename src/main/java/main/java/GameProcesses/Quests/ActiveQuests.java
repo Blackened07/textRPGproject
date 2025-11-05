@@ -1,4 +1,4 @@
-package main.java.GameProcesses.Plot.Quests;
+package main.java.GameProcesses.Quests;
 
 public class ActiveQuests {
     private final String questName;

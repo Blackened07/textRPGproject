@@ -1,4 +1,4 @@
-package main.java.GameProcesses.Plot;
+package main.java.GameProcesses;
 import main.java.GameProcesses.Services.PrintableInterfaces;
 import main.java.GameProcesses.Services.StoryReader;
 

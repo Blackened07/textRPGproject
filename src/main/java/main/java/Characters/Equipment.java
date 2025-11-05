@@ -33,6 +33,12 @@ public class Equipment implements StatsCalculator{
         player.setEvasion(calculateEvasion(player.getFullAgility()));
         player.setSpellResistance(calculateSpellResistance(player.getFullIntellect(), player.getFullStamina()));
         player.setAttackSpeed(calculateAttackSpeed(player.getFullAgility(), player.getFullStamina()));
+
+        player.setHealthMaxValue();
+        player.setManaMaxValue();
+
+        player.setCurrentHealth(player.getHealthMaxValue());
+        player.setCurrentMana(player.getManaMaxValue());
     }
     public float calculateAttackPower(float fullStrength) {return fullStrength / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
     public float calculateSpellPower(float fullIntellect) {return fullIntellect / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}

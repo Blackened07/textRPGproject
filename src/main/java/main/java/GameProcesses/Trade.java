@@ -1,4 +1,4 @@
-package main.java.GameProcesses.Plot;
+package main.java.GameProcesses;
 
 import main.java.Characters.Organism;
 import main.java.GameProcesses.Plot.Locations.Events;

@@ -1,8 +1,8 @@
 package main.java.GameProcesses.Plot.Locations;
 
 import main.java.Characters.Organism;
-import main.java.GameProcesses.Plot.Dialogue;
-import main.java.GameProcesses.Plot.Trade;
+import main.java.GameProcesses.Dialogue;
+import main.java.GameProcesses.Trade;
 import main.java.GameProcesses.Services.*;
 import main.java.GameProcesses.Services.UseItemsFromBackPack;
 

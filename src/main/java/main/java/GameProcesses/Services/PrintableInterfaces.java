@@ -4,7 +4,6 @@ import main.java.Characters.Organism;
 
 public interface PrintableInterfaces {
     default void features (Organism player) {
-
         System.out.println("Ваши характеристикки: \nИмя: " + player.getNAME() + "\nУровень: " + player.getLevel() + "\nМаксимальное Здоровье : " + player.getHealthMaxValue()
                 + "\nТекущее здоровье: " + player.getCurrentHealth()
                 + "\nМана: " + player.getManaMaxValue() + "\nСила: " + player.getFullStrength() +

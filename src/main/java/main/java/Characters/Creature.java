@@ -7,48 +7,17 @@ import java.util.List;
 
 public class Creature extends Organism {
 
-    private BackPack loot;
 
     public Creature(String name, float strength, float stamina, float agility, float intellect, int experience, int gold) {
         super(name, strength, stamina, agility, intellect, experience, gold);
-        this.loot = new BackPack();
-        loot.addListOfLootToBackPack(Loot.getLoot(name));
+        getBackPack().addListOfLootToBackPack(Loot.getLoot(name));
         setHealthMaxValue();
         setManaMaxValue();
+        setCurrentHealth(getHealthMaxValue());
+        setCurrentMana(getManaMaxValue());
     }
 
-    @Override
-    public Item getFromBackPackWithIndex(int index) {
-        return loot.getFromBackPack(index);
-    }
+    @Override public String findQuestItemInCreaturesBackPack() {return getBackPack().findQuestItem();}
+    @Override public Item addQuestItemToPlayerFromCreature() {return getBackPack().getQuestItem();}
 
-    @Override
-    public String findQuestItemInCreaturesBackPack() {
-        return loot.findQuestItem();
-    }
-
-    @Override
-    public Item addQuestItemToPlayerFromCreature() {
-        return loot.getQuestItem();
-    }
-
-    @Override
-    public int getSize() {
-        return loot.getSize();
-    }
-
-    @Override
-    public void autoAttack(Organism attacker, Organism target) {
-        super.autoAttack(attacker, target);
-    }
-
-    @Override
-    public void takingPhysicalDamage(Organism attacker, Organism target) {
-        super.takingPhysicalDamage(attacker, target);
-    }
-
-    @Override
-    public int getLevel() {
-        return super.getLevel();
-    }
 }
