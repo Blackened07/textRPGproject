@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import main.java.Items.Item;
 import com.google.gson.reflect.TypeToken;
+import main.java.Items.RestorableItem.RestorableItem;
 
 
 import java.io.*;
@@ -40,6 +41,15 @@ public class StoryReader {
     public static Map<String, List<Item>> gsonReaderForLoot(String pathName) {
         try (FileReader reader = new FileReader(pathName)) {
             Type type = new TypeToken<Map<String, List<Item>>>() {
+            }.getType();
+            return textAndCommandReader.fromJson(reader, type);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static Map<String, List<RestorableItem>> gsonReaderForFoodVendors(String pathName) {
+        try (FileReader reader = new FileReader(pathName)) {
+            Type type = new TypeToken<Map<String, List<RestorableItem>>>() {
             }.getType();
             return textAndCommandReader.fromJson(reader, type);
         } catch (IOException e) {

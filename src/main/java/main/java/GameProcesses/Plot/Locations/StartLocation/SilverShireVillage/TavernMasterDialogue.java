@@ -1,7 +1,7 @@
 package main.java.GameProcesses.Plot.Locations.StartLocation.SilverShireVillage;
 
 import main.java.Characters.Organism;
-import main.java.GameProcesses.Dialogue;
+import main.java.GameProcesses.Plot.Locations.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
 import main.java.GameProcesses.Services.ConsoleCommands;
@@ -11,15 +11,13 @@ import java.util.Scanner;
 
 public class TavernMasterDialogue extends Events {
 
-    private Dialogue dialogue;
     private Events silverShire;
     private Organism tavernMaster;
     private boolean checkPie;
     private final String AFTER_PIE_EVENT = "Phrase2 - 2";
 
     public TavernMasterDialogue(String eventName, Location LOCATION, Dialogue dialogue, Events silverShire, Organism tavernMaster) {
-        super(eventName, LOCATION);
-        this.dialogue = dialogue;
+        super(eventName, LOCATION, dialogue);
         this.silverShire = silverShire;
         this.tavernMaster = tavernMaster;
     }
@@ -29,7 +27,7 @@ public class TavernMasterDialogue extends Events {
     @Override
     public void startEvent(Organism player, Scanner sc) throws InvalidCommandException {
         setCurrentEvent(getSTART_EVENT());
-        printEventTextAndCommands(getSTART_EVENT(), this.dialogue);
+        printEventTextAndCommands(getSTART_EVENT(), getDialogue());
         setEventActive(true);
         eventSwitcher(sc, player);
     }
@@ -39,7 +37,7 @@ public class TavernMasterDialogue extends Events {
         int userInput;
 
         while (isEventActive()) {
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player, this);
+            userInput = gameScanner(sc, getDialogue().getInnerListSize(getCurrentEvent()), player, this);
 
             if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_2(), this)) {
                 switch (userInput) {
@@ -89,7 +87,7 @@ public class TavernMasterDialogue extends Events {
                     case 6 -> silverShire.startEvent(player, sc);
                 }
             }
-            printEventTextAndCommands(getCurrentEvent(), this.dialogue);
+            printEventTextAndCommands(getCurrentEvent(), getDialogue());
         }
     }
 }

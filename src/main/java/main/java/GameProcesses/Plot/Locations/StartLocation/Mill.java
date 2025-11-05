@@ -1,7 +1,7 @@
 package main.java.GameProcesses.Plot.Locations.StartLocation;
 
 import main.java.Characters.Organism;
-import main.java.GameProcesses.Dialogue;
+import main.java.GameProcesses.Plot.Locations.Dialogue;
 import main.java.GameProcesses.Fight;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
@@ -15,7 +15,6 @@ import static main.java.GameProcesses.Plot.Locations.Location.NORTH_FROM_CROSSRO
 
 public class Mill extends Events implements RandomNumberGenerator, Fight, CreatureGenerator {
 
-    Dialogue dialogue;
     Events roadToWest;
     Events fatDialogue;
     Events lake;
@@ -26,8 +25,7 @@ public class Mill extends Events implements RandomNumberGenerator, Fight, Creatu
     private final String FIELDS = "Fields";
 
     public Mill(String eventName, Location LOCATION, Dialogue dialogue, Events roadToWest, Events lake, Events roadToNorth) {
-        super(eventName, LOCATION);
-        this.dialogue = dialogue;
+        super(eventName, LOCATION, dialogue);
         this.roadToWest = roadToWest;
         this.lake = lake;
         this.roadToNorth = roadToNorth;
@@ -41,7 +39,7 @@ public class Mill extends Events implements RandomNumberGenerator, Fight, Creatu
         fight(player, getCreature(NORTH_FROM_CROSSROADS), sc, this, "Elf Figure");
 
 
-        printEventTextAndCommands(getSTART_EVENT(), this.dialogue);
+        printEventTextAndCommands(getSTART_EVENT(), getDialogue());
         setEventActive(true);
         eventSwitcher(sc, player);
     }
@@ -51,7 +49,7 @@ public class Mill extends Events implements RandomNumberGenerator, Fight, Creatu
         int userInput;
 
         while (isEventActive()) {
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player, this);
+            userInput = gameScanner(sc, getDialogue().getInnerListSize(getCurrentEvent()), player, this);
 
             if(checkCurrentEventAndCommandEqualsForDialogue(FAT_DIALOGUE, this)) {
                 fatDialogue.startEvent(player, sc);
@@ -85,7 +83,7 @@ public class Mill extends Events implements RandomNumberGenerator, Fight, Creatu
                     case 4 -> {roadToWest.startEvent(player, sc);}
                 }
             }
-            printEventTextAndCommands(getCurrentEvent(), this.dialogue);
+            printEventTextAndCommands(getCurrentEvent(), getDialogue());
         }
     }
     private void setFatDialogue(){}

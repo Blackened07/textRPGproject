@@ -41,7 +41,7 @@ public interface Fight extends PrintableInterfaces, RandomNumberGenerator, GameS
             if ( player.getQuestObjectiveName(creature.findQuestItemInCreaturesBackPack()) && !player.getQuestObjectiveIsComplete(creature.findQuestItemInCreaturesBackPack())) {
                 player.addToBackPack(creature.addQuestItemToPlayerFromCreature());
             }
-            player.addToBackPack(creature.getFromBackPackWithIndex((int) (Math.random() * creature.getSize())));
+            player.addToBackPack(creature.getFromBackPackWithIndex((int) (Math.random() * creature.getSize() - 1)));
             player.setGold((int) (Math.random() * creature.getGold()));
             player.checkExp(45);
         }

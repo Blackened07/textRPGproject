@@ -9,8 +9,6 @@ import main.java.GameProcesses.Services.StoryReader;
 import main.java.Items.Loot;
 
 public class Main implements PrintableInterfaces {
-
-
     private static void printHello () {
         System.out.println("""
                 *********************************************************************************************************************************\
@@ -30,7 +28,6 @@ public class Main implements PrintableInterfaces {
     }
 
     public static void main(String[] args) throws InvalidCommandException {
-
         printHello();
         StoryReader story = new StoryReader();
         new Quest();

@@ -4,8 +4,6 @@ import main.java.GameProcesses.Quests.ActiveQuests;
 import main.java.Items.EquipableItem.EquipableItem;
 import main.java.Items.Item;
 import main.java.Items.Types;
-import main.java.Items.EquipableItem.Weapon.Weapon;
-import main.java.Spells.Spell;
 
 public class Player extends Organism implements StatsCalculator {
     GameClass gameClass;
@@ -38,12 +36,12 @@ public class Player extends Organism implements StatsCalculator {
         print("Квест " + quest.getQuestName() + " добавлен в журнал заданий");
     }
     @Override public void showQuestJournal() {System.out.println(questJournal.ShowAllQuests());}
-    @Override public boolean getQuestObjectiveIsComplete(String name) {return questJournal.isItemIsQuestObjective(name);}
+    @Override public boolean getQuestObjectiveIsComplete(String name) {return questJournal.findQuestNameByTheQuestObjectiveNameToCheckQuestIsComplete(name);}
     @Override public boolean getQuestObjectiveName(String name) {return questJournal.getQuestObjectiveName(name);}
     @Override public boolean findQuestInJournal(ActiveQuests aq) {return questJournal.findQuestInJournal(aq);}
     @Override public void setQuestObjectiveCounter(String name) {questJournal.setQuestObjectiveCounter(name);}
     @Override public void removeQuestFromJournal(String name) {questJournal.removeQuest(name);}
-
+    @Override public ActiveQuests findQuestByQuestObjectiveName(String name) {return questJournal.findQuestByQuestObjectiveName(name);}
 
     /***WORK WITH EQUIPMENT / USING ITEMS*/
     private void setWeapon(EquipableItem weapon) {this.weapon = weapon;}
@@ -64,14 +62,15 @@ public class Player extends Organism implements StatsCalculator {
 
     /*** WORK WITH BACKPACK/BUSINESS METHODS*/
     @Override public void addToBackPack(Item item) {
-        if (getWeightByStrength(maxWeight(), this.sumOfEquippedWeightAndBackPackWeight() + item.getWeight())) {
+        if (getWeightByStrength(maxWeight(), sumOfEquippedWeightAndBackPackWeight() + item.getWeight())) {
             if (item.getType().equals(Types.QUEST_ITEM) && !getQuestObjectiveIsComplete(item.getName())) {
                 setQuestObjectiveCounter(item.getName());
                 getBackPack().addToBackPack(item);
+                printQuestObjectiveIs(item.getName(), findQuestByQuestObjectiveName(item.getName()));
             } else getBackPack().addToBackPack(item);
             if (item instanceof EquipableItem e) {
                 print("\nВы получили: " + e + "\n" + e.getFeatures());
-            } else print("\nВы получили: " + item);
+            } else print("\nВы получили: " + item); //check if q item
         } else
             print("\nНедостаточно силы! Необходимый показатель силы: " + requiredStrength(this.sumOfEquippedWeightAndBackPackWeight() + item.getWeight()));
     }
@@ -109,6 +108,6 @@ public class Player extends Organism implements StatsCalculator {
     }
 
     /*** FIGHT*/
-    public void addToSpellBook(Spell spell) {spellBook.addToSpellBook(spell);}
+   /* public void addToSpellBook(Spell spell) {spellBook.addToSpellBook(spell);}*/
 
 }

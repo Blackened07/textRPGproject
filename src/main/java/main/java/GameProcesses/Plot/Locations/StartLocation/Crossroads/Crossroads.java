@@ -1,7 +1,7 @@
 package main.java.GameProcesses.Plot.Locations.StartLocation.Crossroads;
 
 import main.java.Characters.Organism;
-import main.java.GameProcesses.Dialogue;
+import main.java.GameProcesses.Plot.Locations.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
 import main.java.GameProcesses.Plot.Locations.StartLocation.LakeSilver;
@@ -11,8 +11,7 @@ import main.java.GameProcesses.Services.InvalidCommandException;
 import java.util.Scanner;
 
 public class Crossroads extends Events {
-    Dialogue dialogue;
-    Events silverShire;
+    private Events silverShire;
     private Events roadToWest;
     private Events roadToEast;
     private Events roadToNorth;
@@ -25,14 +24,13 @@ public class Crossroads extends Events {
     private final String PATH_NAME_MILL_EVENT = "resources/Mill.json";
 
     public Crossroads(String eventName, Location LOCATION, Dialogue dialogue, Events silverShire) {
-        super(eventName, LOCATION);
-        this.dialogue = dialogue;
+        super(eventName, LOCATION, dialogue);
         this.silverShire = silverShire;
     }
 
     public void startEvent(Organism player, Scanner sc) throws InvalidCommandException {
         setCurrentEvent(getSTART_EVENT());
-        printEventTextAndCommands(getSTART_EVENT(), this.dialogue);
+        printEventTextAndCommands(getSTART_EVENT(), getDialogue());
         setEventActive(true);
 
         setEastEventAtStartLocation();
@@ -51,7 +49,7 @@ public class Crossroads extends Events {
         int userInput;
 
         while (isEventActive()) {
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player, this);
+            userInput = gameScanner(sc, getDialogue().getInnerListSize(getCurrentEvent()), player, this);
 
             if(checkCurrentEventAndCommandEqualsForDialogue(getSTART_EVENT(), this)){
                 switch (userInput) {

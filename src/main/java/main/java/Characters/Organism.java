@@ -42,9 +42,9 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
 
     private int gold;
 
-    Equipment equipment;
-    BackPack backPack;
-    SpellBook spellBook;
+    private Equipment equipment;
+    private BackPack backPack;
+    private SpellBook spellBook;
 
     public Organism(String name, float strength, float stamina, float agility, float intellect, int experience, int gold) {
         this.NAME = name;
@@ -170,6 +170,7 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     public boolean findQuestInJournal(ActiveQuests aq) {return true;}
     public void setQuestObjectiveCounter (String name) {}
     public void removeQuestFromJournal (String name) {}
+    public ActiveQuests findQuestByQuestObjectiveName(String name) {return null;}
 
     /** EXP AND LEVEL*/
     public int getLevel() {return level;}

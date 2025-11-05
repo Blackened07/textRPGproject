@@ -25,21 +25,13 @@ public class QuestJournal {
                 append(e.getQuestObjectiveFull()).append("\n"));
         return sb.toString();
     }
-    public boolean getQuestObjective(String name) {
+    public boolean getQuestObjectiveBool(String name) {
         for (ActiveQuests q : questLog) {
             if (q.getQuestName().equals(name)) {
                 return q.isComplete();
             }
         }
         return false;
-    }
-    public ActiveQuests getQuest (String name) {
-        for (ActiveQuests q : questLog) {
-            if (q.getQuestName().equals(name)) {
-                return q;
-            }
-        }
-        return null;
     }
     public boolean getQuestObjectiveName(String name) {
         for (ActiveQuests q : questLog) {
@@ -60,16 +52,15 @@ public class QuestJournal {
     public void setQuestObjectiveCounter(String name) {
         for (ActiveQuests q : questLog) {
             if (q.getQuestObjective().equals(name)) {
-                System.out.println("In journal objective Setter");
                 q.setQuestObjectiveCounter(1);
             }
         }
     }
 
-    public boolean isItemIsQuestObjective (String name) {
+    public boolean findQuestNameByTheQuestObjectiveNameToCheckQuestIsComplete(String name) {
         for (ActiveQuests q : questLog) {
             if(q.getQuestObjective().equals(name)) {
-                return getQuestObjective(q.getQuestName());
+                return getQuestObjectiveBool(q.getQuestName());
             }
         }
         return false;
@@ -81,5 +72,13 @@ public class QuestJournal {
                questLog.remove(q);
             }
         }
+    }
+
+    public ActiveQuests findQuestByQuestObjectiveName (String name) {
+        for (ActiveQuests q : questLog) {
+            if (q.getQuestObjective().equals(name)) return q;
+            break;
+        }
+        return null;
     }
 }

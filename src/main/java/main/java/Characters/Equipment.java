@@ -5,19 +5,19 @@ import main.java.Items.Item;
 
 import java.util.*;
 
-public class Equipment implements StatsCalculator{
+public class Equipment<T extends EquipableItem> implements StatsCalculator{
     final float attackPowerANDSpellPowerANDAttackSpeedCoefficient = 1.6f;
     final float evasionCoefficient = 2f;
     final float spellResistanceCoefficient = 16f;
     final float attackSpeedCoefficient = 10f;
 
-    private Set<EquipableItem> equipment;
+    private Set<T> equipment;
 
     public Equipment() {
         this.equipment = new HashSet<>();
     }
 
-    public void addToEquipment(EquipableItem item, Organism player) {
+    public void addToEquipment(T item, Organism player) {
         equipment.add(item);
         calculatingEquipped(item, player);
     }

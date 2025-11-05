@@ -1,6 +1,7 @@
 package main.java.GameProcesses;
 
 import main.java.Characters.*;
+import main.java.GameProcesses.Plot.Locations.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
 import main.java.GameProcesses.Plot.Locations.StartGameEvent;

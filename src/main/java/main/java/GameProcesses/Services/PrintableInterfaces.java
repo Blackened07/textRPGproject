@@ -1,6 +1,7 @@
 package main.java.GameProcesses.Services;
 
 import main.java.Characters.Organism;
+import main.java.GameProcesses.Quests.ActiveQuests;
 
 public interface PrintableInterfaces {
     default void features (Organism player) {
@@ -19,5 +20,10 @@ public interface PrintableInterfaces {
         System.out.println("Game message: " + text);
     }
 
-
+    default void printQuestObjectiveIs (String name, ActiveQuests quest) {
+        System.out.println("Вы получили: " + name + " " + quest.getQuestObjectiveCounter() + "/" + quest.getQuestObjectiveFull());
+    }
+    default void printQuestComplete () {
+        System.out.println("Квест завершён");
+    }
 }

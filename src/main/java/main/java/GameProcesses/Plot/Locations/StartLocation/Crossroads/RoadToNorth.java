@@ -1,7 +1,7 @@
 package main.java.GameProcesses.Plot.Locations.StartLocation.Crossroads;
 
 import main.java.Characters.Organism;
-import main.java.GameProcesses.Dialogue;
+import main.java.GameProcesses.Plot.Locations.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
 import main.java.GameProcesses.Services.InvalidCommandException;
@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 public class RoadToNorth extends Events {
 
-    Dialogue dialogue;
     Events crossroads;
     Events lake;
     Events mill;
@@ -19,8 +18,7 @@ public class RoadToNorth extends Events {
     private final String PATHWAY = "Pathway";
 
     public RoadToNorth(String eventName, Location LOCATION, Dialogue dialogue, Events crossroads, Events lake, Events mill) {
-        super(eventName, LOCATION);
-        this.dialogue = dialogue;
+        super(eventName, LOCATION, dialogue);
         this.crossroads = crossroads;
         this.lake = lake;
         this.mill = mill;
@@ -29,7 +27,7 @@ public class RoadToNorth extends Events {
     @Override
     public void startEvent(Organism player, Scanner sc) throws InvalidCommandException {
         setCurrentEvent(getSTART_EVENT());
-        printEventTextAndCommands(getSTART_EVENT(), this.dialogue);
+        printEventTextAndCommands(getSTART_EVENT(), getDialogue());
         setEventActive(true);
         eventSwitcher(sc, player);
     }
@@ -39,7 +37,7 @@ public class RoadToNorth extends Events {
         int userInput;
 
         while (isEventActive()) {
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player, this);
+            userInput = gameScanner(sc, getDialogue().getInnerListSize(getCurrentEvent()), player, this);
 
             if (checkCurrentEventAndCommandEqualsForDialogue(getWAY(), this)) {
                 switch (userInput) {
@@ -78,7 +76,7 @@ public class RoadToNorth extends Events {
                     case 4 -> crossroads.startEvent(player, sc);
                 }
             }
-            printEventTextAndCommands(getCurrentEvent(), this.dialogue);
+            printEventTextAndCommands(getCurrentEvent(), getDialogue());
         }
     }
 }

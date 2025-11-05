@@ -1,22 +1,20 @@
 package main.java.Characters;
 
-import main.java.Items.Food.Food;
 import main.java.Items.Item;
 import main.java.Items.Types;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BackPack {
-    private List<Item> backPack;
+public class BackPack<T extends Item> {
+    private List<T> backPack;
 
     public BackPack() {
         this.backPack = new ArrayList<>();
     }
 
-    public void addToBackPack(Item item) {backPack.add(item);}
-    public void addListOfLootToBackPack(List<Item> items) {
+    public void addToBackPack(T item) {backPack.add(item);}
+    public void addListOfLootToBackPack(List<T> items) {
         backPack.addAll(items);
     }
 

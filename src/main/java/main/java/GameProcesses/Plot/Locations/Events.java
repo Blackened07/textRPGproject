@@ -1,7 +1,6 @@
 package main.java.GameProcesses.Plot.Locations;
 
 import main.java.Characters.Organism;
-import main.java.GameProcesses.Dialogue;
 import main.java.GameProcesses.Trade;
 import main.java.GameProcesses.Services.*;
 import main.java.GameProcesses.Services.UseItemsFromBackPack;
@@ -13,9 +12,8 @@ public abstract class Events implements GameScanner, PrintableInterfaces, Trade,
     private final Location LOCATION;
     private String currentEvent;
     private boolean isEventActive = false;
-    StoryReader story;
-    Organism player;
-    Dialogue dialogue;
+    private Organism player;
+    private Dialogue dialogue;
     private final String START_EVENT = "StartEvent";
     private final String START_QUEST = "StartQuest";
     private final String QUEST_COMPLETE = "QuestComplete";
@@ -29,10 +27,14 @@ public abstract class Events implements GameScanner, PrintableInterfaces, Trade,
     private final String WAY = "Way";
     private final String FIGHT = "Fight";
 
-    public Events(String eventName, Location LOCATION) {
+    public Events(String eventName, Location LOCATION, Dialogue dialogue) {
         this.eventName = eventName;
         this.LOCATION = LOCATION;
+        this.dialogue = dialogue;
     }
+
+    public Dialogue getDialogue() {return dialogue;}
+
     /// WORK WITH VARS
     protected String getSTART_EVENT() {return START_EVENT;}
     protected String getSTART_QUEST() {return START_QUEST;}
@@ -65,5 +67,4 @@ public abstract class Events implements GameScanner, PrintableInterfaces, Trade,
         }
     }
     protected void eventSwitcher(Scanner sc, Organism player) throws InvalidCommandException {}
-    public void setEventToEvent (Events event) {}
 }

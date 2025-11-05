@@ -1,7 +1,7 @@
 package main.java.GameProcesses.Plot.Locations.StartLocation.Crossroads;
 
 import main.java.Characters.Organism;
-import main.java.GameProcesses.Dialogue;
+import main.java.GameProcesses.Plot.Locations.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
 import main.java.GameProcesses.Services.InvalidCommandException;
@@ -9,27 +9,20 @@ import main.java.GameProcesses.Services.InvalidCommandException;
 import java.util.Scanner;
 
 public class RoadToWest extends Events {
-
-    Events crossroads;
-    Dialogue dialogue;
-    Events mill;
-
-    private final String PATH_NAME_MILL_EVENT = "resources/Mill.json";
+    private Events crossroads;
+    private Events mill;
 
     public RoadToWest(String eventName, Location LOCATION, Dialogue dialogue, Events crossroads, Events mill) {
-        super(eventName, LOCATION);
-        this.dialogue = dialogue;
+        super(eventName, LOCATION, dialogue);
         this.crossroads = crossroads;
-
         this.mill = mill;
     }
 
     @Override
     public void startEvent(Organism player, Scanner sc) throws InvalidCommandException {
         setCurrentEvent(getSTART_EVENT());
-        printEventTextAndCommands(getSTART_EVENT(), this.dialogue);
+        printEventTextAndCommands(getSTART_EVENT(), getDialogue());
         setEventActive(true);
-        /*setMillEvent();*/
         eventSwitcher(sc, player);
     }
 
@@ -38,18 +31,15 @@ public class RoadToWest extends Events {
         int userInput;
 
         while (isEventActive()) {
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player, this);
+            userInput = gameScanner(sc, getDialogue().getInnerListSize(getCurrentEvent()), player, this);
             switch (userInput) {
                 case 1 -> System.out.println("Город - городские ворота");
                 case 2 -> System.out.println("Река Ивент перейти реку");
                 case 3 -> mill.startEvent(player, sc);
                 case 4 -> crossroads.startEvent(player, sc);
             }
-            printEventTextAndCommands(getCurrentEvent(), this.dialogue);
+            printEventTextAndCommands(getCurrentEvent(), getDialogue());
         }
     }
 
-   /* private void setMillEvent () {
-        mill = new Mill("Mill", Location.MILL, new Dialogue(PATH_NAME_MILL_EVENT), this, lake, roadToNorth);
-    }*/
 }

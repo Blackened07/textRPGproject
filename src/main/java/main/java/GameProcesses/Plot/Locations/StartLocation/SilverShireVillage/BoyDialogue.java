@@ -1,7 +1,7 @@
 package main.java.GameProcesses.Plot.Locations.StartLocation.SilverShireVillage;
 
 import main.java.Characters.Organism;
-import main.java.GameProcesses.Dialogue;
+import main.java.GameProcesses.Plot.Locations.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
 import main.java.GameProcesses.Quests.ActiveQuests;
@@ -13,13 +13,12 @@ import main.java.Items.Types;
 import java.util.Scanner;
 
 public class BoyDialogue extends Events {
-    Dialogue dialogue;
+
     private Events silverShire;
     ActiveQuests elfFigure;
 
     public BoyDialogue(String eventName, Location LOCATION, Dialogue dialogue, Events silverShire, ActiveQuests elfFigure) {
-        super(eventName, LOCATION);
-        this.dialogue = dialogue;
+        super(eventName, LOCATION, dialogue);
         this.silverShire = silverShire;
         this.elfFigure = elfFigure;
     }
@@ -27,9 +26,9 @@ public class BoyDialogue extends Events {
     @Override
     public void startEvent(Organism player, Scanner sc) throws InvalidCommandException {
         setEventActive(true);
-        if (player.getQuestObjectiveIsComplete(elfFigure.getQuestName())) setCurrentEvent(getQUEST_COMPLETE());
+        if (player.getQuestObjectiveIsComplete(elfFigure.getQuestObjective())) setCurrentEvent(getQUEST_COMPLETE());
         else setCurrentEvent(getSTART_EVENT());
-        printEventTextAndCommands(getSTART_EVENT(), this.dialogue);
+        printEventTextAndCommands(getSTART_EVENT(), getDialogue());
         eventSwitcher(sc, player);
     }
     @Override
@@ -37,7 +36,7 @@ public class BoyDialogue extends Events {
         int userInput = 0;
         while (isEventActive()) {
 
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player, this);
+            userInput = gameScanner(sc, getDialogue().getInnerListSize(getCurrentEvent()), player, this);
 
             if (checkCurrentEventAndCommandEqualsForDialogue(getPHRASE_1(), this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
                 startEvent(player, sc);
@@ -52,17 +51,17 @@ public class BoyDialogue extends Events {
                 startEvent(player, sc);
             }
             if (checkCurrentEventAndCommandEqualsForDialogue(getQUEST_COMPLETE(), this) && userInput == ConsoleCommands.DIGIT_COMMANDS[0]) {
-                player.removeFromBackPackByName("Elf Figure");
-                print("Quest Complete");
+                player.removeFromBackPackByName(elfFigure.getQuestObjective());
+                printQuestComplete();
                 player.addToBackPack(new Item("MillChestKey", 5, 0, Types.KEY));
-                player.removeQuestFromJournal("ElfFigure");
+                player.removeQuestFromJournal(elfFigure.getQuestName());
                 startEvent(player, sc);
             }
             if (checkCurrentEventAndCommandEqualsForDialogue(getSTART_EVENT(), this)) {
                 switch (userInput) {
                     case 1 -> setCurrentEvent(getPHRASE_1());
                     case 2 -> {
-                        if(player.findItemWithName("Elf Figure")) {
+                        if(player.findItemWithName(elfFigure.getQuestObjective())) {
                             setCurrentEvent(getQUEST_COMPLETE());
                         } else setCurrentEvent(getSTART_QUEST());
                     }
@@ -70,7 +69,7 @@ public class BoyDialogue extends Events {
                     case 4 -> silverShire.startEvent(player, sc);
                 }
             }
-            printEventTextAndCommands(getCurrentEvent(), this.dialogue);
+            printEventTextAndCommands(getCurrentEvent(), getDialogue());
         }
     }
 

@@ -30,7 +30,6 @@ public class ActiveQuests {
     }
 
     private void setComplete() {
-        System.out.println("FINISH");
         this.IsComplete = true;
     }
 
@@ -43,7 +42,6 @@ public class ActiveQuests {
     }
 
     public void setQuestObjectiveCounter(int counter) {
-        System.out.println("In active setter");
         this.questObjectiveCounter += counter;
         checkQuestObjective();
     }
@@ -54,9 +52,7 @@ public class ActiveQuests {
 
     public void checkQuestObjective () {
         if (getQuestObjectiveCounter() == getQuestObjectiveFull()) {
-            System.out.println("In complete setter");
             setComplete();
         }
-
     }
 }

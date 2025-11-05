@@ -1,6 +1,7 @@
 package main.java.GameProcesses.Plot.Locations.StartLocation;
 
 import main.java.Characters.Organism;
+import main.java.GameProcesses.Plot.Locations.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
 import main.java.GameProcesses.Services.InvalidCommandException;
@@ -8,8 +9,8 @@ import main.java.GameProcesses.Services.InvalidCommandException;
 import java.util.Scanner;
 
 public class TownGate extends Events {
-    public TownGate(String eventName, Location LOCATION) {
-        super(eventName, LOCATION);
+    public TownGate(String eventName, Location LOCATION, Dialogue dialogue) {
+        super(eventName, LOCATION, dialogue);
     }
 
     @Override

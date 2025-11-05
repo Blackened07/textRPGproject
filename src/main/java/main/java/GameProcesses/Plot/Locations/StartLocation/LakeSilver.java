@@ -1,7 +1,7 @@
 package main.java.GameProcesses.Plot.Locations.StartLocation;
 
 import main.java.Characters.Organism;
-import main.java.GameProcesses.Dialogue;
+import main.java.GameProcesses.Plot.Locations.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
 import main.java.GameProcesses.Services.InvalidCommandException;
@@ -9,14 +9,11 @@ import main.java.GameProcesses.Services.InvalidCommandException;
 import java.util.Scanner;
 
 public class LakeSilver extends Events {
-
-    Dialogue dialogue;
     Events mill;
     Events roadToNorth;
 
     public LakeSilver(String eventName, Location LOCATION, Dialogue dialogue, Events mill, Events roadToNorth) {
-        super(eventName, LOCATION);
-        this.dialogue = dialogue;
+        super(eventName, LOCATION, dialogue);
         this.mill = mill;
         this.roadToNorth = roadToNorth;
     }
@@ -24,7 +21,7 @@ public class LakeSilver extends Events {
     @Override
     public void startEvent(Organism player, Scanner sc) throws InvalidCommandException {
         setCurrentEvent(getSTART_EVENT());
-        printEventTextAndCommands(getSTART_EVENT(), this.dialogue);
+        printEventTextAndCommands(getSTART_EVENT(), getDialogue());
         setEventActive(true);
         eventSwitcher(sc, player);
     }
@@ -34,14 +31,14 @@ public class LakeSilver extends Events {
         int userInput;
 
         while (isEventActive()) {
-            userInput = gameScanner(sc, dialogue.getInnerListSize(getCurrentEvent()), player, this);
+            userInput = gameScanner(sc, getDialogue().getInnerListSize(getCurrentEvent()), player, this);
 
             switch (userInput) {
                 case 1 -> mill.startEvent(player, sc);
                 case 2 -> roadToNorth.startEvent(player, sc);
             }
 
-            printEventTextAndCommands(getCurrentEvent(), this.dialogue);
+            printEventTextAndCommands(getCurrentEvent(), getDialogue());
         }
     }
 }

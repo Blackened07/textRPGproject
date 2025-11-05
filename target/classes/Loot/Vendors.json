@@ -1,0 +1,9 @@
+{
+  "Sednon": [
+    {"name": "Minor Health Potion", "cost" :  10, "weight" : 1, "type" : "POTION", "RESTORE":  23.2},
+    {"name": "ApplePie", "cost" :  3, "weight" : 1, "type" : "FOOD", "RESTORE":  6.7},
+    {"name": "Beef", "cost" :  4, "weight" : 1, "type" : "FOOD", "RESTORE":  11.3},
+    {"name": "Cheese", "cost" :  3, "weight" : 1, "type" : "FOOD", "RESTORE":  5.8},
+    {"name": "Bread", "cost" :  2, "weight" : 1, "type" : "FOOD", "RESTORE":  5.3}
+  ]
+}

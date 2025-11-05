@@ -5,7 +5,7 @@ import main.java.Items.Item;
 import main.java.Items.SlotType;
 import main.java.Items.Types;
 
-public class Weapon extends EquipableItem implements Attack {
+public class Weapon extends EquipableItem{
     private float attackPower;
     private WeaponTypes weaponTypes;
 
@@ -25,7 +25,5 @@ public class Weapon extends EquipableItem implements Attack {
         return attackPower;
     }
     @Override public float[] getAllStats() {return super.getAllStats();}
-    public float attack() {
-        return attackPower;
-    }
+
 }
