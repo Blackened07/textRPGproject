@@ -7,16 +7,25 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Equipment implements StatsCalculator{
+
+
     private Set<EquipableItem> equipment;
 
     public Equipment() {
         this.equipment = new HashSet<>();
     }
 
-    public void addToEquipment(EquipableItem item) {
+    public void addToEquipment(EquipableItem item, Organism player) {
         equipment.add(item);
+        calculatingWhenAddItem(item, player);
     }
 
+    public void calculatingWhenAddItem(EquipableItem item, Organism player) {
+        player.setFullStrength(calculateEquipmentStrength(item));
+        player.setFullStamina(calculateEquipmentStamina(item));
+        player.setFullAgility(calculateEquipmentAgility(item));
+        player.setFullIntellect(calculateEquipmentIntellect(item));
+    }
 
     public int sumOfWeightOfEquippedItems() {
         return equipment.stream().
@@ -42,7 +51,7 @@ public class Equipment implements StatsCalculator{
     public float getArmorFeatures(int indexSlot, int indexStat){
         float[][] stats = new float[SUM_OF_ALL_ITEMS][SUM_OF_ALL_STATS];
         for (EquipableItem a : equipment) {
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < SUM_OF_ALL_ITEMS; i++) {
                 switch (a.getSlotType()) {
                     case HEAD -> stats[HEAD_INDEX] = a.getAllStats();
                     case BACK -> stats[BACK_INDEX] = a.getAllStats();

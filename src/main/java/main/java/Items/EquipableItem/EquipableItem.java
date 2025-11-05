@@ -21,8 +21,6 @@ public class EquipableItem extends Item implements Features {
         this.slotType = slotType;
     }
 
-
-
     public String getFeatures() {return "Сила: " + getStrength() + "; Выносливость: " + getStamina() + "; Ловкость: " + getAgility() + "; Интеллект: " + getIntellect();}
     public float[] getAllStats() {return new float[]{getStrength(), getStamina(), getAgility(), getIntellect()};}
     public float getAttackPower(){return 0;};

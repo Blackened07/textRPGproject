@@ -49,7 +49,7 @@ public interface Fight extends PrintableInterfaces, RandomNumberGenerator, GameS
     }
 
     default boolean chanceToAttackFirst(Organism player) {
-        if (player.getAgility() * 2 > whoStart()) return true;
+        if (player.getBaseAgility() * 2 > whoStart()) return true;
         else return false;
     }
 }

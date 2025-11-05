@@ -15,21 +15,21 @@ public class NPC extends Organism implements StatsCalculator{
 
     /** BASE STATS */
     @Override
-    public float getStrength() {return super.getStrength() + getStat(inventory, STRENGTH_INDEX);}
-    public float getStamina() {return super.getStamina() + getStat(inventory, STAMINA_INDEX);}
-    public float getAgility() {return super.getAgility() + getStat(inventory, AGILITY_INDEX);}
-    public float getIntellect() {return super.getIntellect() + getStat(inventory, INTELLECT_INDEX);}
+    public float getBaseStrength() {return super.getBaseStrength() + getStat(inventory, STRENGTH_INDEX);}
+    public float getBaseStamina() {return super.getBaseStamina() + getStat(inventory, STAMINA_INDEX);}
+    public float getBaseAgility() {return super.getBaseAgility() + getStat(inventory, AGILITY_INDEX);}
+    public float getBaseIntellect() {return super.getBaseIntellect() + getStat(inventory, INTELLECT_INDEX);}
 
     /** HEALTH AND MANA */
-    @Override public float getHealthMaxValue() {return getBASE_HEALTH() + getStamina();}
-    @Override public float getManaMaxValue() {return getBASE_MANA() + getIntellect();}
+    @Override public float getHealthMaxValue() {return getBASE_HEALTH() + getBaseStamina();}
+    @Override public float getManaMaxValue() {return getBASE_MANA() + getBaseIntellect();}
 
     /** SECONDARY STATS/FEATURES */
-    @Override public float getAttackPower() {return getStrength() / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
-    @Override public float getSpellPower() {return getIntellect() / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
-    @Override public float getEvasion() {return getAgility() / evasionCoefficient;}
-    @Override public float getSpellResistance() {return (getIntellect() + getStamina()) / spellResistanceCoefficient;}
-    @Override public float getAttackSpeed() {return ((getAgility() + getStamina()) / attackSpeedCoefficient) / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
+    @Override public float getAttackPower() {return getBaseStrength() / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
+    @Override public float getSpellPower() {return getBaseIntellect() / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
+    @Override public float getEvasion() {return getBaseAgility() / evasionCoefficient;}
+    @Override public float getSpellResistance() {return (getBaseIntellect() + getBaseStamina()) / spellResistanceCoefficient;}
+    @Override public float getAttackSpeed() {return ((getBaseAgility() + getBaseStamina()) / attackSpeedCoefficient) / attackPowerANDSpellPowerANDAttackSpeedCoefficient;}
 
     @Override public void addToBackPack(Item item) {backPack.addToBackPack(item);}
     @Override
