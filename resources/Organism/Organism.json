@@ -1,0 +1,6 @@
+{
+  "NORTH_FROM_CROSSROADS": {
+    "AI_WARRIOR": ["Boar", "Buzzard", "Fox"],
+    "AI_ROGUE": ["Wolf", "Lizard", "Spider", "Snake"]
+  }
+}

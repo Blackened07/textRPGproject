@@ -65,22 +65,22 @@ public class StartGameEvent extends Events implements PrintableInterfaces {
         switch (weaponTyped) {
             case 1 -> {
                 switch (spec) {
-                    case 1 -> player = new Player(enterName(sc), 13, 10,5,7,0,10 , GameClass.PALADIN,  weapon);
-                    case 2 -> player = new Player(enterName(sc), 14, 11,5,5,0,10, GameClass.WARRIOR,  weapon );
+                    case 1 -> player = new Player(enterName(sc), 13, 10,5,7,1,10 , GameClass.PALADIN,  weapon);
+                    case 2 -> player = new Player(enterName(sc), 14, 11,5,5,1,10, GameClass.WARRIOR,  weapon );
                 }
                 armorForWarrior(player, weapon);
             }
             case 2 -> {
                 switch (spec) {
-                    case 1 -> player = new Player(enterName(sc), 5, 8,5,17,0,10, GameClass.FIRE_MAGE,  weapon);
-                    case 2 -> player = new Player(enterName(sc), 5, 7,5,18,0,10, GameClass.FROST_MAGE,  weapon);
+                    case 1 -> player = new Player(enterName(sc), 5, 8,5,17,1,10, GameClass.FIRE_MAGE,  weapon);
+                    case 2 -> player = new Player(enterName(sc), 5, 7,5,18,1,10, GameClass.FROST_MAGE,  weapon);
                 }
                 armorForMage(player, weapon);
             }
             case 3 -> {
                 switch (spec) {
-                    case 1 -> player = new Player(enterName(sc), 5, 10,15,5,0,10, GameClass.ROGUE,  weapon);
-                    case 2 -> player = new Player(enterName(sc), 5, 8,8,14,0,10, GameClass.NECROMANT,  weapon);
+                    case 1 -> player = new Player(enterName(sc), 5, 10,15,5,1,10, GameClass.ROGUE,  weapon);
+                    case 2 -> player = new Player(enterName(sc), 5, 8,8,14,1,10, GameClass.NECROMANT,  weapon);
                 }
                 armorForRogue(player, weapon);
             }

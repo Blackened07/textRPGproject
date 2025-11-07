@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public interface Fight extends PrintableInterfaces, RandomNumberGenerator, GameScanner {
 
-    default void fight(Organism player, Organism creature, Scanner sc, Events event, String questItemName) throws InvalidCommandException {
+    default void fight(Organism player, Organism creature, Scanner sc, Events event) throws InvalidCommandException {
         String userInput;
         boolean isPlayerTurn;
         print("На вас напал " + creature.getNAME() + "\nБой начался!");
@@ -43,12 +43,18 @@ public interface Fight extends PrintableInterfaces, RandomNumberGenerator, GameS
             }
             player.addToBackPack(creature.getFromBackPackWithIndex((int) (Math.random() * creature.getSize() - 1)));
             player.setGold((int) (Math.random() * creature.getGold()));
-            player.checkExp(45);
+            player.checkExp(expAfterFight(player, creature));
         }
     }
 
     default boolean chanceToAttackFirst(Organism player) {
-        if (player.getBaseAgility() * 2 > whoStart()) return true;
-        else return false;
+        return player.getBaseAgility() * 2 > whoStart();
     }
+
+     default int expAfterFight (Organism player, Organism creature) {
+        if (player.getLevel() == creature.getLevel()) return creature.getEXPERIENCE_IN();
+        else if (player.getLevel() > creature.getLevel()) {
+            return creature.getEXPERIENCE_IN() - (player.getLevel() - creature.getLevel()) * 3;
+        } else return creature.getEXPERIENCE_IN() + (player.getLevel() - creature.getLevel()) * 3;
+     }
 }

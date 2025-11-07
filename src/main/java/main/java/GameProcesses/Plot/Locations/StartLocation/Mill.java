@@ -13,12 +13,13 @@ import java.util.Scanner;
 
 import static main.java.GameProcesses.Plot.Locations.Location.NORTH_FROM_CROSSROADS;
 
-public class Mill extends Events implements RandomNumberGenerator, Fight, CreatureGenerator {
+public class Mill extends Events implements RandomNumberGenerator, Fight {
 
     Events roadToWest;
     Events fatDialogue;
     Events lake;
     Events roadToNorth;
+    CreatureGenerator cg;
 
     private final String FAT_DIALOGUE = "FatDialogue";
     private final String MILL_AROUND = "MillAround";
@@ -29,16 +30,13 @@ public class Mill extends Events implements RandomNumberGenerator, Fight, Creatu
         this.roadToWest = roadToWest;
         this.lake = lake;
         this.roadToNorth = roadToNorth;
+        cg = new CreatureGenerator();
     }
 
     @Override
     public void startEvent(Organism player, Scanner sc) throws InvalidCommandException {
-        //StartEventWithRandomFight
         setCurrentEvent(getSTART_EVENT());
-
-        fight(player, getCreature(NORTH_FROM_CROSSROADS), sc, this, "Elf Figure");
-
-
+        fight(player, cg.getCreature(NORTH_FROM_CROSSROADS), sc, this);
         printEventTextAndCommands(getSTART_EVENT(), getDialogue());
         setEventActive(true);
         eventSwitcher(sc, player);
@@ -71,7 +69,10 @@ public class Mill extends Events implements RandomNumberGenerator, Fight, Creatu
                     case 1 -> {
                         lake.startEvent(player, sc);
                     }
-                    case 2 -> roadToNorth.startEvent(player, sc);
+                    case 2 -> {
+                        fight(player, cg.getCreature(NORTH_FROM_CROSSROADS,  2, 3, 4), sc, this);
+                        roadToNorth.startEvent(player, sc);
+                    }
                     case 3 -> startEvent(player, sc);
                 }
             }
@@ -79,7 +80,9 @@ public class Mill extends Events implements RandomNumberGenerator, Fight, Creatu
                 switch (userInput) {
                     case 1 -> {setCurrentEvent(FAT_DIALOGUE);}
                     case 2 -> {setCurrentEvent(MILL_AROUND);}
-                    case 3 -> {setCurrentEvent(FIELDS);}
+                    case 3 -> {
+                        fight(player, cg.getCreature(NORTH_FROM_CROSSROADS, 1, 2, 3), sc, this);
+                        setCurrentEvent(FIELDS);}
                     case 4 -> {roadToWest.startEvent(player, sc);}
                 }
             }

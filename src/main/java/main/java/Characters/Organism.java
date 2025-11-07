@@ -45,15 +45,17 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
     private Equipment equipment;
     private BackPack backPack;
     private SpellBook spellBook;
+    private GameClass gameClass;
 
-    public Organism(String name, float strength, float stamina, float agility, float intellect, int experience, int gold) {
+    public Organism(String name, float strength, float stamina, float agility, float intellect, int lvl, int gold, GameClass gameClass) {
         this.NAME = name;
         this.baseStrength = strength;
         this.baseStamina = stamina;
         this.baseAgility = agility;
         this.baseIntellect = intellect;
-        this.experience = experience;
+        this.experience = lvl;
         this.gold = gold;
+        this.gameClass = gameClass;
         this.fullStrength = baseStrength;
         this.fullStamina = baseStamina;
         this.fullAgility = baseAgility;
@@ -118,6 +120,8 @@ public class Organism implements PrintableInterfaces, StatsCalculator, UseItemsF
 
     public float getFullAttackPower() {return fullAttackPower;}
     public void setFullAttackPower(float fullAttackPower) {this.fullAttackPower = fullAttackPower;}
+
+    public int getEXPERIENCE_IN() {return 0;}
 
     /** ECONOMY */
     public int getGold() {return gold;}

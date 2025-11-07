@@ -3,6 +3,8 @@ package main.java.GameProcesses.Services;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import main.java.Characters.GameClass;
+import main.java.GameProcesses.Plot.Locations.Location;
 import main.java.Items.Item;
 import com.google.gson.reflect.TypeToken;
 import main.java.Items.RestorableItem.RestorableItem;
@@ -52,6 +54,13 @@ public class StoryReader {
             Type type = new TypeToken<Map<String, List<RestorableItem>>>() {
             }.getType();
             return textAndCommandReader.fromJson(reader, type);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static Map<Location, Map<GameClass, List<String>>> gsonReaderForOrganismNamesByLocations(String pathName) {
+        try (FileReader reader = new FileReader(pathName)) {
+            return textAndCommandReader.fromJson(reader, HashMap.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

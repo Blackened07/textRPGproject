@@ -13,4 +13,11 @@ public interface RandomNumberGenerator {
         return random.nextInt(50);
     }
 
+    default int chooseLvl (int ... lvl) {
+        return (int) (Math.random() * lvl.length);
+    }
+    default int chooseNumByValue(int listCapacity) {
+        return (int) (Math.random() * listCapacity);
+    }
+
 }

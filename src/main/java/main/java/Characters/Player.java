@@ -11,8 +11,7 @@ public class Player extends Organism implements StatsCalculator {
     QuestJournal questJournal;
 
     public Player(String name, float strength, float stamina, float agility, float intellect, int experience, int gold, GameClass gameClass, EquipableItem weapon) {
-        super(name, strength, stamina, agility, intellect, experience, gold);
-        this.gameClass = gameClass;
+        super(name, strength, stamina, agility, intellect, experience, gold, gameClass);
         this.weapon = weapon;
         this.questJournal = new QuestJournal();
     }

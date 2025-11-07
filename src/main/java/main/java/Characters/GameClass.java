@@ -6,5 +6,9 @@ public enum GameClass {
     FIRE_MAGE,
     FROST_MAGE,
     NECROMANT,
-    ROGUE
+    ROGUE,
+    VENDOR,
+    AI_WARRIOR,
+    AI_CASTER,
+    AI_ROGUE
 }

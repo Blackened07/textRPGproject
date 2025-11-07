@@ -3,6 +3,7 @@ package main.java;
 import main.java.GameProcesses.Game;
 import main.java.GameProcesses.GameOver;
 import main.java.GameProcesses.Quests.Quest;
+import main.java.GameProcesses.Services.CreatureGenerator;
 import main.java.GameProcesses.Services.InvalidCommandException;
 import main.java.GameProcesses.Services.PrintableInterfaces;
 import main.java.GameProcesses.Services.StoryReader;
@@ -32,6 +33,7 @@ public class Main implements PrintableInterfaces {
         StoryReader story = new StoryReader();
         new Quest();
         new Loot();
+
 
         Game game = new Game(story);
         new GameOver(game);

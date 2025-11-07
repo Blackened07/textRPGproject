@@ -1,19 +1,23 @@
 package main.java.GameProcesses.Plot.Locations.StartLocation.Crossroads;
 
 import main.java.Characters.Organism;
+import main.java.GameProcesses.Fight;
 import main.java.GameProcesses.Plot.Locations.Dialogue;
 import main.java.GameProcesses.Plot.Locations.Events;
 import main.java.GameProcesses.Plot.Locations.Location;
+import main.java.GameProcesses.Services.CreatureGenerator;
 import main.java.GameProcesses.Services.InvalidCommandException;
 
 import java.util.Scanner;
 
-public class RoadToNorth extends Events {
+import static main.java.GameProcesses.Plot.Locations.Location.NORTH_FROM_CROSSROADS;
+
+public class RoadToNorth extends Events implements Fight {
 
     Events crossroads;
     Events lake;
     Events mill;
-
+    CreatureGenerator cg;
 
     private final String PATHWAY = "Pathway";
 
@@ -22,6 +26,7 @@ public class RoadToNorth extends Events {
         this.crossroads = crossroads;
         this.lake = lake;
         this.mill = mill;
+        cg = new CreatureGenerator();
     }
 
     @Override
@@ -72,7 +77,10 @@ public class RoadToNorth extends Events {
                         setCurrentEvent(getCHECK());
                         System.out.println("Вероятность нападения зверя или бандита. Осмотр телеги - ring");
                     }
-                    case 3 -> setCurrentEvent(PATHWAY);
+                    case 3 -> {
+                        fight(player, cg.getCreature(NORTH_FROM_CROSSROADS), sc, this);
+                        setCurrentEvent(PATHWAY);
+                    }
                     case 4 -> crossroads.startEvent(player, sc);
                 }
             }
